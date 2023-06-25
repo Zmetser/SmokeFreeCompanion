@@ -1,0 +1,21 @@
+<strings>
+  <string id="AppName">Quit Tracker</string>
+  <string id="AppNameGlance" scope="glance">QUIT TRACKER</string>
+
+  <!-- Milestones -->
+  <string id="m0">1 Day</string>
+  <string id="m1">2 Days</string>
+  <string id="m2">3 Days</string>
+  <string id="m3">4 Days</string>
+  <string id="m4">5 Days</string>
+  <string id="m5">6 Days</string>
+  <string id="m6">1 Week</string>
+  <string id="m7">10 Days</string>
+  <string id="m8">2 Weeks</string>
+  <string id="m9">3 Weeks</string>
+  <string id="m10">1 Month</string>
+  <string id="m11">3 Months</string>
+  <string id="m12">6 Months</string>
+  <string id="m13">1 Year</string>
+  <string id="m14">Years</string>
+</strings>

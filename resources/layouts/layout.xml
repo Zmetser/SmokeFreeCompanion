@@ -1,0 +1,12 @@
+<layout id="MainLayout">
+  <label id="field1" x="center" y="45" justification="Gfx.TEXT_JUSTIFY_CENTER" font="Gfx.FONT_SYSTEM_NUMBER_HOT" color="Gfx.COLOR_DK_RED" />
+
+  <label id="field2" x="center" y="131" justification="Gfx.TEXT_JUSTIFY_CENTER" font="Gfx.FONT_TINY" color="Gfx.COLOR_LT_GRAY" />
+
+  <label id="field3" x="center" y="bottom" justification="Gfx.TEXT_JUSTIFY_CENTER" font="Gfx.FONT_SMALL" color="Gfx.COLOR_LT_GRAY" />
+
+  <drawable id="progressBar" class="CircularProgressBar">
+    <param name="colorBase">Graphics.COLOR_DK_GRAY</param>
+    <param name="colorActive">Graphics.COLOR_DK_RED</param>
+  </drawable>
+</layout>
