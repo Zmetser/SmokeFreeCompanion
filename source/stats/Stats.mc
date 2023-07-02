@@ -5,7 +5,7 @@ import Toybox.Time.Gregorian;
 import Toybox.Math;
 
 module Stats {
-  const DAYS_IN_MONTH = 30;
+  const DAYS_IN_MONTH = 365 / 12;
 
   var dHour = Gregorian.SECONDS_PER_HOUR;
   var dDay = Gregorian.SECONDS_PER_DAY;

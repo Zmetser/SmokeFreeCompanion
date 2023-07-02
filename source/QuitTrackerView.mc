@@ -45,8 +45,8 @@ class QuitTrackerView extends WatchUi.View {
     var milestonePercentageLabel = View.findDrawableById("field1") as Text;
     milestonePercentageLabel.setText(Math.round(progress * 100).format("%d") + "%");
 
-    (View.findDrawableById("field2") as Text)
-      .setText(Stats.formatDuration(Stats.elapsedSince(settings.quitDate), false));
+    // TODO: smoke free since
+    // TODO: money saved, cigarettes not smoked
 
     var steps = View.findDrawableById("progressBar") as CircularProgressBar;
     steps.setValue(progress);

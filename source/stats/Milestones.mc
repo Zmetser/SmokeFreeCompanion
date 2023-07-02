@@ -61,7 +61,7 @@ module Milestones {
   // TODO: Figure out how to handle infinite years
   (:glance)
   function closestMilestoneTo(moment as Time.Moment) as Lang.Number {
-    var elapsedTime = Stats.elapsedSince(moment);
+    var elapsedTime = Stats.durationSince(moment);
 
     for (var i = 0; i < NUMBER_OF_MILESTONES; i += 1) {
       var milestone = new Time.Duration(MILESTONES[i]);
@@ -75,7 +75,7 @@ module Milestones {
 
   (:glance)
   function milestoneProgress(moment as Time.Moment) as Lang.Float {
-    var elapsedTime = Stats.elapsedSince(moment);
+    var elapsedTime = Stats.durationSince(moment);
     var milestone = closestMilestoneTo(moment);
     var remaining = milestone - elapsedTime.value();
 
