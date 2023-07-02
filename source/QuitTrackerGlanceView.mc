@@ -11,7 +11,17 @@ import Stats;
 class QuitTrackerGlanceView extends WatchUi.GlanceView {
 
   var settings;
-  var appName;
+  private var _appName;
+
+  private const GROUP_SPACING = 4;
+  private const UNIT_SPACING = 0;
+
+  // fonts
+  private const _unitFont as FontDefinition = Graphics.FONT_TINY;
+  private const _dataFont as FontDefinition = Graphics.FONT_GLANCE_NUMBER;
+  private var _dataFontAscent as Number = 0;
+  private var _unitFontAscent as Number = 0;
+
 
   function initialize(aSettings) {
     settings = aSettings;
@@ -20,7 +30,9 @@ class QuitTrackerGlanceView extends WatchUi.GlanceView {
 
   // Load your resources here
   function onLayout(dc as Dc) as Void {
-    appName = Application.loadResource( Rez.Strings.AppNameGlance );
+    _appName = Application.loadResource( Rez.Strings.AppNameGlance );
+    _dataFontAscent = Graphics.getFontAscent(_dataFont);
+    _unitFontAscent = Graphics.getFontAscent(_unitFont);
   }
 
   // Called when this View is brought to the foreground. Restore
@@ -41,6 +53,7 @@ class QuitTrackerGlanceView extends WatchUi.GlanceView {
     var maxX = width * 0.95;
     var minY = height * 0.06;
     var maxY = height * 0.57;
+    var usableWidth = maxX - minX;
 
     // Milestone progress
     var progress = Milestones.milestoneProgress(settings.quitDate) as Lang.Float;
@@ -59,26 +72,41 @@ class QuitTrackerGlanceView extends WatchUi.GlanceView {
             minX,
             minY,
             Graphics.FONT_GLANCE,
-            appName,
+            _appName,
             Graphics.TEXT_JUSTIFY_LEFT);
 
-    // Elapsed since quit
-    var elapsedSinceQuit = Stats.formatDuration(Stats.elapsedSince(settings.quitDate), true);
-    dc.drawText(
-            minX,
-            maxY,
-            Graphics.FONT_GLANCE,
-            elapsedSinceQuit,
-            Graphics.TEXT_JUSTIFY_LEFT);
+    // Elapsed since quit and progress
+    var progressReadable = Math.round(progress * 100).format("%d") + "%";
+    dc.drawText( maxX, maxY, _dataFont, progressReadable, Graphics.TEXT_JUSTIFY_RIGHT);
 
-    dc.drawText(
-            maxX,
-            maxY,
-            Graphics.FONT_GLANCE,
-            Math.round(progress * 100).format("%d") + "%",
-            Graphics.TEXT_JUSTIFY_RIGHT);
+    drawElapsedTime(dc, minX, maxY, usableWidth - (dc.getTextWidthInPixels(progressReadable, _dataFont) + UNIT_SPACING));
+  }
 
-    // Left from milestone %
+  function drawElapsedTime(dc as Dc, startX as Float, y as Float, maxWidth as Float) as Void {
+    var elapsedSinceQuit = Stats.elapsedTimeSince(settings.quitDate);
+    var x = startX;
+    var unitY = y + _dataFontAscent - _unitFontAscent; // baseline for unit
+
+    var keys = [:years, :months, :days, :hours, :minutes];
+    var units = ["y", "m", "d", "h", "m"];
+
+    for (var i = 0; i < elapsedSinceQuit.size(); i += 1) {
+      var unit = units[i];
+      var data = elapsedSinceQuit.get(keys[i]);
+
+      if (data > 0 || x != startX) { // start drawing from the first non-zero value
+        var dataWidth = dc.getTextWidthInPixels(data.toString(), _dataFont) + UNIT_SPACING;
+        var unitWidth = dc.getTextWidthInPixels(unit, _unitFont) + GROUP_SPACING;
+        // Stop drawign if the rest of the text won't fit the maxWidth
+        if ((x + dataWidth + unitWidth) >= maxWidth) { return; }
+
+        // Draw data and unit
+        dc.drawText(x, y, _dataFont, data.toString(), Graphics.TEXT_JUSTIFY_LEFT);
+        x += dataWidth;
+        dc.drawText(x, unitY, _unitFont, unit, Graphics.TEXT_JUSTIFY_LEFT);
+        x += unitWidth;
+      }
+    }
   }
 
   // Called when this View is removed from the screen. Save the
