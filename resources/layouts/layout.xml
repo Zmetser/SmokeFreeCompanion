@@ -7,6 +7,6 @@
 
   <drawable id="progressBar" class="CircularProgressBar">
     <param name="colorBase">Graphics.COLOR_DK_GRAY</param>
-    <param name="colorActive">Graphics.COLOR_DK_RED</param>
+    <param name="colorActive">Graphics.COLOR_RED</param>
   </drawable>
 </layout>

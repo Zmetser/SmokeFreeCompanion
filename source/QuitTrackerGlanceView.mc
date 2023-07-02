@@ -56,15 +56,20 @@ class QuitTrackerGlanceView extends WatchUi.GlanceView {
     var usableWidth = maxX - minX;
 
     // Milestone progress
+    // =====|-- Draws the foreground, leaves a gap and from there it draws the remaining background
     var progress = Milestones.milestoneProgress(settings.quitDate) as Lang.Float;
-    dc.setColor(Graphics.COLOR_DK_GRAY, Graphics.COLOR_TRANSPARENT);
-    dc.setPenWidth(2);
-    dc.drawLine(maxX * progress, height / 2, maxX, height / 2);
+    var progressW = maxX * progress;
+    // progress foreground
     dc.setColor(Graphics.COLOR_DK_RED, Graphics.COLOR_TRANSPARENT);
-    dc.setPenWidth(4);
-    dc.drawLine(minX, height / 2, maxX * progress - 1, height / 2);
-    dc.setPenWidth(1);
+    dc.setPenWidth(7);
+    dc.drawLine(minX, height / 2, progressW, height / 2);
+    // progress background
+    dc.setColor(Graphics.COLOR_DK_GRAY, Graphics.COLOR_TRANSPARENT);
+    dc.setPenWidth(3);
+    dc.drawLine(minX + progressW + 3, height / 2, maxX, height / 2);
 
+    // Reset
+    dc.setPenWidth(1);
     dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
 
     // App name
