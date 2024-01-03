@@ -14,9 +14,9 @@ class Settings {
   public function initialize() {
     quitDate = Time.Gregorian.moment({
       :year   => 2023,
-      :month  => 6,
+      :month  => 12,
       :day    => 21,
-      :hour   => 13,
+      :hour   => 18,
     });
     cigarettesPerDay = 10;
     packPrice = 2020;
