@@ -21,12 +21,11 @@ module StatsTests {
   function lessThanHour(logger as Logger) {
     var duration = Stats.elapsedTimeSince(
       today.subtract(
-        new Time.Duration(Math.floor(129.985 * Gregorian.SECONDS_PER_DAY))
+        new Time.Duration(Math.floor(10 * Gregorian.SECONDS_PER_MINUTE))
       )
     );
 
-    logger.debug(duration);
-    return "10m".equals(duration);
+    return duration[:minutes].equals(10);
   }
 
   // (:test)
