@@ -18,7 +18,6 @@ module Milestones {
     10 * Gregorian.SECONDS_PER_DAY,
     14 * Gregorian.SECONDS_PER_DAY,
     21 * Gregorian.SECONDS_PER_DAY,
-    28 * Gregorian.SECONDS_PER_DAY,
     30 * Gregorian.SECONDS_PER_DAY,
     3 * 30 * Gregorian.SECONDS_PER_DAY,
     Gregorian.SECONDS_PER_YEAR / 2,
