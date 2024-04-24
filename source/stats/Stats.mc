@@ -13,19 +13,27 @@ module Stats {
 
   // Calculate elapsed time since quitDate
   (:glance)
-  function durationSince(quitDate as Time.Moment) as Time.Duration {
-    var today = new Time.Moment(Time.now().value());
-    var elapsed = today.subtract(quitDate);
-    return elapsed;
-  }
-
-  function formatDurationSince(quitDate as Time.Moment) as String {
-    return "";
+  /**
+   * Calculates the duration between the quit date and today.
+   *
+   * @param quitDate The quit date as a Time.Moment object.
+   * @param today The current date as a Time.Moment object.
+   * @return The duration between the quit date and today as a Time.Duration object.
+   */
+  function durationSince(quitDate as Time.Moment, today as Time.Moment) as Time.Duration {
+    return today.subtract(quitDate);
   }
 
   (:glance)
-  function elapsedTimeSince(quitDate as Time.Moment) as ElapsedTime {
-    var duration = durationSince(quitDate);
+  /**
+   * Calculates the elapsed time since the quit date until today.
+   *
+   * @param quitDate The quit date as a Time.Moment object.
+   * @param today The current date as a Time.Moment object.
+   * @return The elapsed time since the quit date as an ElapsedTime object.
+   */
+  function elapsedTimeSince(quitDate as Time.Moment, today as Time.Moment) as ElapsedTime {
+    var duration = durationSince(quitDate, today);
     var builder = new ElapsedTimeBuilder(duration);
     return builder.build();
   }

@@ -88,7 +88,8 @@ class QuitTrackerGlanceView extends WatchUi.GlanceView {
   }
 
   function drawElapsedTime(dc as Dc, startX as Float, y as Float, maxWidth as Float) as Void {
-    var elapsedSinceQuit = Stats.elapsedTimeSince(settings.quitDate);
+    var today = new Time.Moment(Time.now().value());
+    var elapsedSinceQuit = Stats.elapsedTimeSince(settings.quitDate, today);
     var x = startX;
     var unitY = y + _dataFontAscent - _unitFontAscent; // baseline for unit
 
