@@ -1,5 +1,10 @@
 <strings>
-  <string id="AppName">QuitTracker</string>
   <string id="Cigarettes">cigarettes</string>
   <string id="Saved">saved</string>
+
+  <string id="Currency">Currency</string>
+
+  <string id="QuitDate">Quit Date</string>
+  <string id="PackPrice">Pack Price</string>
+  <string id="CigarettesPerPack">Cigarettes per Pack</string>
 </strings>

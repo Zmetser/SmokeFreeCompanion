@@ -11,6 +11,7 @@ import Stats;
 class QuitTrackerGlanceView extends WatchUi.GlanceView {
 
   var settings;
+  var quitDate;
   private var _appName;
 
   private const GROUP_SPACING = 4;
@@ -39,6 +40,7 @@ class QuitTrackerGlanceView extends WatchUi.GlanceView {
   // the state of this View and prepare it to be shown. This includes
   // loading resources into memory.
   function onShow() as Void {
+    quitDate = settings.getQuitDate() as Time.Moment;
   }
 
   // Update the view
@@ -57,7 +59,7 @@ class QuitTrackerGlanceView extends WatchUi.GlanceView {
 
     // Milestone progress
     // =====|-- Draws the foreground, leaves a gap and from there it draws the remaining background
-    var progress = Milestones.milestoneProgress(settings.quitDate) as Lang.Float;
+    var progress = Milestones.milestoneProgress(quitDate) as Lang.Float;
     var progressW = maxX * progress;
     // progress foreground
     dc.setColor(Graphics.COLOR_DK_RED, Graphics.COLOR_TRANSPARENT);
@@ -89,7 +91,7 @@ class QuitTrackerGlanceView extends WatchUi.GlanceView {
 
   function drawElapsedTime(dc as Dc, startX as Float, y as Float, maxWidth as Float) as Void {
     var today = new Time.Moment(Time.now().value());
-    var elapsedSinceQuit = Stats.elapsedTimeSince(settings.quitDate, today);
+    var elapsedSinceQuit = Stats.elapsedTimeSince(quitDate, today);
     var x = startX;
     var unitY = y + _dataFontAscent - _unitFontAscent; // baseline for unit
 
