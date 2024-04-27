@@ -1,12 +1,12 @@
-import Toybox.Test;
-import Toybox.Math;
-import Toybox.Time;
-import Toybox.Time.Gregorian;
-
-import Stats;
-import TestUtils;
-
+(:test)
 module StatsTests {
+  import Toybox.Test;
+  import Toybox.Math;
+  import Toybox.Time;
+  import Toybox.Time.Gregorian;
+
+  import Stats;
+  import TestUtils;
 
   // MARK: - Setup
   var today = Gregorian.moment({

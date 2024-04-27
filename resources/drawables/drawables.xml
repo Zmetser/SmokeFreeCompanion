@@ -1,3 +1,5 @@
 <drawables>
-  <bitmap id="LauncherIcon" filename="launcher_icon_v2.png" />
+  <bitmap id="LauncherIcon" filename="images/launcher_icon_v2.png" />
+  <bitmap id="CigaretteCrossed" filename="images/cigarette_crossed.png" />
+  <bitmap id="Money" filename="images/money.png" />
 </drawables>

@@ -13,12 +13,12 @@ class Settings {
 
   public function initialize() {
     quitDate = Time.Gregorian.moment({
-      :year   => 2023,
-      :month  => 12,
-      :day    => 21,
-      :hour   => 18,
+      :year   => 2024,
+      :month  => 2,
+      :day    => 29,
+      :hour   => 21,
     });
-    cigarettesPerDay = 10;
+    cigarettesPerDay = 7;
     packPrice = 2020;
     cigarettesPerPack = 19;
     currency = "HUF";
