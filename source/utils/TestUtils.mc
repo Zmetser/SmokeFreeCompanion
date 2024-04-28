@@ -67,7 +67,8 @@ module TestUtils {
    * @param b The second value to compare.
    * @return True if the values are equal, false otherwise.
    */
-  function verifyValueEquals(logger as Logger, a, b) as Boolean {
+  function verifyValueEquals(logger as Logger, a, expected) as Boolean {
+    var b = expected;
     if ((a instanceof Lang.Dictionary) && (b instanceof Lang.Dictionary)) {
       return verifyDictEquals(logger, a, b);
     }
@@ -75,22 +76,46 @@ module TestUtils {
       return verifyArrayEquals(logger, a, b);
     }
     if ((a instanceof Lang.String) && (b instanceof Lang.String)) {
-      return a.equals(b);
+      var res = a.equals(b);
+      if (!res) {
+        logger.debug(Lang.format("Expected '$1$', got '$2$'.", [b, a]));
+      }
+      return res;
     }
     if ((a instanceof Lang.Double) && (b instanceof Lang.Double)) {
-      return abs(b - a) < 0.001;
+      var res = abs(b - a) < 0.001;
+      if (!res) {
+        logger.debug(Lang.format("Expected '$1$', got '$2$'.", [b, a]));
+      }
+      return res;
     }
     if ((a instanceof Lang.Float) && (b instanceof Lang.Float)) {
-      return abs(b - a) < 0.001;
+      var res = abs(b - a) < 0.001;
+      if (!res) {
+        logger.debug(Lang.format("Expected '$1$', got '$2$'.", [b, a]));
+      }
+      return res;
     }
     if ((a instanceof Lang.Long) && (b instanceof Lang.Long)) {
-      return a == b;
+      var res = a == b;
+      if (!res) {
+        logger.debug(Lang.format("Expected '$1$', got '$2$'.", [b, a]));
+      }
+      return res;
     }
     if ((a instanceof Lang.Number) && (b instanceof Lang.Number)) {
-      return a == b;
+      var res = a == b;
+      if (!res) {
+        logger.debug(Lang.format("Expected '$1$', got '$2$'.", [b, a]));
+      }
+      return res;
     }
     if ((a instanceof Lang.Boolean) && (b instanceof Lang.Boolean)) {
-      return a == b;
+      var res = a == b;
+      if (!res) {
+        logger.debug(Lang.format("Expected '$1$', got '$2$'.", [b, a]));
+      }
+      return res;
     }
     return false;
   }

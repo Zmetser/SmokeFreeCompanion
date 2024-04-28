@@ -1,4 +1,6 @@
+import Toybox.Application;
 import Toybox.Lang;
+import Toybox.Time;
 
 import Settings;
 import Stats;
@@ -8,7 +10,6 @@ class MoneyNotSpentView extends StatView {
 
   function initialize() {
     StatView.initialize(
-      "100.000",
       :Saved,
       :Money
     );
@@ -18,6 +19,22 @@ class MoneyNotSpentView extends StatView {
   function onShow() as Void {
     StatView.onShow();
     currencySymbol = Settings.getCurrencySymbol();
+    var packs = Stats.packsNotBought(
+      Settings.getQuitDate(),
+      new Time.Moment(Time.today().value()),
+      Settings.getCigarettesPerDay(),
+      Settings.getPackSize()
+    );
+
+    var price = packs * Settings.getPackPrice();
+    System.println(packs + "*" + Settings.getPackPrice() + "=" + price);
+
+    var currencyIndex = Properties.getValue("currency");
+    if (currencyIndex == 2) { // HUF doesn't need decimal places
+      title = price.format("%u");
+    } else {
+      title = price.format("%.1f");
+    }
   }
 
   // Override to add currency symbol to title
