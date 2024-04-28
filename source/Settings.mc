@@ -19,7 +19,6 @@ module Settings {
 
   (:glance)
   public function getQuitDate() as Time.Moment {
-    System.println(Properties.getValue("quitDate"));
     var timestamp = Properties.getValue("quitDate");
     if (timestamp > 0) {
       return new Time.Moment(timestamp);

@@ -10,14 +10,7 @@ class StatsBehavior extends BehaviorDelegate {
     BehaviorDelegate.initialize();
   }
 
-  // Detect Menu behavior
-  function onMenu() as Boolean {
-    System.println("Menu behavior triggered");
-    return false; // allow InputDelegate function to be called
-  }
-
   function onNextPage() as Boolean {
-    System.println("onNextPage");
     currentPage = (currentPage + 1) % numberOfViews;
     var view = getView(currentPage);
 
@@ -27,7 +20,6 @@ class StatsBehavior extends BehaviorDelegate {
   }
 
   function onPreviousPage() as Boolean {
-    System.println("onPreviousPage");
     currentPage = (currentPage - 1) < 0 ? numberOfViews - 1 : currentPage - 1;
     var view = getView(currentPage);
 
