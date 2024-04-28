@@ -3,6 +3,10 @@
       <settingConfig type="date" />
     </setting>
 
+    <setting propertyKey="@Properties.cigarettesPerDay" title="@Strings.CigarettesPerDay">
+      <settingConfig type="numeric" />
+    </setting>
+
     <setting propertyKey="@Properties.currency" title="@Strings.Currency">
       <settingConfig type="list">
         <listEntry value="0">@Strings.SignUSD</listEntry>
@@ -15,7 +19,7 @@
       <settingConfig type="numeric" />
     </setting>
 
-    <setting propertyKey="@Properties.cigarettesPerPack" title="@Strings.CigarettesPerPack">
+    <setting propertyKey="@Properties.packSize" title="@Strings.PackSize">
       <settingConfig type="numeric" />
     </setting>
 </settings>

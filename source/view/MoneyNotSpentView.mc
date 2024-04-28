@@ -1,23 +1,23 @@
 import Toybox.Lang;
+
+import Settings;
 import Stats;
 
 class MoneyNotSpentView extends StatView {
   var currencySymbol;
-  var settings;
 
-  function initialize(aSettings) {
+  function initialize() {
     StatView.initialize(
       "100.000",
       :Saved,
       :Money
     );
-    settings = aSettings;
   }
 
   // loading resources into memory.
   function onShow() as Void {
     StatView.onShow();
-    currencySymbol = settings.getCurrencySymbol();
+    currencySymbol = Settings.getCurrencySymbol();
   }
 
   // Override to add currency symbol to title

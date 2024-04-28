@@ -3,19 +3,21 @@ import Toybox.Application;
 import Toybox.Time;
 import Toybox.Lang;
 
-(:glance)
-class Settings {
+module Settings {
 
-  var cigarettesPerDay;
-  var packPrice;
-  var cigarettesPerPack;
-
-  public function initialize() {
-    cigarettesPerDay = 7;
-    packPrice = 2020;
-    cigarettesPerPack = 19;
+  public function getPackPrice() as Number {
+    return Properties.getValue("packPrice");
   }
 
+  public function getPackSize() as Number {
+    return Properties.getValue("packSize");
+  }
+
+  public function getCigarettesPerDay() as Number {
+    return Properties.getValue("cigarettesPerDay");
+  }
+
+  (:glance)
   public function getQuitDate() as Time.Moment {
     System.println(Properties.getValue("quitDate"));
     var timestamp = Properties.getValue("quitDate");
@@ -35,7 +37,7 @@ class Settings {
     return Application.loadResource(Rez.Strings.SignUSD);
   }
 
-  private static var currencySymbols = [
+  var currencySymbols = [
     :SignUSD,
     :SignEUR,
     :SignHUF

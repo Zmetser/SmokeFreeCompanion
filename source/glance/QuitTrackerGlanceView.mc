@@ -5,12 +5,12 @@ import Toybox.Lang;
 import Toybox.Application;
 
 import Milestones;
+import Settings;
 import Stats;
 
 (:glance)
 class QuitTrackerGlanceView extends WatchUi.GlanceView {
 
-  var settings;
   var quitDate;
   private var _appName;
 
@@ -24,8 +24,7 @@ class QuitTrackerGlanceView extends WatchUi.GlanceView {
   private var _unitFontAscent as Number = 0;
 
 
-  function initialize(aSettings) {
-    settings = aSettings;
+  function initialize() {
     GlanceView.initialize();
   }
 
@@ -40,7 +39,7 @@ class QuitTrackerGlanceView extends WatchUi.GlanceView {
   // the state of this View and prepare it to be shown. This includes
   // loading resources into memory.
   function onShow() as Void {
-    quitDate = settings.getQuitDate() as Time.Moment;
+    quitDate = Settings.getQuitDate() as Time.Moment;
   }
 
   // Update the view

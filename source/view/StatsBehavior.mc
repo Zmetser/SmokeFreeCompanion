@@ -6,11 +6,8 @@ class StatsBehavior extends BehaviorDelegate {
   private static var currentPage as Number = 0;
   private static var numberOfViews as Number = 2;
 
-  private var settings;
-
-  function initialize(aSettings) {
+  function initialize() {
     BehaviorDelegate.initialize();
-    settings = aSettings;
   }
 
   // Detect Menu behavior
@@ -24,7 +21,7 @@ class StatsBehavior extends BehaviorDelegate {
     currentPage = (currentPage + 1) % numberOfViews;
     var view = getView(currentPage);
 
-    WatchUi.switchToView(view, new StatsBehavior(settings), WatchUi.SLIDE_UP);
+    WatchUi.switchToView(view, new StatsBehavior(), WatchUi.SLIDE_UP);
 
     return true;
   }
@@ -34,7 +31,7 @@ class StatsBehavior extends BehaviorDelegate {
     currentPage = (currentPage - 1) < 0 ? numberOfViews - 1 : currentPage - 1;
     var view = getView(currentPage);
 
-    WatchUi.switchToView(view, new StatsBehavior(settings), WatchUi.SLIDE_DOWN);
+    WatchUi.switchToView(view, new StatsBehavior(), WatchUi.SLIDE_DOWN);
 
     return true;
   }
@@ -42,7 +39,7 @@ class StatsBehavior extends BehaviorDelegate {
   function getView(page as Number) as View {
     switch (page) {
       case 0: return new CigarettesNotSmokedView();
-      case 1: return new MoneyNotSpentView(settings);
+      case 1: return new MoneyNotSpentView();
       default: return new CigarettesNotSmokedView();
     }
   }
