@@ -1,0 +1,25 @@
+<settings>
+    <setting propertyKey="@Properties.quitDate" title="@Strings.QuitDate">
+      <settingConfig type="date" />
+    </setting>
+
+    <setting propertyKey="@Properties.cigarettesPerDay" title="@Strings.CigarettesPerDay">
+      <settingConfig type="numeric" />
+    </setting>
+
+    <setting propertyKey="@Properties.currency" title="@Strings.Currency">
+      <settingConfig type="list">
+        <listEntry value="0">@Strings.SignUSD</listEntry>
+        <listEntry value="1">@Strings.SignEUR</listEntry>
+        <listEntry value="2">@Strings.SignHUF</listEntry>
+      </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.packPrice" title="@Strings.PackPrice">
+      <settingConfig type="numeric" />
+    </setting>
+
+    <setting propertyKey="@Properties.packSize" title="@Strings.PackSize">
+      <settingConfig type="numeric" />
+    </setting>
+</settings>
