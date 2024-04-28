@@ -29,7 +29,7 @@ module Settings {
   public function getCurrencySymbol() as String {
     var currencyIndex = Properties.getValue("currency");
     if (currencyIndex >= 0 && currencyIndex < currencySymbols.size()) {
-      var id = currencySymbols[currencyIndex];
+      var id = (currencySymbols as Array<Lang.Symbol>)[currencyIndex];
       return Application.loadResource(Rez.Strings[id]);
     }
 
