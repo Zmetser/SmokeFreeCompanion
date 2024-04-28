@@ -24,8 +24,7 @@ class StatView extends WatchUi.View {
 
   private var subTitle;
 
-  function initialize(aTitle, aSubTitle, aIcon) {
-    title = aTitle;
+  function initialize(aSubTitle, aIcon) {
     subTitleRezName = aSubTitle;
     iconRezName = aIcon;
     View.initialize();

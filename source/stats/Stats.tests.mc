@@ -4,10 +4,11 @@ import Toybox.Time;
 import Toybox.Time.Gregorian;
 
 import Stats;
-import TestUtils;
 
 (:test)
 module TestConsts {
+  import TestUtils;
+
   var today = Gregorian.moment({
     :year   => 2016,
     :month  => 3,
@@ -23,6 +24,7 @@ module TestConsts {
 
 (:test)
 module ElapsedTimeTests {
+  import TestUtils;
 
   (:test)
   function canGetElapsedTime(logger as Logger) {
