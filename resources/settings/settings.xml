@@ -1,10 +1,10 @@
 <settings>
     <setting propertyKey="@Properties.quitDate" title="@Strings.QuitDate">
-      <settingConfig type="date" />
+      <settingConfig type="date" required="true" />
     </setting>
 
     <setting propertyKey="@Properties.cigarettesPerDay" title="@Strings.CigarettesPerDay">
-      <settingConfig type="numeric" />
+      <settingConfig type="numeric" min="1" required="true" />
     </setting>
 
     <setting propertyKey="@Properties.currency" title="@Strings.Currency">
@@ -16,10 +16,10 @@
     </setting>
 
     <setting propertyKey="@Properties.packPrice" title="@Strings.PackPrice">
-      <settingConfig type="numeric" />
+      <settingConfig type="numeric" min="1" />
     </setting>
 
     <setting propertyKey="@Properties.packSize" title="@Strings.PackSize">
-      <settingConfig type="numeric" />
+      <settingConfig type="numeric" min="1" />
     </setting>
 </settings>
