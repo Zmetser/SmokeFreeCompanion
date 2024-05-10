@@ -11,12 +11,6 @@ module MilestonesTests {
   var today = new Time.Moment(Time.now().value());
 
   (:test)
-  function canGetDayString(logger as Logger) {
-    var duration = 10 * Gregorian.SECONDS_PER_DAY;
-    return "10 Days".equals(Milestones.milestoneToString(duration));
-  }
-
-  (:test)
   function canGetOneDayMilestone(logger as Logger) {
     var duration = new Time.Duration((0.5 * Gregorian.SECONDS_PER_DAY) as Lang.Number);
     var quitTime = today.subtract(duration) as Time.Moment;
@@ -26,7 +20,7 @@ module MilestonesTests {
 
   (:test)
   function canGetTwoDayMilestone(logger as Logger) {
-    var duration = new Time.Duration(Gregorian.SECONDS_PER_DAY);
+    var duration = new Time.Duration(Gregorian.SECONDS_PER_DAY + 1);
     var quitTime = today.subtract(duration) as Time.Moment;
     var milestone = Milestones.closestMilestoneTo(quitTime);
     return (milestone == Milestones.MILESTONES[1]);
@@ -34,7 +28,7 @@ module MilestonesTests {
 
   (:test)
   function canGetOneWeekMilestone(logger as Logger) {
-    var duration = new Time.Duration(6 * Gregorian.SECONDS_PER_DAY);
+    var duration = new Time.Duration(6 * Gregorian.SECONDS_PER_DAY + 1);
     var quitTime = today.subtract(duration) as Time.Moment;
     var milestone = Milestones.closestMilestoneTo(quitTime);
     return (milestone == Milestones.MILESTONES[6]);
@@ -63,5 +57,22 @@ module MilestonesTests {
     var progress = Milestones.milestoneProgress(quitTime);
 
     return (Math.round(progress * 10) / 10 == 0.5);
+  }
+
+  (:test)
+  function exactMilestoneHasToBeHundredPercent(logger as Logger) {
+    for (var i = 0; i < Milestones.NUMBER_OF_MILESTONES; i++) {
+      var milestone = Milestones.MILESTONES[i];
+      var duration = new Time.Duration(milestone);
+      var quitTime = today.subtract(duration) as Time.Moment;
+      var progress = Milestones.milestoneProgress(quitTime);
+
+      if (progress < 1.0) {
+        logger.debug("Milestone[" + i + "]: " + milestone);
+        logger.debug("Progress: " + progress);
+        return false;
+      }
+    }
+    return true;
   }
 }

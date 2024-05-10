@@ -21,44 +21,31 @@ module Milestones {
     30 * Gregorian.SECONDS_PER_DAY,
     3 * 30 * Gregorian.SECONDS_PER_DAY,
     Gregorian.SECONDS_PER_YEAR / 2,
-    Gregorian.SECONDS_PER_YEAR
+    Gregorian.SECONDS_PER_YEAR,
+    2 * Gregorian.SECONDS_PER_YEAR,
+    3 * Gregorian.SECONDS_PER_YEAR,
+    4 * Gregorian.SECONDS_PER_YEAR,
+    5 * Gregorian.SECONDS_PER_YEAR,
+    6 * Gregorian.SECONDS_PER_YEAR,
+    7 * Gregorian.SECONDS_PER_YEAR,
+    8 * Gregorian.SECONDS_PER_YEAR,
+    9 * Gregorian.SECONDS_PER_YEAR,
+    10 * Gregorian.SECONDS_PER_YEAR,
+    15 * Gregorian.SECONDS_PER_YEAR,
+    20 * Gregorian.SECONDS_PER_YEAR,
+    25 * Gregorian.SECONDS_PER_YEAR,
+    30 * Gregorian.SECONDS_PER_YEAR,
+    35 * Gregorian.SECONDS_PER_YEAR,
+    40 * Gregorian.SECONDS_PER_YEAR,
+    45 * Gregorian.SECONDS_PER_YEAR,
+    50 * Gregorian.SECONDS_PER_YEAR
   ] as Array<Lang.Number>;
 
   (:glance)
   const NUMBER_OF_MILESTONES = MILESTONES.size() as Lang.Number;
 
-  // TODO: Figure out how to handle infinite years
-  function milestoneToString(milestone as Lang.Number) as String {
-    // Hiding const here to not confuse :glance with the Rez object.
-    // TODO: Figure out a better separation of :glance
-    var INDEX_TO_MILESTONE_SYMBOL = [
-      Rez.Strings.m0,
-      Rez.Strings.m1,
-      Rez.Strings.m2,
-      Rez.Strings.m3,
-      Rez.Strings.m4,
-      Rez.Strings.m5,
-      Rez.Strings.m6,
-      Rez.Strings.m7,
-      Rez.Strings.m8,
-      Rez.Strings.m9,
-      Rez.Strings.m10,
-      Rez.Strings.m11,
-      Rez.Strings.m12,
-      Rez.Strings.m13,
-      Rez.Strings.m14,
-    ] as Array<Lang.Symbol>;
-    var index = MILESTONES.indexOf(milestone);
-    if (index != -1) {
-      return Application.loadResource(INDEX_TO_MILESTONE_SYMBOL[index]);
-    }
-    return Application.loadResource(Rez.Strings.m14);
-  }
-
   // closest milestone to date in the past
   // should be the first unfulfilled milestone
-  // TODO: Test all the cases
-  // TODO: Figure out how to handle infinite years
   (:glance)
   function closestMilestoneTo(moment as Time.Moment) as Lang.Number {
     var today = new Time.Moment(Time.now().value());
@@ -66,7 +53,7 @@ module Milestones {
 
     for (var i = 0; i < NUMBER_OF_MILESTONES; i += 1) {
       var milestone = new Time.Duration(MILESTONES[i]);
-      if (milestone.greaterThan(elapsedTime)) {
+      if (milestone.compare(elapsedTime) >= 0) {
         return MILESTONES[i];
       }
     }
@@ -74,6 +61,12 @@ module Milestones {
     return MILESTONES[NUMBER_OF_MILESTONES - 1];
   }
 
+  /**
+   * Calculates the progress towards a milestone based on a given moment.
+   *
+   * @param moment The moment to calculate the progress from.
+   * @return The progress towards the milestone as a floating-point number between 0 and 1.
+   */
   (:glance)
   function milestoneProgress(moment as Time.Moment) as Lang.Float {
     var today = new Time.Moment(Time.now().value());

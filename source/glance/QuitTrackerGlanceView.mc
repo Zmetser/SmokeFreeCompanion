@@ -81,11 +81,9 @@ class QuitTrackerGlanceView extends WatchUi.GlanceView {
             _appName,
             Graphics.TEXT_JUSTIFY_LEFT);
 
-    // Elapsed since quit and progress
-    var progressReadable = Math.round(progress * 100).format("%d") + "%";
-    dc.drawText( maxX, maxY, _dataFont, progressReadable, Graphics.TEXT_JUSTIFY_RIGHT);
-
-    drawElapsedTime(dc, minX, maxY, usableWidth - (dc.getTextWidthInPixels(progressReadable, _dataFont) + UNIT_SPACING));
+    // Adjust maxY to make room for unit text with descent (y, g...)
+    var maxYAdjusted = maxY - Graphics.getFontDescent(_unitFont);
+    drawElapsedTime(dc, minX, maxYAdjusted, usableWidth);
   }
 
   function drawElapsedTime(dc as Dc, startX as Float, y as Float, maxWidth as Float) as Void {
