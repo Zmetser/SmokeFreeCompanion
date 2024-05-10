@@ -66,7 +66,7 @@ module Milestones {
 
     for (var i = 0; i < NUMBER_OF_MILESTONES; i += 1) {
       var milestone = new Time.Duration(MILESTONES[i]);
-      if (milestone.greaterThan(elapsedTime)) {
+      if (milestone.compare(elapsedTime) >= 0) {
         return MILESTONES[i];
       }
     }
