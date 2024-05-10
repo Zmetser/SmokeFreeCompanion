@@ -1,5 +1,6 @@
 <drawables>
   <bitmap id="LauncherIcon" filename="images/lung.png" />
-  <bitmap id="CigaretteCrossed" filename="images/smoking.png" />
-  <bitmap id="Money" filename="images/piggy_bank.png" />
+  <!-- Stat view icons -->
+  <bitmap id="CigarettesNotSmokedIcon" filename="images/smoking.png" />
+  <bitmap id="MoneyNotSpentIcon" filename="images/piggy_bank.png" />
 </drawables>

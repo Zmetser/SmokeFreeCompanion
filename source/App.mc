@@ -5,7 +5,7 @@ import Toybox.WatchUi;
 import Milestones;
 
 (:glance)
-class QuitTrackerApp extends Application.AppBase {
+class App extends Application.AppBase {
 
   function initialize() {
     AppBase.initialize();
@@ -21,7 +21,7 @@ class QuitTrackerApp extends Application.AppBase {
   }
 
   function getGlanceView() {
-    return [ new QuitTrackerGlanceView() ];
+    return [ new GlanceView() ];
   }
 
   // Return the initial view of your application here
@@ -31,6 +31,6 @@ class QuitTrackerApp extends Application.AppBase {
 
 }
 
-function getApp() as QuitTrackerApp {
-  return Application.getApp() as QuitTrackerApp;
+function getApp() as App {
+  return Application.getApp() as App;
 }

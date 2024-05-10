@@ -18,7 +18,7 @@ class MoneyNotSpentView extends StatView {
   function onShow() as Void {
     StatView.onShow();
 
-    iconResource = WatchUi.loadResource(Rez.Drawables.Money) as BitmapResource;
+    iconResource = WatchUi.loadResource(Rez.Drawables.MoneyNotSpentIcon) as BitmapResource;
     subTitle = WatchUi.loadResource(Rez.Strings.Saved) as Lang.String;
 
     _currencySymbol = Settings.getCurrencySymbol();
