@@ -2,6 +2,7 @@ import Toybox.Graphics;
 import Toybox.WatchUi;
 import Toybox.Time;
 import Toybox.Lang;
+import Toybox.Math;
 import Toybox.Application;
 
 import Milestones;
@@ -9,7 +10,7 @@ import Settings;
 import Stats;
 
 (:glance)
-class QuitTrackerGlanceView extends WatchUi.GlanceView {
+class GlanceView extends WatchUi.GlanceView {
 
   var quitDate;
   private var _appName;
@@ -18,10 +19,10 @@ class QuitTrackerGlanceView extends WatchUi.GlanceView {
   private const UNIT_SPACING = 0;
 
   // fonts
+  private const _font as FontDefinition = Graphics.FONT_GLANCE;
   private const _unitFont as FontDefinition = Graphics.FONT_TINY;
   private const _dataFont as FontDefinition = Graphics.FONT_GLANCE_NUMBER;
-  private var _dataFontAscent as Number = 0;
-  private var _unitFontAscent as Number = 0;
+  private const _lineHeight as Number = 7;
 
 
   function initialize() {
@@ -31,8 +32,6 @@ class QuitTrackerGlanceView extends WatchUi.GlanceView {
   // Load your resources here
   function onLayout(dc as Dc) as Void {
     _appName = Application.loadResource( Rez.Strings.AppNameGlance );
-    _dataFontAscent = Graphics.getFontAscent(_dataFont);
-    _unitFontAscent = Graphics.getFontAscent(_unitFont);
   }
 
   // Called when this View is brought to the foreground. Restore
@@ -50,24 +49,25 @@ class QuitTrackerGlanceView extends WatchUi.GlanceView {
     var height = dc.getHeight();
     var width = dc.getWidth();
 
-    var minX = width * 0.02;
-    var maxX = width * 0.95;
-    var minY = height * 0.06;
-    var maxY = height * 0.57;
-    var usableWidth = maxX - minX;
+    var minX = 0.0;
+    var minY = 0.0;
 
     // Milestone progress
     // =====|-- Draws the foreground, leaves a gap and from there it draws the remaining background
     var progress = Milestones.milestoneProgress(quitDate) as Lang.Float;
-    var progressW = maxX * progress;
+    var progressW = width * progress;
+
+    var progressY = height / 2;
+    var gap = Graphics.getFontHeight(_font) - progressY + Graphics.getFontDescent(_font);
+
     // progress foreground
-    dc.setColor(Graphics.COLOR_DK_RED, Graphics.COLOR_TRANSPARENT);
-    dc.setPenWidth(7);
-    dc.drawLine(minX, height / 2, progressW, height / 2);
+    dc.setColor(Graphics.COLOR_DK_GREEN, Graphics.COLOR_TRANSPARENT);
+    dc.setPenWidth(_lineHeight);
+    dc.drawLine(minX, progressY, progressW, progressY);
     // progress background
     dc.setColor(Graphics.COLOR_DK_GRAY, Graphics.COLOR_TRANSPARENT);
-    dc.setPenWidth(3);
-    dc.drawLine(minX + progressW + 3, height / 2, maxX, height / 2);
+    dc.setPenWidth(Math.floor(_lineHeight / 2));
+    dc.drawLine(progressW + _lineHeight, progressY, width, progressY);
 
     // Reset
     dc.setPenWidth(1);
@@ -77,20 +77,19 @@ class QuitTrackerGlanceView extends WatchUi.GlanceView {
     dc.drawText(
             minX,
             minY,
-            Graphics.FONT_GLANCE,
+            _font,
             _appName,
             Graphics.TEXT_JUSTIFY_LEFT);
 
-    // Adjust maxY to make room for unit text with descent (y, g...)
-    var maxYAdjusted = maxY - Graphics.getFontDescent(_unitFont);
-    drawElapsedTime(dc, minX, maxYAdjusted, usableWidth);
+    var elapsedY = progressY + gap + _lineHeight;
+    drawElapsedTime(dc, minX, elapsedY, width);
   }
 
-  function drawElapsedTime(dc as Dc, startX as Float, y as Float, maxWidth as Float) as Void {
+  function drawElapsedTime(dc as Dc, startX as Numeric, y as Numeric, maxWidth as Numeric) as Void {
     var today = new Time.Moment(Time.now().value());
     var elapsedSinceQuit = Stats.elapsedTimeSince(quitDate, today);
     var x = startX;
-    var unitY = y + _dataFontAscent - _unitFontAscent; // baseline for unit
+    var unitY = y + Graphics.getFontAscent(_dataFont) - Graphics.getFontAscent(_unitFont); // baseline for unit
 
     var keys = [:years, :months, :days, :hours, :minutes];
     var units = ["y", "m", "d", "h", "m"];
