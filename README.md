@@ -9,4 +9,6 @@ It provides a useful tool to track your progress and motivate you to stay smoke-
 
 ## License
 
-This project is licensed under the terms of the [GPL-3.0](./LICENSE.txt) license.
+Quit Tracker is licensed under the terms of the [GPL-3.0](./LICENSE.txt) license.
+
+Quit Tracker also contains code from open source projects. See [ATTRIBUTIONS.md](./ATTRIBUTIONS.md) for a list.
