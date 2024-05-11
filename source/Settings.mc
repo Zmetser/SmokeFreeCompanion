@@ -20,10 +20,12 @@ module Settings {
   (:glance)
   public function getQuitDate() as Time.Moment {
     var timestamp = Properties.getValue("quitDate");
-    if (timestamp > 0) {
-      return new Time.Moment(timestamp);
+    // If the quit date is not set or is in the future, return today
+    if (timestamp == 0 || timestamp > Time.now().value()) {
+      return new Time.Moment(Time.today().value());
     }
-    return new Time.Moment(Time.today().value());
+
+    return new Time.Moment(timestamp);
   }
 
   public function getCurrencySymbol() as String {
