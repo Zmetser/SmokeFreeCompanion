@@ -8,7 +8,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Fixed
 
+ - Improve placement of surrency symbol on MoneyNotSpent stat
  - Allow quit dates before 1970, fallback to today for future dates
+ - Change packPrice from Int to Double
 
 ## [0.1.0] - 2024-05-10
 
