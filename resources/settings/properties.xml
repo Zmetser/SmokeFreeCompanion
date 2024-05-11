@@ -1,4 +1,5 @@
 <properties>
+  <property id="appVersion" type="string">0.1.0</property>
   <property id="quitDate" type="number">0</property>
   <property id="currency" type="number">0</property>
   <property id="packPrice" type="number">6</property>

@@ -1,6 +1,6 @@
 <strings>
-  <string id="AppName">QUIT TRACKER</string>
-  <string id="AppNameGlance" scope="glance">QUIT TRACKER</string>
+  <string id="AppName">SMOKE FREE</string>
+  <string id="AppNameGlance" scope="glance">SMOKE FREE</string>
 
   <!-- Milestones -->
   <string id="day">Day</string>
