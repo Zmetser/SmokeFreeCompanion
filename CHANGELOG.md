@@ -6,10 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [0.2.0]
+
 ### Changed
 
  - Use calming and positive colors to evoke feelings of health
  - Improve placement of surrency symbol on MoneyNotSpent stat
+ - add support for fenix6s, fenix6spro, fenix7s, fenix7spro, fr245, fr245m
 
 ### Fixed
 
@@ -20,5 +23,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 First test release to Connect IQ Store to test app settings
 
-[unreleased]: https://github.com/Zmetser/SmokeFreeCompanion/compare/v0.1.0...HEAD
+[unreleased]: https://github.com/Zmetser/SmokeFreeCompanion/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/Zmetser/SmokeFreeCompanion/releases/tag/v0.2.0
 [0.1.0]: https://github.com/Zmetser/SmokeFreeCompanion/releases/tag/v0.1.0
