@@ -13,7 +13,8 @@ import Stats;
 class GlanceView extends WatchUi.GlanceView {
 
   var quitDate;
-  private var _appName;
+  private var _appName as String?;
+  private var _colorSpace as Number?;
 
   private const GROUP_SPACING = 4;
   private const UNIT_SPACING = 0;
@@ -24,7 +25,6 @@ class GlanceView extends WatchUi.GlanceView {
   private const _dataFont as FontDefinition = Graphics.FONT_GLANCE_NUMBER;
   private const _lineHeight as Number = 7;
 
-
   function initialize() {
     GlanceView.initialize();
   }
@@ -32,6 +32,7 @@ class GlanceView extends WatchUi.GlanceView {
   // Load your resources here
   function onLayout(dc as Dc) as Void {
     _appName = Application.loadResource( Rez.Strings.AppNameGlance );
+    _colorSpace = Properties.getValue("colorSpace");
   }
 
   // Called when this View is brought to the foreground. Restore
@@ -60,12 +61,13 @@ class GlanceView extends WatchUi.GlanceView {
     var progressW = width * progress;
 
     // progress foreground
-    dc.setColor(Graphics.COLOR_DK_GREEN, Graphics.COLOR_TRANSPARENT);
+    dc.setColor(foregroundColor(Graphics.COLOR_DK_GREEN), Graphics.COLOR_TRANSPARENT);
     dc.setPenWidth(_lineHeight);
     dc.drawLine(minX, progressY, progressW, progressY);
     // progress background
-    dc.setColor(Graphics.COLOR_DK_GRAY, Graphics.COLOR_TRANSPARENT);
-    dc.setPenWidth(Math.floor(_lineHeight / 2));
+    dc.setColor(foregroundColor(Graphics.COLOR_DK_GRAY), Graphics.COLOR_TRANSPARENT);
+    var backgroundLineHeight = _colorSpace > 1 ? Math.floor(_lineHeight / 2) : 1;
+    dc.setPenWidth(backgroundLineHeight);
     dc.drawLine(progressW + _lineHeight, progressY, width, progressY);
 
     // Reset
@@ -115,6 +117,10 @@ class GlanceView extends WatchUi.GlanceView {
   // state of this View here. This includes freeing resources from
   // memory.
   function onHide() as Void {
+  }
+
+  function foregroundColor(color as Number) as Number {
+    return _colorSpace > 1 ? color : Graphics.COLOR_WHITE;
   }
 
 }
