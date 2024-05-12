@@ -50,15 +50,14 @@ class GlanceView extends WatchUi.GlanceView {
     var width = dc.getWidth();
 
     var minX = 0.0;
-    var minY = 0.0;
+    var minY = 0;
+    var subtitleY = height * 0.57;
+    var progressY = height / 2;
 
     // Milestone progress
     // =====|-- Draws the foreground, leaves a gap and from there it draws the remaining background
     var progress = Milestones.milestoneProgress(quitDate) as Lang.Float;
     var progressW = width * progress;
-
-    var progressY = height / 2;
-    var gap = Graphics.getFontHeight(_font) - progressY + Graphics.getFontDescent(_font);
 
     // progress foreground
     dc.setColor(Graphics.COLOR_DK_GREEN, Graphics.COLOR_TRANSPARENT);
@@ -81,8 +80,7 @@ class GlanceView extends WatchUi.GlanceView {
             _appName,
             Graphics.TEXT_JUSTIFY_LEFT);
 
-    var elapsedY = progressY + gap + _lineHeight;
-    drawElapsedTime(dc, minX, elapsedY, width);
+    drawElapsedTime(dc, minX, subtitleY, width);
   }
 
   function drawElapsedTime(dc as Dc, startX as Numeric, y as Numeric, maxWidth as Numeric) as Void {
