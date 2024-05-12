@@ -1,5 +1,3 @@
 {
-    "monkeyC.testDevices": [
-        "fenix6"
-    ]
+    "monkeyC.testDevices": []
 }
