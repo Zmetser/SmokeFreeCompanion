@@ -6,7 +6,7 @@ This application uses Open Source components. You can find the source code of th
 
 Interface icons are from [uicons](https://www.flaticon.com/uicons/interface-icons)
  - [piggy_bank.png](https://www.flaticon.com/free-icon-font/piggy-bank_7653627)
- - [smoking.png](https://www.flaticon.com/free-icon-font/smoking_9856593)
+ - [smoking.png](https://www.flaticon.com/free-icon-font/smoking_9856318)
  - [app_icon.png](https://www.flaticon.com/free-icon-font/smoking-ban_9856316)
 
 ## Cover Image

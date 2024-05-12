@@ -2,6 +2,16 @@
   <string id="AppName">SMOKE FREE</string>
   <string id="AppNameGlance" scope="glance">SMOKE FREE</string>
 
+  <string id="Cigarettes">cigarettes</string>
+  <string id="Saved">saved</string>
+
+  <string id="Currency">Currency</string>
+
+  <string id="CigarettesPerDay">Cigarettes Per Day</string>
+  <string id="QuitDate">Quit Date</string>
+  <string id="PackPrice">Pack Price</string>
+  <string id="PackSize">Cigarettes per Pack</string>
+
   <!-- Milestones -->
   <string id="day">Day</string>
   <string id="days">Days</string>

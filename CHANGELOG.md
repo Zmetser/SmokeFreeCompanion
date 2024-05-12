@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed
+
+ - add support for (#5)
+    - fenix 7 lineup
+    - instinct 2 lineup
+    - venu 2 and venu 3 lineups
+    - vivoactive 5
+    - all forerunner devices with glance support
+
 ## [0.2.0]
 
 ### Changed

@@ -21,12 +21,12 @@ class App extends Application.AppBase {
   }
 
   function getGlanceView() {
-    return [ new GlanceView() ];
+    return [new GlanceView()];
   }
 
   // Return the initial view of your application here
-  function getInitialView() as Array<Views or InputDelegates>? {
-    return [ new CigarettesNotSmokedView(), new NavigationBehavior(0) ] as Array<Views or InputDelegates>;
+  function getInitialView() as [WatchUi.Views] or [WatchUi.Views, WatchUi.InputDelegates] {
+    return [new CigarettesNotSmokedView(), new NavigationBehavior(0)] as [WatchUi.Views, WatchUi.InputDelegates];
   }
 
 }
