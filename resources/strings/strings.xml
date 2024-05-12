@@ -1,6 +1,6 @@
 <strings>
-  <string id="AppName">SMOKE FREE</string>
-  <string id="AppNameGlance" scope="glance">SMOKE FREE</string>
+  <string id="AppName" translatable="false">SMOKE FREE</string>
+  <string id="AppNameGlance" scope="glance" translatable="false">SMOKE FREE</string>
 
   <string id="Cigarettes">cigarettes</string>
   <string id="Saved">saved</string>
@@ -12,18 +12,15 @@
   <string id="PackPrice">Pack Price</string>
   <string id="PackSize">Cigarettes per Pack</string>
 
-  <!-- Milestones -->
-  <string id="day">Day</string>
-  <string id="days">Days</string>
-  <string id="week">Week</string>
-  <string id="weeks">Weeks</string>
-  <string id="month">Month</string>
-  <string id="months">Months</string>
-  <string id="year">Year</string>
-  <string id="years">Years</string>
+  <!-- Short date units -->
+  <string id="ShortYear" scope="glance">y</string>
+  <string id="ShortMonth" scope="glance">m</string>
+  <string id="ShortDay" scope="glance">d</string>
+  <string id="ShortHour" scope="glance">h</string>
+  <string id="ShortMinute" scope="glance">m</string>
 
   <!-- Currency symbols -->
-  <string id="SignUSD">$</string>
-  <string id="SignEUR">€</string>
-  <string id="SignHUF">Ft</string>
+  <string id="SignUSD" translatable="false">$</string>
+  <string id="SignEUR" translatable="false">€</string>
+  <string id="SignHUF" translatable="false">Ft</string>
 </strings>

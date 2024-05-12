@@ -76,7 +76,7 @@ class StatView extends WatchUi.View {
    *
    * @param {DeviceContext} dc - The device context to draw on.
    */
-  protected function drawTitle(dc) {
+  protected function drawTitle(dc as Dc) as Void {
     dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT );
     dc.drawText(titleX, titleY, Graphics.FONT_NUMBER_MEDIUM, title, Graphics.TEXT_JUSTIFY_CENTER);
   }
@@ -86,7 +86,7 @@ class StatView extends WatchUi.View {
    *
    * @param {DeviceContext} dc - The device context to draw on.
    */
-  protected function drawSubTitle(dc) {
+  protected function drawSubTitle(dc as Dc) as Void {
     var titleHeight = Graphics.getFontHeight(Graphics.FONT_NUMBER_MEDIUM);
     var y = _iconMaxY + titleHeight; // Constrained to title's maxY
     dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_TRANSPARENT );

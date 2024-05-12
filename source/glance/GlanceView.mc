@@ -15,6 +15,7 @@ class GlanceView extends WatchUi.GlanceView {
   var quitDate;
   private var _appName as String?;
   private var _colorSpace as Number?;
+  private var _units;
 
   private const GROUP_SPACING = 4;
   private const UNIT_SPACING = 0;
@@ -33,6 +34,13 @@ class GlanceView extends WatchUi.GlanceView {
   function onLayout(dc as Dc) as Void {
     _appName = Application.loadResource( Rez.Strings.AppNameGlance );
     _colorSpace = Properties.getValue("colorSpace");
+    _units = [
+      Application.loadResource( Rez.Strings.ShortYear ),
+      Application.loadResource( Rez.Strings.ShortMonth ),
+      Application.loadResource( Rez.Strings.ShortDay ),
+      Application.loadResource( Rez.Strings.ShortHour ),
+      Application.loadResource( Rez.Strings.ShortMinute )
+    ];
   }
 
   // Called when this View is brought to the foreground. Restore
@@ -92,10 +100,9 @@ class GlanceView extends WatchUi.GlanceView {
     var unitY = y + Graphics.getFontAscent(_dataFont) - Graphics.getFontAscent(_unitFont); // baseline for unit
 
     var keys = [:years, :months, :days, :hours, :minutes];
-    var units = ["y", "m", "d", "h", "m"];
 
     for (var i = 0; i < elapsedSinceQuit.size(); i += 1) {
-      var unit = units[i];
+      var unit = _units[i]; // TODO: Make sure this access does not crash
       var data = elapsedSinceQuit.get(keys[i]);
 
       if (data > 0 || x != startX) { // start drawing from the first non-zero value

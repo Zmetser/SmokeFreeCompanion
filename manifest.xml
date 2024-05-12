@@ -62,6 +62,7 @@
         -->
         <iq:languages>
             <iq:language>eng</iq:language>
+            <iq:language>hun</iq:language>
         </iq:languages>
         <!--
             Use "Monkey C: Configure Monkey Barrel" from the Visual Studio Code

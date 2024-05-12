@@ -6,9 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
-### Changed
+### Added
 
- - add support for (#5)
+ - hungarian language support
+ - support for more devices (#5)
     - fenix 7 lineup
     - instinct 2 lineup
     - venu 2 and venu 3 lineups
@@ -17,11 +18,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [0.2.0]
 
+### Added
+
+ - support for fenix lineup, fenix7s, fenix7s pro, forerunner245, forerunner245m
+
 ### Changed
 
  - Use calming and positive colors to evoke feelings of health
  - Improve placement of surrency symbol on MoneyNotSpent stat
- - add support for fenix6s, fenix6spro, fenix7s, fenix7spro, fr245, fr245m
 
 ### Fixed
 

@@ -45,13 +45,24 @@ class MoneyNotSpentView extends StatView {
   }
 
   // Override to add currency symbol to title
-  function drawTitle(dc) {
-    var titleW = dc.getTextWidthInPixels(title, _titleFont) as Number;
-    var currencyX = titleX - (titleW / 2) - _space;
-    var currencyY = titleY + dc.getFontAscent(_titleFont) - dc.getFontAscent(_currencyFont);
+  function drawTitle(dc as Dc) as Void {
+    var currencyX = getCurrencyX(dc);
+    var currencyY = titleY + Graphics.getFontAscent(_titleFont) - Graphics.getFontAscent(_currencyFont);
 
     dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
     dc.drawText(titleX, titleY, _titleFont, title, Graphics.TEXT_JUSTIFY_CENTER);
     dc.drawText(currencyX, currencyY, _currencyFont, _currencySymbol, Graphics.TEXT_JUSTIFY_RIGHT);
+  }
+
+  function getCurrencyX(dc as Dc) as Number {
+    var titleW = dc.getTextWidthInPixels(title, _titleFont) as Number;
+    var currencyIndex = Properties.getValue("currency");
+
+    if (currencyIndex == 2) { // HUF is suffixed
+      var currencyW = dc.getTextWidthInPixels(_currencySymbol, _currencyFont) as Number;
+      return titleX + (titleW / 2) + _space + currencyW;
+    } else {
+      return titleX - (titleW / 2) - _space;
+    }
   }
 }

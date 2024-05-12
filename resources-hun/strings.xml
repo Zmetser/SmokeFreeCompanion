@@ -1,0 +1,18 @@
+<strings>
+  <string id="Cigarettes">szál cigaretta</string>
+  <string id="Saved">megspórolva</string>
+
+  <string id="Currency">Pénznem</string>
+
+  <string id="CigarettesPerDay">Szál cigaretta naponta</string>
+  <string id="QuitDate">Leszokás dátuma</string>
+  <string id="PackPrice">Doboz ára</string>
+  <string id="PackSize">Szál cigaretta 1 dobozban</string>
+
+  <!-- Short date units -->
+  <string id="ShortYear" scope="glance">é</string>
+  <string id="ShortMonth" scope="glance">h</string>
+  <string id="ShortDay" scope="glance">n</string>
+  <string id="ShortHour" scope="glance">ó</string>
+  <string id="ShortMinute" scope="glance">p</string>
+</strings>
