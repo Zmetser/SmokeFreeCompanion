@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [0.3.0]
+
 ### Added
 
  - hungarian language support
@@ -36,6 +38,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 First test release to Connect IQ Store to test app settings
 
-[unreleased]: https://github.com/Zmetser/SmokeFreeCompanion/compare/v0.2.0...HEAD
+[unreleased]: https://github.com/Zmetser/SmokeFreeCompanion/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/Zmetser/SmokeFreeCompanion/releases/tag/v0.3.0
 [0.2.0]: https://github.com/Zmetser/SmokeFreeCompanion/releases/tag/v0.2.0
 [0.1.0]: https://github.com/Zmetser/SmokeFreeCompanion/releases/tag/v0.1.0
