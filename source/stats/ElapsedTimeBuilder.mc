@@ -43,7 +43,7 @@ module Stats {
         return _calculateDays(duration);
       }
       // Less than a year (1m 2d 3h 4m)
-      else if (duration.lessThan(new Time.Duration(12 * dMonth))) {
+      else if (duration.lessThan(new Time.Duration(Gregorian.SECONDS_PER_YEAR))) {
         return _calculateMonths(duration);
       }
 
@@ -78,7 +78,7 @@ module Stats {
     }
 
     private function _calculateYears(duration as Time.Duration) as ElapsedTime {
-      var years = Math.floor(duration.value() / (12 * dMonth));
+      var years = Math.floor(duration.value() / (Gregorian.SECONDS_PER_YEAR));
       var remaining = duration.subtract(Gregorian.duration({ :days => years * 12 * DAYS_IN_MONTH }));
       _elapsedTime.put(:years, years.toNumber());
       return _calculateMonths(remaining);

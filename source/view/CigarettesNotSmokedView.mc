@@ -18,7 +18,7 @@ class CigarettesNotSmokedView extends StatView {
 
     var cigs = Stats.cigarettesNotSmoked(
       Settings.getQuitDate(),
-      new Time.Moment(Time.today().value()),
+      new Time.Moment(Time.now().value()),
       Settings.getCigarettesPerDay()
     );
 

@@ -29,7 +29,7 @@ class MoneyNotSpentView extends StatView {
     _currencySymbol = Settings.getCurrencySymbol();
     var packs = Stats.packsNotBought(
       Settings.getQuitDate(),
-      new Time.Moment(Time.today().value()),
+      new Time.Moment(Time.now().value()),
       Settings.getCigarettesPerDay(),
       Settings.getPackSize()
     );

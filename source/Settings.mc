@@ -4,7 +4,10 @@ import Toybox.Time;
 import Toybox.Lang;
 
 module Settings {
-
+  
+  // TODO: Add time zone support
+  const tz = System.getClockTime().timeZoneOffset as Lang.Number;
+  
   public function getPackPrice() as Number {
     return Properties.getValue("packPrice");
   }

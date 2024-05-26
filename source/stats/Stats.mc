@@ -46,9 +46,9 @@ module Stats {
    * @return The estimated number of cigarettes not smoked.
    */
   function cigarettesNotSmoked(quitDate as Time.Moment, today as Time.Moment, cigarettesPerDay as Number) as Number {
-    var durationInSeconds = durationSince(quitDate, today).value();
-    var days = Math.floor(durationInSeconds.toDouble() / dDay.toDouble()).toNumber();
-    return days * cigarettesPerDay;
+    var durationInHours = durationSince(quitDate, today).value() / dHour;
+    var cigarettesPerHour = cigarettesPerDay.toDouble() / 24;
+    return Math.floor(durationInHours * cigarettesPerHour).toNumber();
   }
 
   /**

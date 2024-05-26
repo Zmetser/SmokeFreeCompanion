@@ -110,17 +110,24 @@ module ElapsedTimeTests {
   function twoYears(logger as Logger) {
     var duration = Stats.elapsedTimeSince(
       TestConsts.today.subtract(
-        new Time.Duration(Math.floor(2 * 365 * Gregorian.SECONDS_PER_DAY))
+        new Time.Duration(Math.floor(2 * Gregorian.SECONDS_PER_YEAR))
       ),
       TestConsts.today
     );
-
-    return TestUtils.verifyDictEquals(logger, duration, { :years => 2, :months => 0, :days => 10, :hours => 0, :minutes => 0 });
+    return TestUtils.verifyDictEquals(logger, duration, { :years => 2, :months => 0, :days => 10, :hours => 12, :minutes => 0 });
   }
 }
 
 (:test)
 module CigarettesNotSmokedTests {
+  
+  (:test)
+  function cigsInHalfDay(logger as Logger) {
+    var halfDay = new Time.Duration(Gregorian.SECONDS_PER_DAY / 2);
+    var res = Stats.cigarettesNotSmoked(TestConsts.today.subtract(halfDay), TestConsts.today, 10);
+    logger.debug(res);
+    return TestUtils.verifyValueEquals(logger, res, 5);
+  }
 
   (:test)
   function cigarettesNotSmoked(logger as Logger) {
@@ -137,7 +144,7 @@ module CigarettesNotSmokedTests {
   (:test)
   function cigsInOneYear(logger as Logger) {
     var res = Stats.cigarettesNotSmoked(TestConsts.quitDate.subtract(new Time.Duration(Gregorian.SECONDS_PER_YEAR)), TestConsts.today, 10);
-    return TestUtils.verifyValueEquals(logger, res, 3660);
+    return TestUtils.verifyValueEquals(logger, res, 3662);
   }
 
   (:test)
