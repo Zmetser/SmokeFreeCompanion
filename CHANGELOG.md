@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed
+ - support only fenix6 and fenix7 lineup
+
 ## [0.3.0]
 
 ### Added

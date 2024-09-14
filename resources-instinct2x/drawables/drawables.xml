@@ -1,6 +1,0 @@
-<drawables>
-  <bitmap id="LauncherIcon" filename="app_icon.png" />
-  <!-- Stat view icons -->
-  <bitmap id="CigarettesNotSmokedIcon" filename="smoking.png" />
-  <bitmap id="MoneyNotSpentIcon" filename="piggy_bank.png" />
-</drawables>

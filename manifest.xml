@@ -5,7 +5,7 @@
         Use "Monkey C: Edit Application" from the Visual Studio Code command palette
         to update the application attributes.
     -->
-    <iq:application id="7e2658fa-d012-4e65-86c9-a4903b410acc" type="widget" name="@Strings.AppName" entry="App" launcherIcon="@Drawables.LauncherIcon" minApiLevel="3.0.0">
+    <iq:application id="8d26c065-6a61-4a68-bbd9-4b82e62462c5" type="widget" name="@Strings.AppName" entry="App" launcherIcon="@Drawables.LauncherIcon" minApiLevel="3.4.0">
         <!--
             Use the following from the Visual Studio Code comand palette to edit
             the build targets:
@@ -25,31 +25,6 @@
             <iq:product id="fenix7x"/>
             <iq:product id="fenix7xpro"/>
             <iq:product id="fenix7xpronowifi"/>
-            <iq:product id="fr165"/>
-            <iq:product id="fr165m"/>
-            <iq:product id="fr255"/>
-            <iq:product id="fr255m"/>
-            <iq:product id="fr255s"/>
-            <iq:product id="fr255sm"/>
-            <iq:product id="fr265"/>
-            <iq:product id="fr265s"/>
-            <iq:product id="fr55"/>
-            <iq:product id="fr745"/>
-            <iq:product id="fr945"/>
-            <iq:product id="fr945lte"/>
-            <iq:product id="fr955"/>
-            <iq:product id="fr965"/>
-            <iq:product id="instinct2"/>
-            <iq:product id="instinct2s"/>
-            <iq:product id="instinct2x"/>
-            <iq:product id="venu2"/>
-            <iq:product id="venu2plus"/>
-            <iq:product id="venu2s"/>
-            <iq:product id="venu3"/>
-            <iq:product id="venu3s"/>
-            <iq:product id="venusq2"/>
-            <iq:product id="venusq2m"/>
-            <iq:product id="vivoactive5"/>
         </iq:products>
         <!--
             Use "Monkey C: Edit Permissions" from the Visual Studio Code command
