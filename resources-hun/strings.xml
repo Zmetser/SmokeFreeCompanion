@@ -15,4 +15,12 @@
   <string id="ShortDay" scope="glance">n</string>
   <string id="ShortHour" scope="glance">ó</string>
   <string id="ShortMinute" scope="glance">p</string>
+  
+  <!-- Quit Data Screen -->
+  <string id="Quit_OneDayTitle">Ma tetted le.</string>
+  <string id="Quit_OneDaySubtitle">Gratulálok!</string>
+  <string id="Quit_QuitDate">Leszokás dátuma</string>
+  
+  <!-- 1:Day 2:Month 3:Year -->
+  <string id="DateFormat">$3$ $2$ $1$</string>
 </strings>

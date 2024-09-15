@@ -3,4 +3,5 @@
   <!-- Stat view icons -->
   <bitmap id="CigarettesNotSmokedIcon" filename="smoking.png" />
   <bitmap id="MoneyNotSpentIcon" filename="piggy_bank.png" />
+  <bitmap id="QuitDateIcon" filename="calendar.png" />
 </drawables>

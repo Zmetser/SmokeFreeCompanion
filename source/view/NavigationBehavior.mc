@@ -4,7 +4,7 @@ import Toybox.Lang;
 class NavigationBehavior extends BehaviorDelegate {
   // Private variable to store the current page number.
   private var _currentPage as Number;
-  private const _numberOfViews as Number = 2;
+  private const _numberOfViews as Number = 3;
 
   /**
    * Initializes the NavigationBehavior object with the specified current page number.
@@ -50,6 +50,7 @@ class NavigationBehavior extends BehaviorDelegate {
     switch (page) {
       case 0: return new CigarettesNotSmokedView();
       case 1: return new MoneyNotSpentView();
+      case 2: return new CleanSinceView();
       default: return new CigarettesNotSmokedView();
     }
   }

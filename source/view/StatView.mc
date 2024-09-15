@@ -64,8 +64,10 @@ class StatView extends WatchUi.View {
     // Call the parent onUpdate function to redraw the layout
     View.onUpdate(dc);
 
-    _iconDimensions = _iconDimensions as Array<Lang.Numeric>; // What a stupid way to get around the "type system" warning
-    dc.drawBitmap(_iconDimensions[0], _iconDimensions[1], iconResource);
+    if (iconResource != null) {
+      _iconDimensions = _iconDimensions as Array<Lang.Numeric>; // What a stupid way to get around the "type system" warning
+      dc.drawBitmap(_iconDimensions[0], _iconDimensions[1], iconResource);
+    }
 
     drawTitle(dc);
     drawSubTitle(dc);
@@ -92,5 +94,4 @@ class StatView extends WatchUi.View {
     dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_TRANSPARENT );
     dc.drawText(_centerX, y, Graphics.FONT_SMALL, subTitle, Graphics.TEXT_JUSTIFY_CENTER);
   }
-
 }

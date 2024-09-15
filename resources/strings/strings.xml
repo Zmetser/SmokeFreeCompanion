@@ -23,4 +23,12 @@
   <string id="SignUSD" translatable="false">$</string>
   <string id="SignEUR" translatable="false">€</string>
   <string id="SignHUF" translatable="false">Ft</string>
+  
+  <!-- Quit Data Screen -->
+  <string id="Quit_OneDayTitle">You quit today!</string>
+  <string id="Quit_OneDaySubtitle">Congratulations!</string>
+  <string id="Quit_QuitDate">Quit date</string>
+  
+  <!-- 1:Day 2:Month 3:Year -->
+  <string id="DateFormat">$1$ $2$ $3$</string>
 </strings>
