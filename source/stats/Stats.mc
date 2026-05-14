@@ -5,11 +5,13 @@ import Toybox.Time.Gregorian;
 import Toybox.Math;
 
 module Stats {
-  const DAYS_IN_MONTH = 365 / 12;
+  // Approximation used when decomposing a Duration into y/m/d. Months
+  // in Gregorian are variable-length; 30 = floor(365 / 12).
+  const APPROX_DAYS_PER_MONTH = 30;
 
   var dHour = Gregorian.SECONDS_PER_HOUR;
   var dDay = Gregorian.SECONDS_PER_DAY;
-  var dMonth = DAYS_IN_MONTH * Gregorian.SECONDS_PER_DAY;
+  var dMonth = APPROX_DAYS_PER_MONTH * Gregorian.SECONDS_PER_DAY;
 
   /**
    * Calculates the duration between the quit date and today.

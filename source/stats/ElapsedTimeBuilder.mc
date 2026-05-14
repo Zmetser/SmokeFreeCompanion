@@ -72,14 +72,14 @@ module Stats {
 
     private function _calculateMonths(duration as Time.Duration) as ElapsedTime {
       var months = Math.floor(duration.value() / dMonth);
-      var remaining = duration.subtract(Gregorian.duration({ :days => months * DAYS_IN_MONTH }));
+      var remaining = duration.subtract(Gregorian.duration({ :days => months * APPROX_DAYS_PER_MONTH }));
       _elapsedTime.put(:months, months.toNumber());
       return _calculateDays(remaining);
     }
 
     private function _calculateYears(duration as Time.Duration) as ElapsedTime {
       var years = Math.floor(duration.value() / (Gregorian.SECONDS_PER_YEAR));
-      var remaining = duration.subtract(Gregorian.duration({ :days => years * 12 * DAYS_IN_MONTH }));
+      var remaining = duration.subtract(Gregorian.duration({ :days => years * 12 * APPROX_DAYS_PER_MONTH }));
       _elapsedTime.put(:years, years.toNumber());
       return _calculateMonths(remaining);
     }
