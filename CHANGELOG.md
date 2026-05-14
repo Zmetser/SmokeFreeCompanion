@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed
+
+- Internal: renamed `DAYS_IN_MONTH` to `APPROX_DAYS_PER_MONTH` so callers can't mistake the truncated value (30) for a precise one. No user-visible change.
+
 ## [0.4.0]
 
 ### Added
