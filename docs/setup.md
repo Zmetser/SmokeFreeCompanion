@@ -82,10 +82,13 @@ You do **not** need to install a separate "SDK" inside the SDK Manager — the b
 ```bash
 make check-deps   # passes silently when everything is in place
 make build        # compiles for fenix6 by default
+make run          # launch the widget in the simulator for manual testing
 make test         # runs the (:test) suite in the simulator
 ```
 
 A clean `make test` ends with a line like `PASSED (passed=25, failed=0, errors=0)` and exits 0.
+
+`make run` leaves the simulator window open until you close it. Use the simulator's **Settings → Edit Persistent Storage** to change pack price / quit date / etc. without rebuilding, and the **Device** menu to switch form factor mid-session.
 
 If `make test` reports `Unable to connect to simulator`, the simulator isn't running yet — the `Makefile` tries to start it but sometimes needs more time on the first invocation. Re-run, or `open -a ConnectIQ` first.
 

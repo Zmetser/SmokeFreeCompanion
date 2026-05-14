@@ -16,12 +16,16 @@ export PATH   := $(JDK_BIN):$(PATH)
 APP_PRG      := $(OUT_DIR)/SmokeFreeCompanion.prg
 TEST_PRG     := $(OUT_DIR)/SmokeFreeCompanion-tests.prg
 
-.PHONY: all build test clean check-deps simulator
+.PHONY: all build run test clean check-deps simulator
 
 all: build
 
 # Compile the widget for $(DEVICE).
 build: check-deps $(APP_PRG)
+
+# Launch the widget in the simulator for manual testing.
+run: check-deps $(APP_PRG) simulator
+	monkeydo $(APP_PRG) $(DEVICE)
 
 $(APP_PRG): | $(OUT_DIR)
 	monkeyc -f $(JUNGLE) -d $(DEVICE) -y $(DEVELOPER_KEY) -o $@ -w
