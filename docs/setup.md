@@ -122,4 +122,4 @@ Then retry `make test`.
 
 - `monkeydo` returns a non-zero exit code even on a successful `PASSED` run. The Makefile's `test` target compensates by grepping `out/test.log` for the summary line.
 - The build emits `Invalid device id` warnings for every product in `manifest.xml` whose device package isn't installed locally. These are harmless — the build succeeds for the device you asked for. Install the missing packages via the SDK Manager to silence them.
-- Two pre-existing type-checker warnings (`Cannot determine if container access is using container type`) show up on every build. They're tracked in `docs/_zee/findings.md` §6 and §17.
+- Two pre-existing type-checker warnings (`Cannot determine if container access is using container type`) show up on every build in `Settings.mc` and `GlanceView.mc`. Known, not a regression.

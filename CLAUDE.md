@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 Smoke Free Companion is a Garmin Connect IQ **widget** (see `manifest.xml`) written in Monkey C. It shows users how long they've been smoke-free, cigarettes not smoked, and money saved since their configured quit date.
 
 - `minApiLevel`: 3.4.0
-- Supported devices: fenix6 and fenix7 lineups only (downgraded from a broader set in v0.4.0 — see CHANGELOG)
+- Supported devices: fenix6 and fenix7 lineups only (downgraded from a broader set in v0.4.0 — see CHANGELOG.md)
 - Languages: English (`resources/`) and Hungarian (`resources-hun/`)
 
 ## Build / Run / Test
@@ -51,7 +51,7 @@ Each transition calls `WatchUi.switchToView` with a **new** `NavigationBehavior(
 - `ElapsedTimeBuilder` (`stats/ElapsedTimeBuilder.mc`) converts a `Time.Duration` into the `ElapsedTime` struct that views render.
 - `Milestones.mc` defines progress milestones.
 
-**Settings** (`source/Settings.mc`) wraps `Application.Properties` for `packPrice`, `packSize`, `cigarettesPerDay`, `quitDate`, `currency`. Property keys are defined in `resources/settings/properties.xml` and surfaced to users via `resources/settings/settings.xml`. `getQuitDate()` falls back to today when the stored timestamp is `0` or in the future (handles the pre-1970 / future-date edge cases called out in CHANGELOG). Currency is an index into a fixed `currencySymbols` array of resource symbols (`:SignUSD`, `:SignEUR`, `:SignHUF`); add new currencies in both the array and the strings resources.
+**Settings** (`source/Settings.mc`) wraps `Application.Properties` for `packPrice`, `packSize`, `cigarettesPerDay`, `quitDate`, `currency`. Property keys are defined in `resources/settings/properties.xml` and surfaced to users via `resources/settings/settings.xml`. `getQuitDate()` falls back to today when the stored timestamp is `0` or in the future (handles the pre-1970 / future-date edge cases called out in CHANGELOG.md). Currency is an index into a fixed `currencySymbols` array of resource symbols (`:SignUSD`, `:SignEUR`, `:SignHUF`); add new currencies in both the array and the strings resources.
 
 **Tests** live next to the code they cover as `*.tests.mc` files using Toybox `(:test)` modules. `source/utils/TestUtils.mc` and `source/stats/Stats.tests.mc` set up shared `today` / `quitDate` moments inside a `TestConsts` module.
 
