@@ -78,8 +78,8 @@ module Stats {
     }
 
     private function _calculateYears(duration as Time.Duration) as ElapsedTime {
-      var years = Math.floor(duration.value() / (Gregorian.SECONDS_PER_YEAR));
-      var remaining = duration.subtract(Gregorian.duration({ :days => years * 12 * DAYS_IN_MONTH }));
+      var years = Math.floor(duration.value() / Gregorian.SECONDS_PER_YEAR);
+      var remaining = duration.subtract(new Time.Duration(years.toNumber() * Gregorian.SECONDS_PER_YEAR));
       _elapsedTime.put(:years, years.toNumber());
       return _calculateMonths(remaining);
     }
