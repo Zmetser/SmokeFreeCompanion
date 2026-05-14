@@ -1,4 +1,5 @@
 bin
+out
 *.prg
 *.prg*
 *.DS_Store
