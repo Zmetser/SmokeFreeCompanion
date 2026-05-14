@@ -79,10 +79,6 @@ module Stats {
 
     private function _calculateYears(duration as Time.Duration) as ElapsedTime {
       var years = Math.floor(duration.value() / Gregorian.SECONDS_PER_YEAR);
-      // Subtract the exact same number of seconds we counted, so the
-      // remainder feeds cleanly into _calculateMonths. Using
-      // (years * 12 * DAYS_IN_MONTH) days here would drift by ~5 days
-      // per year because DAYS_IN_MONTH truncates 365/12 to 30.
       var remaining = duration.subtract(new Time.Duration(years.toNumber() * Gregorian.SECONDS_PER_YEAR));
       _elapsedTime.put(:years, years.toNumber());
       return _calculateMonths(remaining);
