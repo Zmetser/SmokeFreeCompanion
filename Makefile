@@ -45,9 +45,18 @@ $(TEST_PRG): | $(OUT_DIR)
 $(OUT_DIR):
 	mkdir -p $(OUT_DIR)
 
-# Start the simulator if it isn't already up. Idempotent.
+# Start the simulator if it isn't already up, then wait until it's
+# accepting connections on its control port. Idempotent.
+# monkeydo silently fails with "Unable to connect" if it tries to
+# attach before the simulator has finished booting (~5s on cold start).
+SIMULATOR_PORT := 1234
 simulator:
-	@pgrep -f ConnectIQ.app > /dev/null || (open -a ConnectIQ && sleep 2)
+	@pgrep -f ConnectIQ.app > /dev/null || open -a ConnectIQ
+	@for i in $$(seq 1 30); do \
+		nc -z localhost $(SIMULATOR_PORT) 2>/dev/null && exit 0; \
+		sleep 1; \
+	done; \
+	echo "Simulator did not become ready on port $(SIMULATOR_PORT)"; exit 1
 
 clean:
 	rm -rf $(OUT_DIR)

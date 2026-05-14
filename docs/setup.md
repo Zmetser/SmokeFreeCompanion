@@ -34,11 +34,17 @@ $ which monkeyc monkeydo
 brew install openjdk
 ```
 
-Homebrew's `openjdk` is keg-only, so it does **not** end up on `PATH` automatically. The `Makefile` prepends it for build/test invocations, so you don't need to edit your shell config — but if you ever invoke `monkeyc` directly, run:
+Homebrew's `openjdk` is keg-only, so it does **not** end up on `PATH` automatically. The `Makefile` prepends it for its own recipes, but a plain shell won't see it — `monkeydo out/foo.prg fenix6` will fail with *"Unable to locate a Java Runtime"* until you fix `PATH`.
+
+Append to `~/.zshrc` so every shell picks it up (one-time, recommended):
 
 ```bash
-export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+echo '' >> ~/.zshrc
+echo '# Homebrew openjdk is keg-only; needed by monkeyc/monkeydo (Garmin Connect IQ)' >> ~/.zshrc
+echo 'export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"' >> ~/.zshrc
 ```
+
+Then `source ~/.zshrc` (or open a new terminal). Verify with `java --version` — should print `openjdk 25.x`.
 
 ## 3. Generate a developer signing key
 
