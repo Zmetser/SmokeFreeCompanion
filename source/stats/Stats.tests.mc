@@ -107,14 +107,62 @@ module ElapsedTimeTests {
   }
 
   (:test)
-  function twoYears(logger as Logger) {
+  function exactlyOneYear(logger as Logger) {
     var duration = Stats.elapsedTimeSince(
       TestConsts.today.subtract(
-        new Time.Duration(Math.floor(2 * Gregorian.SECONDS_PER_YEAR))
+        new Time.Duration(Gregorian.SECONDS_PER_YEAR)
       ),
       TestConsts.today
     );
-    return TestUtils.verifyDictEquals(logger, duration, { :years => 2, :months => 0, :days => 10, :hours => 12, :minutes => 0 });
+
+    return TestUtils.verifyDictEquals(logger, duration, { :years => 1, :months => 0, :days => 0, :hours => 0, :minutes => 0 });
+  }
+
+  (:test)
+  function twoYearsExactly(logger as Logger) {
+    var duration = Stats.elapsedTimeSince(
+      TestConsts.today.subtract(
+        new Time.Duration(2 * Gregorian.SECONDS_PER_YEAR)
+      ),
+      TestConsts.today
+    );
+
+    return TestUtils.verifyDictEquals(logger, duration, { :years => 2, :months => 0, :days => 0, :hours => 0, :minutes => 0 });
+  }
+
+  (:test)
+  function fiveYearsExactly(logger as Logger) {
+    var duration = Stats.elapsedTimeSince(
+      TestConsts.today.subtract(
+        new Time.Duration(5 * Gregorian.SECONDS_PER_YEAR)
+      ),
+      TestConsts.today
+    );
+
+    return TestUtils.verifyDictEquals(logger, duration, { :years => 5, :months => 0, :days => 0, :hours => 0, :minutes => 0 });
+  }
+
+  (:test)
+  function tenYearsExactly(logger as Logger) {
+    var duration = Stats.elapsedTimeSince(
+      TestConsts.today.subtract(
+        new Time.Duration(10 * Gregorian.SECONDS_PER_YEAR)
+      ),
+      TestConsts.today
+    );
+
+    return TestUtils.verifyDictEquals(logger, duration, { :years => 10, :months => 0, :days => 0, :hours => 0, :minutes => 0 });
+  }
+
+  (:test)
+  function twoYearsThreeMonths(logger as Logger) {
+    var offset = (2 * Gregorian.SECONDS_PER_YEAR) + (3 * 30 * Gregorian.SECONDS_PER_DAY);
+    var duration = Stats.elapsedTimeSince(
+      TestConsts.today.subtract(new Time.Duration(offset)),
+      TestConsts.today
+    );
+
+    return TestUtils.verifyDictEquals(logger, duration, { :years => 2, :months => 3, :days => 0, :hours => 0, :minutes => 0 });
   }
 }
 
