@@ -15,6 +15,11 @@ SHELL        := /bin/zsh
 export PATH  := $(JDK_BIN):$(PATH)
 
 APP_PRG      := $(OUT_DIR)/SmokeFreeCompanion.prg
+APP_SETTINGS := $(OUT_DIR)/SmokeFreeCompanion-settings.json
+# The simulator's App Settings Editor reads the sidecar from a fixed path
+# inside the simulator's vfs: GARMIN/Settings/<APP>-settings.json. Without
+# this, the editor reports "No settings file found for this app."
+SETTINGS_DEST := GARMIN/Settings/SMOKEFREECOMPANION-settings.json
 TEST_PRG     := $(OUT_DIR)/SmokeFreeCompanion-tests.prg
 
 # monkeyc builds in ~2s, so always rebuild rather than track a wildcard of
@@ -30,7 +35,7 @@ build: check-deps | $(OUT_DIR)
 
 # Launch the widget in the simulator for manual testing.
 run: build simulator
-	monkeydo $(APP_PRG) $(DEVICE)
+	monkeydo $(APP_PRG) $(DEVICE) -a $(APP_SETTINGS):$(SETTINGS_DEST)
 
 # Compile with unit tests enabled, then run them in the simulator.
 # monkeydo exits non-zero on a clean PASSED run, so we grep the
