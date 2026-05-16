@@ -8,7 +8,7 @@ import Settings;
 import Stats;
 
 class MoneyNotSpentView extends StatView {
-  private var _currencySymbol;
+  private var _currencyConfig as Lang.Dictionary?;
 
   private const _titleFont = Graphics.FONT_NUMBER_MEDIUM;
   private const _currencyFont = Graphics.FONT_MEDIUM;
@@ -19,14 +19,14 @@ class MoneyNotSpentView extends StatView {
     StatView.initialize();
   }
 
-  // loading resources into memory.
   function onShow() as Void {
     StatView.onShow();
 
     iconResource = WatchUi.loadResource(Rez.Drawables.MoneyNotSpentIcon) as BitmapResource;
     subTitle = WatchUi.loadResource(Rez.Strings.Saved) as Lang.String;
 
-    _currencySymbol = Settings.getCurrencySymbol();
+    _currencyConfig = Settings.getCurrencyConfig();
+
     var packs = Stats.packsNotBought(
       Settings.getQuitDate(),
       new Time.Moment(Time.now().value()),
@@ -35,31 +35,26 @@ class MoneyNotSpentView extends StatView {
     );
 
     var price = packs * Settings.getPackPrice();
-
-    var currencyIndex = Properties.getValue("currency");
-    if (currencyIndex == 2) { // HUF doesn't need decimal places
-      title = price.format("%u");
-    } else {
-      title = price.format("%.1f");
-    }
+    title = price.format((_currencyConfig as Lang.Dictionary)[:priceFormat] as String);
   }
 
   // Override to add currency symbol to title
   function drawTitle(dc as Dc) as Void {
-    var currencyX = getCurrencyX(dc);
+    var symbol = (_currencyConfig as Lang.Dictionary)[:symbol] as String;
+    var currencyX = getCurrencyX(dc, symbol);
     var currencyY = titleY + Graphics.getFontAscent(_titleFont) - Graphics.getFontAscent(_currencyFont);
 
     dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
     dc.drawText(titleX, titleY, _titleFont, title, Graphics.TEXT_JUSTIFY_CENTER);
-    dc.drawText(currencyX, currencyY, _currencyFont, _currencySymbol, Graphics.TEXT_JUSTIFY_RIGHT);
+    dc.drawText(currencyX, currencyY, _currencyFont, symbol, Graphics.TEXT_JUSTIFY_RIGHT);
   }
 
-  function getCurrencyX(dc as Dc) as Number {
+  function getCurrencyX(dc as Dc, symbol as String) as Number {
     var titleW = dc.getTextWidthInPixels(title, _titleFont) as Number;
-    var currencyIndex = Properties.getValue("currency");
+    var suffixed = (_currencyConfig as Lang.Dictionary)[:suffixed] as Boolean;
 
-    if (currencyIndex == 2) { // HUF is suffixed
-      var currencyW = dc.getTextWidthInPixels(_currencySymbol, _currencyFont) as Number;
+    if (suffixed) {
+      var currencyW = dc.getTextWidthInPixels(symbol, _currencyFont) as Number;
       return titleX + (titleW / 2) + _space + currencyW;
     } else {
       return titleX - (titleW / 2) - _space;

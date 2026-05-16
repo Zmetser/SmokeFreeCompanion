@@ -14,7 +14,7 @@ module MilestonesTests {
   function canGetOneDayMilestone(logger as Logger) {
     var duration = new Time.Duration((0.5 * Gregorian.SECONDS_PER_DAY) as Lang.Number);
     var quitTime = today.subtract(duration) as Time.Moment;
-    var milestone = Milestones.closestMilestoneTo(quitTime);
+    var milestone = Milestones.closestMilestoneTo(quitTime, today);
     return (milestone == Milestones.MILESTONES[0]);
   }
 
@@ -22,7 +22,7 @@ module MilestonesTests {
   function canGetTwoDayMilestone(logger as Logger) {
     var duration = new Time.Duration(Gregorian.SECONDS_PER_DAY + 1);
     var quitTime = today.subtract(duration) as Time.Moment;
-    var milestone = Milestones.closestMilestoneTo(quitTime);
+    var milestone = Milestones.closestMilestoneTo(quitTime, today);
     return (milestone == Milestones.MILESTONES[1]);
   }
 
@@ -30,7 +30,7 @@ module MilestonesTests {
   function canGetOneWeekMilestone(logger as Logger) {
     var duration = new Time.Duration(6 * Gregorian.SECONDS_PER_DAY + 1);
     var quitTime = today.subtract(duration) as Time.Moment;
-    var milestone = Milestones.closestMilestoneTo(quitTime);
+    var milestone = Milestones.closestMilestoneTo(quitTime, today);
     return (milestone == Milestones.MILESTONES[6]);
   }
 
@@ -38,7 +38,7 @@ module MilestonesTests {
   function canGetTwoWeekMilestone(logger as Logger) {
     var duration = new Time.Duration(11 * Gregorian.SECONDS_PER_DAY);
     var quitTime = today.subtract(duration) as Time.Moment;
-    var milestone = Milestones.closestMilestoneTo(quitTime);
+    var milestone = Milestones.closestMilestoneTo(quitTime, today);
     return (milestone == Milestones.MILESTONES[8]);
   }
 
@@ -46,7 +46,7 @@ module MilestonesTests {
   function canGetThreeMonthsMilestone(logger as Logger) {
     var duration = new Time.Duration(2 * 30 * Gregorian.SECONDS_PER_DAY);
     var quitTime = today.subtract(duration) as Time.Moment;
-    var milestone = Milestones.closestMilestoneTo(quitTime);
+    var milestone = Milestones.closestMilestoneTo(quitTime, today);
     return (milestone == Milestones.MILESTONES[11]);
   }
 
@@ -54,7 +54,7 @@ module MilestonesTests {
   function canGetProgress(logger as Logger) {
     var duration = new Time.Duration((0.5 * Gregorian.SECONDS_PER_DAY) as Lang.Number);
     var quitTime = today.subtract(duration) as Time.Moment;
-    var progress = Milestones.milestoneProgress(quitTime);
+    var progress = Milestones.milestoneProgress(quitTime, today);
 
     return (Math.round(progress * 10) / 10 == 0.5);
   }
@@ -63,7 +63,7 @@ module MilestonesTests {
   function progressPastLastMilestone(logger as Logger) {
     var fiftyOneYears = new Time.Duration(51 * Gregorian.SECONDS_PER_YEAR);
     var quitTime = today.subtract(fiftyOneYears) as Time.Moment;
-    var progress = Milestones.milestoneProgress(quitTime);
+    var progress = Milestones.milestoneProgress(quitTime, today);
     return TestUtils.verifyValueEquals(logger, progress, 1.0);
   }
 
@@ -73,7 +73,7 @@ module MilestonesTests {
       var milestone = Milestones.MILESTONES[i];
       var duration = new Time.Duration(milestone);
       var quitTime = today.subtract(duration) as Time.Moment;
-      var progress = Milestones.milestoneProgress(quitTime);
+      var progress = Milestones.milestoneProgress(quitTime, today);
 
       if (progress < 1.0) {
         logger.debug("Milestone[" + i + "]: " + milestone);

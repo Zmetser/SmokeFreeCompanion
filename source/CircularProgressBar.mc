@@ -13,7 +13,12 @@ class CircularProgressBar extends WatchUi.Drawable {
 
   typedef CircularProgressBarSettings as {
     :colorBase as Graphics.ColorType,
-    :colorActive as Graphics.ColorType
+    :colorActive as Graphics.ColorType,
+    :identifier as Lang.Object?,
+    :locX as Lang.Numeric?,
+    :locY as Lang.Numeric?,
+    :width as Lang.Numeric?,
+    :height as Lang.Numeric?,
   };
   function initialize(settings as CircularProgressBarSettings) {
     self.colorBase = settings[ :colorBase ] as Graphics.ColorType;

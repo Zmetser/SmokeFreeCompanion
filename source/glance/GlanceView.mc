@@ -33,7 +33,7 @@ class GlanceView extends WatchUi.GlanceView {
   // Load your resources here
   function onLayout(dc as Dc) as Void {
     _appName = Application.loadResource( Rez.Strings.AppNameGlance );
-    _colorSpace = Properties.getValue("colorSpace");
+    _colorSpace = Settings.getColorSpace();
     _units = [
       Application.loadResource( Rez.Strings.ShortYear ),
       Application.loadResource( Rez.Strings.ShortMonth ),
@@ -57,6 +57,7 @@ class GlanceView extends WatchUi.GlanceView {
 
     var height = dc.getHeight();
     var width = dc.getWidth();
+    var today = new Time.Moment(Time.now().value());
 
     var minX = 0.0;
     var minY = 0;
@@ -65,7 +66,7 @@ class GlanceView extends WatchUi.GlanceView {
 
     // Milestone progress
     // =====|-- Draws the foreground, leaves a gap and from there it draws the remaining background
-    var progress = Milestones.milestoneProgress(quitDate) as Lang.Float;
+    var progress = Milestones.milestoneProgress(quitDate, today) as Lang.Float;
     var progressW = width * progress;
 
     // progress foreground
@@ -90,11 +91,10 @@ class GlanceView extends WatchUi.GlanceView {
             _appName,
             Graphics.TEXT_JUSTIFY_LEFT);
 
-    drawElapsedTime(dc, minX, subtitleY, width);
+    drawElapsedTime(dc, minX, subtitleY, width, today);
   }
 
-  function drawElapsedTime(dc as Dc, startX as Numeric, y as Numeric, maxWidth as Numeric) as Void {
-    var today = new Time.Moment(Time.now().value());
+  function drawElapsedTime(dc as Dc, startX as Numeric, y as Numeric, maxWidth as Numeric, today as Time.Moment) as Void {
     var elapsedSinceQuit = Stats.elapsedTimeSince(quitDate, today);
     var x = startX;
     var unitY = y + Graphics.getFontAscent(_dataFont) - Graphics.getFontAscent(_unitFont); // baseline for unit
