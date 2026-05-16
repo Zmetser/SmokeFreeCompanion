@@ -33,7 +33,7 @@ class StatView extends WatchUi.View {
   private var _centerX;
   private var _centerY;
 
-  private var _iconDimensions;
+  private var _iconDimensions as Array<Lang.Numeric>?;
   private var _iconMaxY;
 
   function initialize() {
@@ -64,8 +64,7 @@ class StatView extends WatchUi.View {
     // Call the parent onUpdate function to redraw the layout
     View.onUpdate(dc);
 
-    if (iconResource != null) {
-      _iconDimensions = _iconDimensions as Array<Lang.Numeric>; // What a stupid way to get around the "type system" warning
+    if (iconResource != null && _iconDimensions != null) {
       dc.drawBitmap(_iconDimensions[0], _iconDimensions[1], iconResource);
     }
 
