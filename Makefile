@@ -11,21 +11,30 @@ JUNGLE       ?= monkey.jungle
 # it here rather than rely on the user's shell config. brew --prefix resolves
 # correctly on both Apple Silicon (/opt/homebrew) and Intel (/usr/local).
 JDK_BIN      := $(shell brew --prefix openjdk 2>/dev/null)/bin
+# Honor whichever SDK the user has marked active via the SDK Manager. The
+# brew symlinks always point at the latest installed cask, which may not
+# match the chosen SDK. current-sdk.cfg already includes a trailing slash.
+SDK_DIR      := $(shell cat "$(HOME)/Library/Application Support/Garmin/ConnectIQ/current-sdk.cfg" 2>/dev/null)
+SDK_BIN      := $(SDK_DIR)bin
 SHELL        := /bin/zsh
-export PATH  := $(JDK_BIN):$(PATH)
+export PATH  := $(SDK_BIN):$(JDK_BIN):$(PATH)
 
-APP_PRG      := $(OUT_DIR)/SmokeFreeCompanion.prg
-APP_SETTINGS := $(OUT_DIR)/SmokeFreeCompanion-settings.json
+# Bundle name — drives the PRG filename, the sidecar JSON, and the
+# in-simulator settings destination. manifest.xml's name attribute is a
+# @Strings.* resource reference, not a literal, so it's set here directly.
+APP_NAME     := SmokeFreeCompanion
+APP_PRG      := $(OUT_DIR)/$(APP_NAME).prg
+APP_SETTINGS := $(OUT_DIR)/$(APP_NAME)-settings.json
 # The simulator's App Settings Editor reads the sidecar from a fixed path
 # inside the simulator's vfs: GARMIN/Settings/<APP>-settings.json. Without
 # this, the editor reports "No settings file found for this app."
-SETTINGS_DEST := GARMIN/Settings/SMOKEFREECOMPANION-settings.json
-TEST_PRG     := $(OUT_DIR)/SmokeFreeCompanion-tests.prg
+SETTINGS_DEST := GARMIN/Settings/$(shell echo $(APP_NAME) | tr '[:lower:]' '[:upper:]')-settings.json
+TEST_PRG     := $(OUT_DIR)/$(APP_NAME)-tests.prg
 
 # monkeyc builds in ~2s, so always rebuild rather than track a wildcard of
 # every .mc/resource file. Stale .prgs would be a much worse failure mode
 # than the extra two seconds.
-.PHONY: all build run test clean check-deps simulator
+.PHONY: all build run test clean check-deps simulator crashes
 
 all: build
 
@@ -46,6 +55,13 @@ test: check-deps simulator | $(OUT_DIR)
 	monkeydo $(TEST_PRG) $(DEVICE) -t 2>&1 | tee $(OUT_DIR)/test.log; \
 	grep -qE '^PASSED' $(OUT_DIR)/test.log
 
+# Fetch crash reports for the published app from Garmin's servers. Requires
+# APP_ID (the manifest <iq:application id>) to be set on the command line:
+#   make crashes APP_ID=8d26c065-6a61-4a68-bbd9-4b82e62462c5
+crashes:
+	@test -n "$(APP_ID)" || { echo "Usage: make crashes APP_ID=<app-uuid>"; exit 1; }
+	$(SDK_BIN)/era -a $(APP_ID) -k "$(DEVELOPER_KEY)"
+
 $(OUT_DIR):
 	mkdir -p $(OUT_DIR)
 
@@ -53,9 +69,11 @@ $(OUT_DIR):
 # accepting connections on its control port. Idempotent.
 # monkeydo silently fails with "Unable to connect" if it tries to
 # attach before the simulator has finished booting (~5s on cold start).
+# Launch via the active SDK's bundle so we don't get whichever copy
+# macOS has registered for `open -a ConnectIQ`.
 SIMULATOR_PORT := 1234
 simulator:
-	@pgrep -f ConnectIQ.app > /dev/null || open -a ConnectIQ
+	@pgrep -f ConnectIQ.app > /dev/null || open -a "$(SDK_BIN)/ConnectIQ.app"
 	@for i in $$(seq 1 30); do \
 		nc -z localhost $(SIMULATOR_PORT) 2>/dev/null && exit 0; \
 		sleep 1; \
