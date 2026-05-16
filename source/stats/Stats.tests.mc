@@ -178,6 +178,20 @@ module CigarettesNotSmokedTests {
   }
 
   (:test)
+  function cigsInHalfHour(logger as Logger) {
+    var halfHour = new Time.Duration(Gregorian.SECONDS_PER_HOUR / 2);
+    var res = Stats.cigarettesNotSmoked(TestConsts.today.subtract(halfHour), TestConsts.today, 48);
+    return TestUtils.verifyValueEquals(logger, res, 1);
+  }
+
+  (:test)
+  function cigsInOneAndHalfHours(logger as Logger) {
+    var ninetyMin = new Time.Duration(Gregorian.SECONDS_PER_HOUR + Gregorian.SECONDS_PER_HOUR / 2);
+    var res = Stats.cigarettesNotSmoked(TestConsts.today.subtract(ninetyMin), TestConsts.today, 48);
+    return TestUtils.verifyValueEquals(logger, res, 3);
+  }
+
+  (:test)
   function cigarettesNotSmoked(logger as Logger) {
     var res = Stats.cigarettesNotSmoked(TestConsts.quitDate, TestConsts.today, 10);
     return TestUtils.verifyValueEquals(logger, res, 10);
