@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Fixed
 
 - Elapsed-time display no longer drifts by ~5 days per year past your 1-year anniversary (was showing e.g. `2y 0m 10d` instead of `2y 0m 0d`).
+- Cigarettes-not-smoked count now updates continuously within each hour, instead of staying at zero until a full hour elapses.
 
 ## [0.4.0]
 
