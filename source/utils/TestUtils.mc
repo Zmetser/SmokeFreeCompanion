@@ -25,7 +25,7 @@ module TestUtils {
 
       if (!verifyValueEquals(logger, a[key], b[key])) {
         logger.debug(a);
-        logger.debug(Lang.format("Expected '$1$', got '$2$' at '$3$'.", [a[key], b[key], key]));
+        logger.debug(Lang.format("Expected '$1$', got '$2$' at '$3$'.", [b[key], a[key], key]));
         return false;
       }
     }
@@ -51,7 +51,7 @@ module TestUtils {
     for (var i = 0; i < a_sz; ++i) {
       if (!verifyValueEquals(logger, a[i], b[i])) {
         logger.debug(i.toString());
-        logger.debug(Lang.format("Expected '$1$', got '$2$'.", [ a[i], b[i] ]));
+        logger.debug(Lang.format("Expected '$1$', got '$2$'.", [ b[i], a[i] ]));
         return false;
       }
     }
