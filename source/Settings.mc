@@ -24,6 +24,7 @@ module Settings {
     return v != null ? (v as Number) : 0;
   }
 
+  (:glance)
   public function getColorSpace() as Number {
     var v = Properties.getValue("colorSpace");
     return v != null ? (v as Number) : 0;
