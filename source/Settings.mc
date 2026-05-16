@@ -1,23 +1,32 @@
-import Toybox.System;
 import Toybox.Application;
 import Toybox.Time;
 import Toybox.Lang;
 
 module Settings {
-  
-  // TODO: Add time zone support
-  const tz = System.getClockTime().timeZoneOffset as Lang.Number;
-  
-  public function getPackPrice() as Number {
-    return Properties.getValue("packPrice");
+
+  public function getPackPrice() as Float {
+    var v = Properties.getValue("packPrice");
+    return v != null ? (v as Float) : 9.0f;
   }
 
   public function getPackSize() as Number {
-    return Properties.getValue("packSize");
+    var v = Properties.getValue("packSize");
+    return v != null ? (v as Number) : 19;
   }
 
   public function getCigarettesPerDay() as Number {
-    return Properties.getValue("cigarettesPerDay");
+    var v = Properties.getValue("cigarettesPerDay");
+    return v != null ? (v as Number) : 1;
+  }
+
+  public function getCurrencyIndex() as Number {
+    var v = Properties.getValue("currency");
+    return v != null ? (v as Number) : 0;
+  }
+
+  public function getColorSpace() as Number {
+    var v = Properties.getValue("colorSpace");
+    return v != null ? (v as Number) : 0;
   }
 
   (:glance)

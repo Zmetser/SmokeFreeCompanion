@@ -36,7 +36,7 @@ class MoneyNotSpentView extends StatView {
 
     var price = packs * Settings.getPackPrice();
 
-    var currencyIndex = Properties.getValue("currency");
+    var currencyIndex = Settings.getCurrencyIndex();
     if (currencyIndex == 2) { // HUF doesn't need decimal places
       title = price.format("%u");
     } else {
@@ -56,7 +56,7 @@ class MoneyNotSpentView extends StatView {
 
   function getCurrencyX(dc as Dc) as Number {
     var titleW = dc.getTextWidthInPixels(title, _titleFont) as Number;
-    var currencyIndex = Properties.getValue("currency");
+    var currencyIndex = Settings.getCurrencyIndex();
 
     if (currencyIndex == 2) { // HUF is suffixed
       var currencyW = dc.getTextWidthInPixels(_currencySymbol, _currencyFont) as Number;

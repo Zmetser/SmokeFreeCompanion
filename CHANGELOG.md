@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed
+
+- Code quality: null-guarded all `Settings` property reads, eliminated dead `Settings.tz` constant, moved `ceil` to `Math.ceil`, injected `today` into Milestones functions to remove internal clock reads, and replaced `NavigationBehavior` switch with a method registry.
+
 ### Fixed
 
 - Elapsed-time display no longer drifts by ~5 days per year past your 1-year anniversary (was showing e.g. `2y 0m 10d` instead of `2y 0m 0d`).

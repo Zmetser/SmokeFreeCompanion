@@ -62,20 +62,6 @@ module Stats {
    */
   function packsNotBought(quitDate as Time.Moment, today as Time.Moment, cigarettesPerDay as Number, cigarettesPerPack as Number) as Number {
     var cigarettes = cigarettesNotSmoked(quitDate, today, cigarettesPerDay);
-    return ceil(cigarettes.toDouble() / cigarettesPerPack.toDouble());
+    return Math.ceil(cigarettes.toDouble() / cigarettesPerPack.toDouble()).toNumber();
   }
-}
-
-/**
- * Rounds up a decimal value to the nearest whole number.
- *
- * @param value The decimal value to round up.
- * @return The rounded up whole number.
- */
-function ceil(value as Double) as Number {
-  var intValue = value.toNumber();
-  if (value == intValue) {
-    return intValue;
-  }
-  return intValue + 1;
 }

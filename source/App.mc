@@ -26,7 +26,8 @@ class App extends Application.AppBase {
 
   // Return the initial view of your application here
   function getInitialView() as [WatchUi.Views] or [WatchUi.Views, WatchUi.InputDelegates] {
-    return [new CigarettesNotSmokedView(), new NavigationBehavior(0)] as [WatchUi.Views, WatchUi.InputDelegates];
+    var nav = new NavigationBehavior(0);
+    return [nav.getView(0), nav] as [WatchUi.Views, WatchUi.InputDelegates];
   }
 
 }

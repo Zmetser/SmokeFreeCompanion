@@ -47,8 +47,7 @@ module Milestones {
   // closest milestone to date in the past
   // should be the first unfulfilled milestone
   (:glance)
-  function closestMilestoneTo(moment as Time.Moment) as Lang.Number {
-    var today = new Time.Moment(Time.now().value());
+  function closestMilestoneTo(moment as Time.Moment, today as Time.Moment) as Lang.Number {
     var elapsedTime = Stats.durationSince(moment, today);
 
     for (var i = 0; i < NUMBER_OF_MILESTONES; i += 1) {
@@ -68,15 +67,14 @@ module Milestones {
    * @return The progress towards the milestone as a floating-point number between 0 and 1.
    */
   (:glance)
-  function milestoneProgress(moment as Time.Moment) as Lang.Float {
-    var today = new Time.Moment(Time.now().value());
+  function milestoneProgress(moment as Time.Moment, today as Time.Moment) as Lang.Float {
     var elapsedTime = Stats.durationSince(moment, today);
 
     if (elapsedTime.value() >= MILESTONES[NUMBER_OF_MILESTONES - 1]) {
       return 1.0;
     }
 
-    var milestone = closestMilestoneTo(moment);
+    var milestone = closestMilestoneTo(moment, today);
     var remaining = milestone - elapsedTime.value();
 
     return 1 - (remaining.toFloat() / milestone.toFloat());
