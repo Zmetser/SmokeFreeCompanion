@@ -6,15 +6,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [0.4.1] - 2026-05-16
+
 ### Changed
 
-- Code quality: null-guarded all `Settings` property reads, eliminated dead `Settings.tz` constant, moved `ceil` to `Math.ceil`, injected `today` into Milestones functions to remove internal clock reads, and replaced `NavigationBehavior` switch with a method registry.
+- Code quality: null-guarded all `Settings` property reads, removed the dead `Settings.tz` constant, moved `ceil` to `Math.ceil`, injected `today` into `Milestones` functions to remove internal clock reads, and centralised currency layout behind `Settings.getCurrencyConfig()`.
 
 ### Fixed
 
 - Elapsed-time display no longer drifts by ~5 days per year past your 1-year anniversary (was showing e.g. `2y 0m 10d` instead of `2y 0m 0d`).
 - Cigarettes-not-smoked count now updates continuously within each hour, instead of staying at zero until a full hour elapses.
 - Milestone progress bar no longer overflows past the screen edge for users beyond the last milestone (50 years).
+- Glance view no longer crashes on launch (regression caught during release prep — `getColorSpace` was missing the `(:glance)` annotation and got stripped from the glance build).
 
 ## [0.4.0]
 
@@ -59,7 +62,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 First test release to Connect IQ Store to test app settings
 
-[unreleased]: https://github.com/Zmetser/SmokeFreeCompanion/compare/v0.4.0...HEAD
+[unreleased]: https://github.com/Zmetser/SmokeFreeCompanion/compare/v0.4.1...HEAD
+[0.4.1]: https://github.com/Zmetser/SmokeFreeCompanion/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/Zmetser/SmokeFreeCompanion/releases/tag/v0.4.0
 [0.3.0]: https://github.com/Zmetser/SmokeFreeCompanion/releases/tag/v0.3.0
 [0.2.0]: https://github.com/Zmetser/SmokeFreeCompanion/releases/tag/v0.2.0
