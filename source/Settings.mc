@@ -29,6 +29,16 @@ module Settings {
     return v != null ? (v as Number) : 0;
   }
 
+  public function getCurrencyConfig() as Lang.Dictionary {
+    var configs = [
+      { :symbol => Application.loadResource(Rez.Strings.SignUSD) as String, :suffixed => false, :priceFormat => "%.1f" },
+      { :symbol => Application.loadResource(Rez.Strings.SignEUR) as String, :suffixed => false, :priceFormat => "%.1f" },
+      { :symbol => Application.loadResource(Rez.Strings.SignHUF) as String, :suffixed => true,  :priceFormat => "%u"   },
+    ] as Array<Lang.Dictionary>;
+    var index = getCurrencyIndex();
+    return configs[index < configs.size() ? index : 0];
+  }
+
   (:glance)
   public function getQuitDate() as Time.Moment {
     var timestamp = Properties.getValue("quitDate");
@@ -39,20 +49,4 @@ module Settings {
 
     return new Time.Moment(timestamp);
   }
-
-  public function getCurrencySymbol() as String {
-    var currencyIndex = Properties.getValue("currency");
-    if (currencyIndex >= 0 && currencyIndex < currencySymbols.size()) {
-      var id = (currencySymbols as Array<Lang.Symbol>)[currencyIndex];
-      return Application.loadResource(Rez.Strings[id]);
-    }
-
-    return Application.loadResource(Rez.Strings.SignUSD);
-  }
-
-  var currencySymbols = [
-    :SignUSD,
-    :SignEUR,
-    :SignHUF
-  ] as Array<Lang.Symbol>;
 }
