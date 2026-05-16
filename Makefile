@@ -60,7 +60,7 @@ test: check-deps simulator | $(OUT_DIR)
 #   make crashes APP_ID=8d26c065-6a61-4a68-bbd9-4b82e62462c5
 crashes:
 	@test -n "$(APP_ID)" || { echo "Usage: make crashes APP_ID=<app-uuid>"; exit 1; }
-	$(SDK_BIN)/era -a $(APP_ID) -k "$(DEVELOPER_KEY)"
+	"$(SDK_BIN)/era" -a $(APP_ID) -k "$(DEVELOPER_KEY)"
 
 $(OUT_DIR):
 	mkdir -p $(OUT_DIR)
