@@ -26,8 +26,10 @@ class App extends Application.AppBase {
 
   // Return the initial view of your application here
   function getInitialView() as [WatchUi.Views] or [WatchUi.Views, WatchUi.InputDelegates] {
-    var nav = new NavigationBehavior(0);
-    return [nav.getView(0), nav] as [WatchUi.Views, WatchUi.InputDelegates];
+    var stored = Application.Storage.getValue("lastPage");
+    var page = stored instanceof Lang.Number ? stored : 0;
+    var nav = new NavigationBehavior(page);
+    return [nav.getView(page), nav] as [WatchUi.Views, WatchUi.InputDelegates];
   }
 
 }

@@ -1,3 +1,4 @@
+import Toybox.Application;
 import Toybox.WatchUi;
 import Toybox.Lang;
 
@@ -7,6 +8,7 @@ class NavigationBehavior extends BehaviorDelegate {
 
   function initialize(currentPage as Number) {
     _currentPage = currentPage;
+    Storage.setValue("lastPage", currentPage);
     BehaviorDelegate.initialize();
   }
 
