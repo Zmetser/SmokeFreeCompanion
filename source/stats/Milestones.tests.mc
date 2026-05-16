@@ -60,6 +60,14 @@ module MilestonesTests {
   }
 
   (:test)
+  function progressPastLastMilestone(logger as Logger) {
+    var fiftyOneYears = new Time.Duration(51 * Gregorian.SECONDS_PER_YEAR);
+    var quitTime = today.subtract(fiftyOneYears) as Time.Moment;
+    var progress = Milestones.milestoneProgress(quitTime);
+    return TestUtils.verifyValueEquals(logger, progress, 1.0);
+  }
+
+  (:test)
   function exactMilestoneHasToBeHundredPercent(logger as Logger) {
     for (var i = 0; i < Milestones.NUMBER_OF_MILESTONES; i++) {
       var milestone = Milestones.MILESTONES[i];

@@ -71,6 +71,11 @@ module Milestones {
   function milestoneProgress(moment as Time.Moment) as Lang.Float {
     var today = new Time.Moment(Time.now().value());
     var elapsedTime = Stats.durationSince(moment, today);
+
+    if (elapsedTime.value() >= MILESTONES[NUMBER_OF_MILESTONES - 1]) {
+      return 1.0;
+    }
+
     var milestone = closestMilestoneTo(moment);
     var remaining = milestone - elapsedTime.value();
 
