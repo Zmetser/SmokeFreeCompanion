@@ -10,6 +10,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - The widget now remembers the last-viewed stat page and reopens to it on next launch.
 
+### Changed
+
+- Settings edits (quit date, pack price, cigarettes per day, currency, etc.) now take effect immediately without needing to relaunch the widget.
+
 ## [0.4.1] - 2026-05-16
 
 ### Changed

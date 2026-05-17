@@ -32,6 +32,10 @@ class App extends Application.AppBase {
     return [nav.getView(page), nav] as [WatchUi.Views, WatchUi.InputDelegates];
   }
 
+  function onSettingsChanged() as Void {
+    WatchUi.requestUpdate();
+  }
+
 }
 
 function getApp() as App {

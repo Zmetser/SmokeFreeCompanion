@@ -25,31 +25,29 @@ class CleanSinceView extends StatView {
     _dateFormat = Application.loadResource( Rez.Strings.DateFormat );
   }
 
-  // loading resources into memory.
   function onShow() as Void {
     StatView.onShow();
 
     iconResource = WatchUi.loadResource(Rez.Drawables.QuitDateIcon) as BitmapResource;
-    subTitle = _subTitle;
-    
+  }
+
+  function onUpdate(dc as Dc) as Void {
     var quitDate = Settings.getQuitDate();
     var now = new Time.Moment(Time.today().value());
-    
+
     if (now.subtract(quitDate).value() < Gregorian.SECONDS_PER_DAY) {
       title = _oneDayTitle;
       subTitle = _oneDaySubTitle;
     } else {
       var quitDateInfo = Gregorian.info(quitDate, Time.FORMAT_MEDIUM);
-      var dateString = Lang.format(
+      title = Lang.format(
         _dateFormat,
-        [
-          quitDateInfo.day,
-          quitDateInfo.month,
-          quitDateInfo.year
-        ]
+        [quitDateInfo.day, quitDateInfo.month, quitDateInfo.year]
       );
-      title = dateString;
+      subTitle = _subTitle;
     }
+
+    StatView.onUpdate(dc);
   }
   
   function drawTitle(dc as Dc) as Void {

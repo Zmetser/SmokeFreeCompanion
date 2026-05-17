@@ -24,7 +24,9 @@ class MoneyNotSpentView extends StatView {
 
     iconResource = WatchUi.loadResource(Rez.Drawables.MoneyNotSpentIcon) as BitmapResource;
     subTitle = WatchUi.loadResource(Rez.Strings.Saved) as Lang.String;
+  }
 
+  function onUpdate(dc as Dc) as Void {
     _currencyConfig = Settings.getCurrencyConfig();
 
     var packs = Stats.packsNotBought(
@@ -36,6 +38,8 @@ class MoneyNotSpentView extends StatView {
 
     var price = packs * Settings.getPackPrice();
     title = price.format((_currencyConfig as Lang.Dictionary)[:priceFormat] as String);
+
+    StatView.onUpdate(dc);
   }
 
   // Override to add currency symbol to title
