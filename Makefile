@@ -34,7 +34,7 @@ TEST_PRG     := $(OUT_DIR)/$(APP_NAME)-tests.prg
 # monkeyc builds in ~2s, so always rebuild rather than track a wildcard of
 # every .mc/resource file. Stale .prgs would be a much worse failure mode
 # than the extra two seconds.
-.PHONY: all build run test clean check-deps simulator crashes
+.PHONY: all build run test clean check-deps simulator
 
 all: build
 
@@ -54,13 +54,6 @@ test: check-deps simulator | $(OUT_DIR)
 	@set -o pipefail; \
 	monkeydo $(TEST_PRG) $(DEVICE) -t 2>&1 | tee $(OUT_DIR)/test.log; \
 	grep -qE '^PASSED' $(OUT_DIR)/test.log
-
-# Fetch crash reports for the published app from Garmin's servers. Requires
-# APP_ID (the manifest <iq:application id>) to be set on the command line:
-#   make crashes APP_ID=8d26c065-6a61-4a68-bbd9-4b82e62462c5
-crashes:
-	@test -n "$(APP_ID)" || { echo "Usage: make crashes APP_ID=<app-uuid>"; exit 1; }
-	"$(SDK_BIN)/era" -a $(APP_ID) -k "$(DEVELOPER_KEY)"
 
 $(OUT_DIR):
 	mkdir -p $(OUT_DIR)
