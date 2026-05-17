@@ -62,4 +62,24 @@ module Settings {
     }
     return new Time.Moment(timestamp);
   }
+
+  public function setQuitDate(moment as Time.Moment) as Void {
+    _getReader().setValue("quitDate", moment.value());
+  }
+
+  public function setCigarettesPerDay(value as Number) as Void {
+    _getReader().setValue("cigarettesPerDay", value);
+  }
+
+  public function setCurrencyIndex(value as Number) as Void {
+    _getReader().setValue("currency", value);
+  }
+
+  public function setPackPrice(value as Float) as Void {
+    _getReader().setValue("packPrice", value);
+  }
+
+  public function setPackSize(value as Number) as Void {
+    _getReader().setValue("packSize", value);
+  }
 }
