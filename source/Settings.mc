@@ -4,29 +4,39 @@ import Toybox.Lang;
 
 module Settings {
 
+  var _reader as PropertyReader? = null;
+
+  (:glance)
+  function _getReader() as PropertyReader {
+    if (_reader == null) {
+      _reader = new ApplicationPropertyReader();
+    }
+    return _reader;
+  }
+
   public function getPackPrice() as Float {
-    var v = Properties.getValue("packPrice");
+    var v = _getReader().getValue("packPrice");
     return v != null ? (v as Float) : 9.0f;
   }
 
   public function getPackSize() as Number {
-    var v = Properties.getValue("packSize");
+    var v = _getReader().getValue("packSize");
     return v != null ? (v as Number) : 19;
   }
 
   public function getCigarettesPerDay() as Number {
-    var v = Properties.getValue("cigarettesPerDay");
+    var v = _getReader().getValue("cigarettesPerDay");
     return v != null ? (v as Number) : 1;
   }
 
   public function getCurrencyIndex() as Number {
-    var v = Properties.getValue("currency");
+    var v = _getReader().getValue("currency");
     return v != null ? (v as Number) : 0;
   }
 
   (:glance)
   public function getColorSpace() as Number {
-    var v = Properties.getValue("colorSpace");
+    var v = _getReader().getValue("colorSpace");
     return v != null ? (v as Number) : 0;
   }
 
@@ -42,12 +52,14 @@ module Settings {
 
   (:glance)
   public function getQuitDate() as Time.Moment {
-    var timestamp = Properties.getValue("quitDate");
-    // If the quit date is not set or is in the future, return today
+    var raw = _getReader().getValue("quitDate");
+    if (!(raw instanceof Lang.Number)) {
+      return new Time.Moment(Time.today().value());
+    }
+    var timestamp = raw as Number;
     if (timestamp == 0 || timestamp > Time.now().value()) {
       return new Time.Moment(Time.today().value());
     }
-
     return new Time.Moment(timestamp);
   }
 }
