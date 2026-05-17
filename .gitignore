@@ -4,3 +4,4 @@ out
 *.prg*
 *.DS_Store
 releases
+.claude/*.local*
