@@ -3,7 +3,7 @@
 
 # Override on the command line, e.g. `make test DEVICE=fenix7`
 DEVICE       ?= fenix6
-DEVELOPER_KEY ?= $(HOME)/.garmin/developer_key.der
+DEVELOPER_KEY ?= $(HOME)/.garmin/developer_key
 OUT_DIR      ?= out
 JUNGLE       ?= monkey.jungle
 
