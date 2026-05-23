@@ -96,4 +96,42 @@ module SettingsTests {
     Settings.setPackSize(25);
     return Settings.getPackSize() == 25;
   }
+
+  // Upgrade-compatibility guard. v0.4.0 is the current Store release; the
+  // shape below is what a v0.4.0 user has in Application.Properties on their
+  // device. If any of these reads break, a release would silently wipe real
+  // users' settings — keep this test green or migrate the data explicitly.
+  (:test)
+  function upgradeFromV040_preservesAllUserSettings(logger as Logger) as Boolean {
+    var past = Time.now().value() - 86400 * 30;
+    _setReader(new DictPropertyReader({
+      "quitDate" => past,
+      "cigarettesPerDay" => 20,
+      "currency" => 1,
+      "packPrice" => 7.5f,
+      "packSize" => 20,
+    }));
+
+    if (Settings.getQuitDate().value() != past) {
+      logger.debug("quitDate not preserved");
+      return false;
+    }
+    if (Settings.getCigarettesPerDay() != 20) {
+      logger.debug("cigarettesPerDay not preserved");
+      return false;
+    }
+    if (Settings.getCurrencyIndex() != 1) {
+      logger.debug("currencyIndex not preserved");
+      return false;
+    }
+    if (Settings.getPackPrice() != 7.5f) {
+      logger.debug("packPrice not preserved");
+      return false;
+    }
+    if (Settings.getPackSize() != 20) {
+      logger.debug("packSize not preserved");
+      return false;
+    }
+    return true;
+  }
 }
