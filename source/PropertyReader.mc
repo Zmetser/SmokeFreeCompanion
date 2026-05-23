@@ -8,6 +8,8 @@ class PropertyReader {
   function getValue(key as String) as Object? {
     return null;
   }
+
+  function setValue(key as String, value as Application.PropertyValueType) as Void {}
 }
 
 (:glance)
@@ -18,6 +20,10 @@ class ApplicationPropertyReader extends PropertyReader {
 
   function getValue(key as String) as Object? {
     return Properties.getValue(key);
+  }
+
+  function setValue(key as String, value as Application.PropertyValueType) as Void {
+    Properties.setValue(key, value);
   }
 }
 
@@ -35,5 +41,9 @@ class DictPropertyReader extends PropertyReader {
       return _values.get(key);
     }
     return null;
+  }
+
+  function setValue(key as String, value as Application.PropertyValueType) as Void {
+    _values.put(key, value);
   }
 }

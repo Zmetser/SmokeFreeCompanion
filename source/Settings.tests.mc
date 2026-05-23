@@ -60,4 +60,92 @@ module SettingsTests {
     }
     return true;
   }
+
+  (:test)
+  function setQuitDate_roundTrip(logger as Logger) as Boolean {
+    var past = Time.now().value() - 86400;
+    _setReader(new DictPropertyReader({}));
+    Settings.setQuitDate(new Time.Moment(past));
+    return Settings.getQuitDate().value() == past;
+  }
+
+  (:test)
+  function setCigarettesPerDay_roundTrip(logger as Logger) as Boolean {
+    _setReader(new DictPropertyReader({}));
+    Settings.setCigarettesPerDay(17);
+    return Settings.getCigarettesPerDay() == 17;
+  }
+
+  (:test)
+  function setCurrencyIndex_roundTrip(logger as Logger) as Boolean {
+    _setReader(new DictPropertyReader({}));
+    Settings.setCurrencyIndex(2);
+    return Settings.getCurrencyIndex() == 2;
+  }
+
+  (:test)
+  function setPackPrice_roundTrip(logger as Logger) as Boolean {
+    _setReader(new DictPropertyReader({}));
+    Settings.setPackPrice(12.5f);
+    return Settings.getPackPrice() == 12.5f;
+  }
+
+  (:test)
+  function setPackSize_roundTrip(logger as Logger) as Boolean {
+    _setReader(new DictPropertyReader({}));
+    Settings.setPackSize(25);
+    return Settings.getPackSize() == 25;
+  }
+
+  (:test)
+  function currencyConfig_exposesDefaultPricePerCurrency(logger as Logger) as Boolean {
+    var expected = [9.0f, 9.0f, 2100.0f];
+    for (var i = 0; i < expected.size(); i++) {
+      _setReader(new DictPropertyReader({"currency" => i}));
+      var defaultPrice = Settings.getCurrencyConfig()[:defaultPrice] as Float;
+      if (defaultPrice != expected[i]) {
+        logger.debug(Lang.format("Currency $1$: expected default $2$, got $3$.", [i, expected[i], defaultPrice]));
+        return false;
+      }
+    }
+    return true;
+  }
+
+  // Upgrade-compatibility guard. v0.4.0 is the current Store release; the
+  // shape below is what a v0.4.0 user has in Application.Properties on their
+  // device. If any of these reads break, a release would silently wipe real
+  // users' settings — keep this test green or migrate the data explicitly.
+  (:test)
+  function upgradeFromV040_preservesAllUserSettings(logger as Logger) as Boolean {
+    var past = Time.now().value() - 86400 * 30;
+    _setReader(new DictPropertyReader({
+      "quitDate" => past,
+      "cigarettesPerDay" => 20,
+      "currency" => 1,
+      "packPrice" => 7.5f,
+      "packSize" => 20,
+    }));
+
+    if (Settings.getQuitDate().value() != past) {
+      logger.debug("quitDate not preserved");
+      return false;
+    }
+    if (Settings.getCigarettesPerDay() != 20) {
+      logger.debug("cigarettesPerDay not preserved");
+      return false;
+    }
+    if (Settings.getCurrencyIndex() != 1) {
+      logger.debug("currencyIndex not preserved");
+      return false;
+    }
+    if (Settings.getPackPrice() != 7.5f) {
+      logger.debug("packPrice not preserved");
+      return false;
+    }
+    if (Settings.getPackSize() != 20) {
+      logger.debug("packSize not preserved");
+      return false;
+    }
+    return true;
+  }
 }

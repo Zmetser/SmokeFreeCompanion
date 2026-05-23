@@ -31,4 +31,7 @@
   
   <!-- 1:Day 2:Month 3:Year -->
   <string id="DateFormat">$1$ $2$ $3$</string>
+
+  <!-- On-watch settings menu -->
+  <string id="SettingsMenuTitle">Settings</string>
 </strings>

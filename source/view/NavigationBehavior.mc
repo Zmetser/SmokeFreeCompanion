@@ -24,6 +24,11 @@ class NavigationBehavior extends BehaviorDelegate {
     return true;
   }
 
+  function onMenu() as Boolean {
+    WatchUi.pushView(new SettingsMenu(), new SettingsMenuDelegate(), WatchUi.SLIDE_UP);
+    return true;
+  }
+
   // To add a view: add a case here and increment _numberOfViews.
   function getView(page as Number) as WatchUi.View {
     switch (page) {
