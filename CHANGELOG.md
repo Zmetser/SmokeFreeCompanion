@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-05-23
+
 ### Added
 
 - The widget now remembers the last-viewed stat page and reopens to it on next launch.
@@ -72,7 +74,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 First test release to Connect IQ Store to test app settings
 
-[unreleased]: https://github.com/Zmetser/SmokeFreeCompanion/compare/v0.4.1...HEAD
+[unreleased]: https://github.com/Zmetser/SmokeFreeCompanion/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/Zmetser/SmokeFreeCompanion/compare/v0.4.1...v0.5.0
 [0.4.1]: https://github.com/Zmetser/SmokeFreeCompanion/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/Zmetser/SmokeFreeCompanion/releases/tag/v0.4.0
 [0.3.0]: https://github.com/Zmetser/SmokeFreeCompanion/releases/tag/v0.3.0
