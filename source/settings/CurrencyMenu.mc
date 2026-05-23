@@ -13,10 +13,8 @@ class CurrencyMenu extends WatchUi.Menu2 {
       Application.loadResource(Rez.Strings.SignEUR) as String,
       Application.loadResource(Rez.Strings.SignHUF) as String,
     ];
-    var currentIndex = Settings.getCurrencyIndex();
     for (var i = 0; i < labels.size(); i++) {
-      var subLabel = (i == currentIndex) ? "✓" : null;
-      addItem(new WatchUi.MenuItem(labels[i], subLabel, i, {}));
+      addItem(new WatchUi.MenuItem(labels[i], null, i, {}));
     }
   }
 }
@@ -27,7 +25,15 @@ class CurrencyMenuDelegate extends WatchUi.Menu2InputDelegate {
   }
 
   function onSelect(item as WatchUi.MenuItem) as Void {
-    Settings.setCurrencyIndex(item.getId() as Number);
+    var newIndex = item.getId() as Number;
+    if (newIndex != Settings.getCurrencyIndex()) {
+      Settings.setCurrencyIndex(newIndex);
+      // Pack price scales with currency (e.g. ~$9 vs ~2100 HUF). Reset to the
+      // per-currency default so the user isn't left with a nonsensical price
+      // — they can adjust if needed.
+      var defaultPrice = Settings.getCurrencyConfig()[:defaultPrice] as Float;
+      Settings.setPackPrice(defaultPrice);
+    }
     WatchUi.popView(WatchUi.SLIDE_RIGHT);
   }
 }

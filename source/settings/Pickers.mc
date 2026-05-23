@@ -14,12 +14,14 @@ class WholeNumberFactory extends WatchUi.PickerFactory {
   private var _min as Number;
   private var _max as Number;
   private var _format as String;
+  private var _font as Graphics.FontType;
 
-  function initialize(min as Number, max as Number, format as String) {
+  function initialize(min as Number, max as Number, format as String, font as Graphics.FontType) {
     PickerFactory.initialize();
     _min = min;
     _max = max;
     _format = format;
+    _font = font;
   }
 
   function getSize() as Number {
@@ -42,7 +44,7 @@ class WholeNumberFactory extends WatchUi.PickerFactory {
     return new WatchUi.Text({
       :text => value.format(_format),
       :color => selected ? Graphics.COLOR_WHITE : Graphics.COLOR_LT_GRAY,
-      :font => Graphics.FONT_NUMBER_MILD,
+      :font => _font,
       :locX => WatchUi.LAYOUT_HALIGN_CENTER,
       :locY => WatchUi.LAYOUT_VALIGN_CENTER,
     });
@@ -53,7 +55,7 @@ class WholeNumberFactory extends WatchUi.PickerFactory {
 
 class WholeNumberPicker extends WatchUi.Picker {
   function initialize(title as String, min as Number, max as Number, defaultValue as Number) {
-    var factory = new WholeNumberFactory(min, max, "%u");
+    var factory = new WholeNumberFactory(min, max, "%u", Graphics.FONT_NUMBER_MILD);
     Picker.initialize({
       :title => _titleDrawable(title),
       :pattern => [factory],
@@ -62,27 +64,53 @@ class WholeNumberPicker extends WatchUi.Picker {
   }
 }
 
+// Digit-per-column price picker. Layout per currency :pickerMode:
+//   :narrow   — [tens, ones, ".", tenths]                  Float 0.0..99.9     (USD, EUR)
+//   :hundreds — [thousands-digit, hundreds-digit, "00.0"]  Float 0..9900 / 100 (HUF)
 class PricePicker extends WatchUi.Picker {
-  function initialize(title as String, defaultValue as Float) {
-    var intFactory = new WholeNumberFactory(1, 9999, "%u");
-    var decFactory = new WholeNumberFactory(0, 99, "%02d");
-    var parts = SettingsValueFormatter.splitPrice(defaultValue);
-    Picker.initialize({
-      :title => _titleDrawable(title),
-      :pattern => [
-        intFactory,
-        new WatchUi.Text({
-          :text => ".",
-          :color => Graphics.COLOR_WHITE,
-          :font => Graphics.FONT_NUMBER_MILD,
-          :locX => WatchUi.LAYOUT_HALIGN_CENTER,
-          :locY => WatchUi.LAYOUT_VALIGN_CENTER,
-        }),
-        decFactory,
-      ],
-      :defaults => [intFactory.getIndex(parts[0]), 0, decFactory.getIndex(parts[1])],
-    });
+  function initialize(title as String, defaultValue as Float, pickerMode as Symbol) {
+    var font = Graphics.FONT_NUMBER_MILD;
+
+    if (pickerMode == :hundreds) {
+      var v = defaultValue.toNumber();
+      if (v < 0) { v = 0; }
+      if (v > 9900) { v = 9900; }
+      var thousands = (v / 1000) % 10;
+      var hundreds = (v / 100) % 10;
+      Picker.initialize({
+        :title => _titleDrawable(title),
+        :pattern => [
+          new WholeNumberFactory(0, 9, "%u", font),
+          new WholeNumberFactory(0, 9, "%u", font),
+          _textDrawable("00.0", font),
+        ],
+        :defaults => [thousands, hundreds, 0],
+      });
+    } else {
+      // :narrow (USD, EUR, and any future narrow-prefixed currency)
+      var parts = SettingsValueFormatter.splitPriceWithTenths(defaultValue);
+      Picker.initialize({
+        :title => _titleDrawable(title),
+        :pattern => [
+          new WholeNumberFactory(0, 9, "%u", font),
+          new WholeNumberFactory(0, 9, "%u", font),
+          _textDrawable(".", font),
+          new WholeNumberFactory(0, 9, "%u", font),
+        ],
+        :defaults => [parts[1], parts[2], 0, parts[3]],
+      });
+    }
   }
+}
+
+function _textDrawable(text as String, font as Graphics.FontType) as WatchUi.Text {
+  return new WatchUi.Text({
+    :text => text,
+    :color => Graphics.COLOR_WHITE,
+    :font => font,
+    :locX => WatchUi.LAYOUT_HALIGN_CENTER,
+    :locY => WatchUi.LAYOUT_VALIGN_CENTER,
+  });
 }
 
 class DatePicker extends WatchUi.Picker {
@@ -91,9 +119,12 @@ class DatePicker extends WatchUi.Picker {
     var nowInfo = Gregorian.info(Time.now(), Time.FORMAT_SHORT);
     var maxYear = nowInfo.year as Number;
     var minYear = maxYear - 50;
-    var yearFactory = new WholeNumberFactory(minYear, maxYear, "%u");
-    var monthFactory = new WholeNumberFactory(1, 12, "%02d");
-    var dayFactory = new WholeNumberFactory(1, 31, "%02d");
+    // FONT_MEDIUM (text) instead of FONT_NUMBER_MILD: three columns share the
+    // screen, so a 4-digit year in the numeric font overflows its column.
+    var dateFont = Graphics.FONT_MEDIUM;
+    var yearFactory = new WholeNumberFactory(minYear, maxYear, "%u", dateFont);
+    var monthFactory = new WholeNumberFactory(1, 12, "%02d", dateFont);
+    var dayFactory = new WholeNumberFactory(1, 31, "%02d", dateFont);
     Picker.initialize({
       :title => _titleDrawable(title),
       :pattern => [yearFactory, monthFactory, dayFactory],
@@ -153,14 +184,24 @@ class PackSizePickerDelegate extends WatchUi.PickerDelegate {
 }
 
 class PackPricePickerDelegate extends WatchUi.PickerDelegate {
-  function initialize() {
+  private var _pickerMode as Symbol;
+
+  function initialize(pickerMode as Symbol) {
     PickerDelegate.initialize();
+    _pickerMode = pickerMode;
   }
 
   function onAccept(values as Array) as Boolean {
-    var intPart = values[0] as Number;
-    var decPart = values[2] as Number;
-    Settings.setPackPrice(SettingsValueFormatter.combinePrice(intPart, decPart));
+    var price;
+    if (_pickerMode == :hundreds) {
+      // [thousands-digit, hundreds-digit, "00.0"]
+      price = ((values[0] as Number) * 1000 + (values[1] as Number) * 100).toFloat();
+    } else {
+      // :narrow — [tens, ones, ".", tenths]
+      var whole = (values[0] as Number) * 10 + (values[1] as Number);
+      price = whole.toFloat() + (values[3] as Number).toFloat() / 10.0f;
+    }
+    Settings.setPackPrice(price);
     WatchUi.popView(WatchUi.SLIDE_DOWN);
     return true;
   }

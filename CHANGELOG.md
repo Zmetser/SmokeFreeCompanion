@@ -9,6 +9,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Added
 
 - The widget now remembers the last-viewed stat page and reopens to it on next launch.
+- All five settings (quit date, cigarettes per day, currency, pack price, pack size) can now be edited directly on the watch: long-press UP on any stat view to open the on-watch settings menu.
+- Picking a different currency now resets the pack price to a sensible default for that currency (USD/EUR: 9.0, HUF: 2100), so existing values aren't left at a nonsensical scale.
 
 ### Changed
 

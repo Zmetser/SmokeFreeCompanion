@@ -32,4 +32,30 @@ module SettingsValueFormatter {
     }
     return [intPart, decPart] as Array<Number>;
   }
+
+  // Split a 0..9999 integer into [thousands, hundreds, tens, ones].
+  function splitIntDigits(value as Number) as Array<Number> {
+    var v = value;
+    if (v < 0) { v = 0; }
+    if (v > 9999) { v = 9999; }
+    return [
+      (v / 1000) % 10,
+      (v / 100) % 10,
+      (v / 10) % 10,
+      v % 10,
+    ] as Array<Number>;
+  }
+
+  // Split a Float price into [hundreds, tens, ones, tenths] for prefixed currencies.
+  function splitPriceWithTenths(value as Float) as Array<Number> {
+    var tenthsTotal = (value * 10 + 0.5).toNumber();
+    if (tenthsTotal < 0) { tenthsTotal = 0; }
+    if (tenthsTotal > 9999) { tenthsTotal = 9999; }
+    return [
+      (tenthsTotal / 1000) % 10,
+      (tenthsTotal / 100) % 10,
+      (tenthsTotal / 10) % 10,
+      tenthsTotal % 10,
+    ] as Array<Number>;
+  }
 }

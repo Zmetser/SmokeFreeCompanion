@@ -115,12 +115,14 @@ class SettingsMenuDelegate extends WatchUi.Menu2InputDelegate {
     } else if (id == :currency) {
       WatchUi.pushView(new CurrencyMenu(), new CurrencyMenuDelegate(), WatchUi.SLIDE_LEFT);
     } else if (id == :packPrice) {
+      var pickerMode = Settings.getCurrencyConfig()[:pickerMode] as Symbol;
       WatchUi.pushView(
         new PricePicker(
           Application.loadResource(Rez.Strings.PackPrice) as String,
-          Settings.getPackPrice()
+          Settings.getPackPrice(),
+          pickerMode
         ),
-        new PackPricePickerDelegate(),
+        new PackPricePickerDelegate(pickerMode),
         WatchUi.SLIDE_LEFT
       );
     } else if (id == :packSize) {

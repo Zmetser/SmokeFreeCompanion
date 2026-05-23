@@ -97,6 +97,20 @@ module SettingsTests {
     return Settings.getPackSize() == 25;
   }
 
+  (:test)
+  function currencyConfig_exposesDefaultPricePerCurrency(logger as Logger) as Boolean {
+    var expected = [9.0f, 9.0f, 2100.0f];
+    for (var i = 0; i < expected.size(); i++) {
+      _setReader(new DictPropertyReader({"currency" => i}));
+      var defaultPrice = Settings.getCurrencyConfig()[:defaultPrice] as Float;
+      if (defaultPrice != expected[i]) {
+        logger.debug(Lang.format("Currency $1$: expected default $2$, got $3$.", [i, expected[i], defaultPrice]));
+        return false;
+      }
+    }
+    return true;
+  }
+
   // Upgrade-compatibility guard. v0.4.0 is the current Store release; the
   // shape below is what a v0.4.0 user has in Application.Properties on their
   // device. If any of these reads break, a release would silently wipe real

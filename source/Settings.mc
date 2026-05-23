@@ -40,11 +40,14 @@ module Settings {
     return v != null ? (v as Number) : 0;
   }
 
+  // Picker layouts:
+  //   :narrow   — 2 int + "." + 1 decimal (max 99.9). Used by USD and EUR.
+  //   :hundreds — 2 int + literal "00.0" suffix (max 9900, step 100). HUF.
   public function getCurrencyConfig() as Lang.Dictionary {
     var configs = [
-      { :symbol => Application.loadResource(Rez.Strings.SignUSD) as String, :suffixed => false, :priceFormat => "%.1f" },
-      { :symbol => Application.loadResource(Rez.Strings.SignEUR) as String, :suffixed => false, :priceFormat => "%.1f" },
-      { :symbol => Application.loadResource(Rez.Strings.SignHUF) as String, :suffixed => true,  :priceFormat => "%u"   },
+      { :symbol => Application.loadResource(Rez.Strings.SignUSD) as String, :suffixed => false, :priceFormat => "%.1f", :defaultPrice => 9.0f,    :pickerMode => :narrow   },
+      { :symbol => Application.loadResource(Rez.Strings.SignEUR) as String, :suffixed => false, :priceFormat => "%.1f", :defaultPrice => 9.0f,    :pickerMode => :narrow   },
+      { :symbol => Application.loadResource(Rez.Strings.SignHUF) as String, :suffixed => true,  :priceFormat => "%u",   :defaultPrice => 2100.0f, :pickerMode => :hundreds },
     ] as Array<Lang.Dictionary>;
     var index = getCurrencyIndex();
     return configs[index < configs.size() ? index : 0];
