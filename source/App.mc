@@ -28,8 +28,8 @@ class App extends Application.AppBase {
   function getInitialView() as [WatchUi.Views] or [WatchUi.Views, WatchUi.InputDelegates] {
     var stored = Application.Storage.getValue("lastPage");
     var page = stored instanceof Lang.Number ? stored : 0;
-    var nav = new NavigationBehavior(page);
-    return [nav.getView(page), nav] as [WatchUi.Views, WatchUi.InputDelegates];
+    var viewLoop = new WatchUi.ViewLoop(new StatLoopFactory(), {:page => page, :wrap => true});
+    return [viewLoop, new NavigationBehavior(viewLoop, page)] as [WatchUi.Views, WatchUi.InputDelegates];
   }
 
   function onSettingsChanged() as Void {
