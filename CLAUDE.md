@@ -42,7 +42,7 @@ Entry point `source/App.mc` (`class App extends Application.AppBase`):
 1. `MoneyNotSpentView`
 2. `CleanSinceView`
 
-Each transition calls `WatchUi.switchToView` with a **new** `NavigationBehavior(nextPage)` — page state is held in the delegate, not globally. When adding a new stat view, update both `_numberOfViews` and the `switch` in `getView`.
+Each transition calls `WatchUi.switchToView` with a **new** `NavigationBehavior(nextPage)` — page state is held in the delegate, not globally. `NavigationBehavior.initialize` also writes the current page to `Application.Storage["lastPage"]`, and `App.getInitialView()` reads it back on launch so the widget reopens to where the user left off. When adding a new stat view, update both `_numberOfViews` and the `switch` in `getView`; the `default` case keeps stale stored values safe.
 
 **Stats module** (`source/stats/Stats.mc`) is pure functions over `Time.Moment`:
 
@@ -51,7 +51,9 @@ Each transition calls `WatchUi.switchToView` with a **new** `NavigationBehavior(
 - `ElapsedTimeBuilder` (`stats/ElapsedTimeBuilder.mc`) converts a `Time.Duration` into the `ElapsedTime` struct that views render.
 - `Milestones.mc` defines progress milestones.
 
-**Settings** (`source/Settings.mc`) wraps `Application.Properties` for `packPrice`, `packSize`, `cigarettesPerDay`, `quitDate`, `currency`. Property keys are defined in `resources/settings/properties.xml` and surfaced to users via `resources/settings/settings.xml`. `getQuitDate()` falls back to today when the stored timestamp is `0` or in the future (handles the pre-1970 / future-date edge cases called out in CHANGELOG.md). Currency is an index into a fixed `currencySymbols` array of resource symbols (`:SignUSD`, `:SignEUR`, `:SignHUF`); add new currencies in both the array and the strings resources.
+**Settings** (`source/Settings.mc`) wraps `Application.Properties` for `packPrice`, `packSize`, `cigarettesPerDay`, `quitDate`, `currency`, `colorSpace`. Every getter null-guards the underlying property read with a sensible default. Property keys are defined in `resources/settings/properties.xml` and surfaced to users via `resources/settings/settings.xml`. `getQuitDate()` falls back to today when the stored timestamp is `0` or in the future (handles the pre-1970 / future-date edge cases called out in CHANGELOG.md). `getCurrencyConfig()` returns a dict `{:symbol, :suffixed, :priceFormat}` for the active currency — views consume this, not the raw index. To add a currency: append an entry to `getCurrencyConfig`'s `configs` table, add a string resource for the symbol, and add a `listEntry` in `settings.xml`.
+
+**Settings reactivity.** `App.onSettingsChanged` calls `WatchUi.requestUpdate()` so Connect-Mobile-pushed setting changes are visible without relaunch. This means **settings-dependent computation belongs in `onUpdate`, not `onShow`** — `onShow` is for one-time resource loads (icons, static strings). Each stat view follows this pattern: resources in `onShow`, settings reads + title computation in `onUpdate`.
 
 **Tests** live next to the code they cover as `*.tests.mc` files using Toybox `(:test)` modules. `source/utils/TestUtils.mc` and `source/stats/Stats.tests.mc` set up shared `today` / `quitDate` moments inside a `TestConsts` module.
 
