@@ -137,6 +137,23 @@ class DatePicker extends WatchUi.Picker {
   }
 }
 
+class TimePicker extends WatchUi.Picker {
+  function initialize(title as String, defaultHour as Number, defaultMinute as Number) {
+    var font = Graphics.FONT_NUMBER_MILD;
+    var hourFactory = new WholeNumberFactory(0, 23, "%02d", font);
+    var minuteFactory = new WholeNumberFactory(0, 59, "%02d", font);
+    Picker.initialize({
+      :title => _titleDrawable(title),
+      :pattern => [hourFactory, _textDrawable(":", font), minuteFactory],
+      :defaults => [
+        hourFactory.getIndex(defaultHour),
+        0,
+        minuteFactory.getIndex(defaultMinute),
+      ],
+    });
+  }
+}
+
 function _titleDrawable(text as String) as WatchUi.Text {
   return new WatchUi.Text({
     :text => text,
@@ -212,18 +229,61 @@ class PackPricePickerDelegate extends WatchUi.PickerDelegate {
   }
 }
 
+// Quit date picker chains into the time picker on accept — the user always
+// sets both together so sub-day milestones (20min, 8h) have something to
+// count against. The QuitTimePickerDelegate is what actually writes Settings.
 class QuitDatePickerDelegate extends WatchUi.PickerDelegate {
   function initialize() {
     PickerDelegate.initialize();
   }
 
   function onAccept(values as Array) as Boolean {
+    var year = values[0] as Number;
+    var month = values[1] as Number;
+    var day = values[2] as Number;
+
+    var existing = Gregorian.info(Settings.getQuitDate(), Time.FORMAT_SHORT);
+    var defaultHour = existing.hour as Number;
+    var defaultMinute = existing.min as Number;
+
+    WatchUi.popView(WatchUi.SLIDE_DOWN);
+    WatchUi.pushView(
+      new TimePicker(
+        Application.loadResource(Rez.Strings.QuitTime) as String,
+        defaultHour,
+        defaultMinute
+      ),
+      new QuitTimePickerDelegate(year, month, day),
+      WatchUi.SLIDE_UP
+    );
+    return true;
+  }
+
+  function onCancel() as Boolean {
+    WatchUi.popView(WatchUi.SLIDE_DOWN);
+    return true;
+  }
+}
+
+class QuitTimePickerDelegate extends WatchUi.PickerDelegate {
+  private var _year as Number;
+  private var _month as Number;
+  private var _day as Number;
+
+  function initialize(year as Number, month as Number, day as Number) {
+    PickerDelegate.initialize();
+    _year = year;
+    _month = month;
+    _day = day;
+  }
+
+  function onAccept(values as Array) as Boolean {
     var moment = Gregorian.moment({
-      :year => values[0] as Number,
-      :month => values[1] as Number,
-      :day => values[2] as Number,
-      :hour => 0,
-      :minute => 0,
+      :year => _year,
+      :month => _month,
+      :day => _day,
+      :hour => values[0] as Number,
+      :minute => values[2] as Number,
       :second => 0,
     });
     Settings.setQuitDate(moment);

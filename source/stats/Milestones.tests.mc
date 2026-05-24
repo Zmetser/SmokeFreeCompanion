@@ -11,12 +11,29 @@ module MilestonesTests {
   var today = new Time.Moment(Time.now().value());
 
   const TEST_UNITS = {
+    :minute => "min",
     :hour => "h",
     :day => "d",
     :week => "w",
     :month => "mo",
     :year => "y",
   };
+
+  (:test)
+  function canGet20MinMilestone(logger as Logger) {
+    var duration = new Time.Duration(10 * 60);
+    var quitTime = today.subtract(duration) as Time.Moment;
+    var milestone = Milestones.closestMilestoneTo(quitTime, today);
+    return TestUtils.verifyValueEquals(logger, milestone, 20 * 60);
+  }
+
+  (:test)
+  function canGet8hMilestone(logger as Logger) {
+    var duration = new Time.Duration(5 * Gregorian.SECONDS_PER_HOUR);
+    var quitTime = today.subtract(duration) as Time.Moment;
+    var milestone = Milestones.closestMilestoneTo(quitTime, today);
+    return TestUtils.verifyValueEquals(logger, milestone, 8 * Gregorian.SECONDS_PER_HOUR);
+  }
 
   (:test)
   function canGet24hMilestone(logger as Logger) {
@@ -113,7 +130,7 @@ module MilestonesTests {
 
   (:test)
   function labelForCoversEveryMilestone(logger as Logger) {
-    var expected = ["24h", "48h", "72h", "1w", "2w", "4w", "12w", "6mo", "9mo", "1y"];
+    var expected = ["20min", "8h", "24h", "48h", "72h", "1w", "2w", "4w", "12w", "6mo", "9mo", "1y"];
     if (Milestones.NUMBER_OF_MILESTONES != expected.size()) {
       logger.debug("MILESTONES size " + Milestones.NUMBER_OF_MILESTONES + " != expected " + expected.size());
       return false;
@@ -149,7 +166,7 @@ module MilestonesTests {
   (:test)
   function bandIndexForMapsEachMilestone(logger as Logger) {
     // index in MILESTONES → expected band
-    var expected = [0, 1, 2, 3, 3, 3, 3, 4, 4, 5];
+    var expected = [0, 1, 2, 3, 4, 5, 5, 5, 5, 6, 6, 7];
     if (Milestones.NUMBER_OF_MILESTONES != expected.size()) {
       logger.debug("MILESTONES size " + Milestones.NUMBER_OF_MILESTONES + " != expected " + expected.size());
       return false;
@@ -167,7 +184,31 @@ module MilestonesTests {
   (:test)
   function bandIndexForPastFinalMilestone(logger as Logger) {
     var band = Milestones.bandIndexFor(2 * Gregorian.SECONDS_PER_YEAR);
-    return TestUtils.verifyValueEquals(logger, band, 5);
+    return TestUtils.verifyValueEquals(logger, band, 7);
+  }
+
+  (:test)
+  function labelFor20Min(logger as Logger) {
+    var label = Milestones.labelFor(20 * 60, TEST_UNITS);
+    return TestUtils.verifyValueEquals(logger, label, "20min");
+  }
+
+  (:test)
+  function labelFor8h(logger as Logger) {
+    var label = Milestones.labelFor(8 * Gregorian.SECONDS_PER_HOUR, TEST_UNITS);
+    return TestUtils.verifyValueEquals(logger, label, "8h");
+  }
+
+  (:test)
+  function elapsedUnitForMinuteTargets(logger as Logger) {
+    var unit = Milestones.elapsedUnitFor(20 * 60, TEST_UNITS);
+    return TestUtils.verifyValueEquals(logger, unit, "min");
+  }
+
+  (:test)
+  function elapsedDivisorForMinuteTargets(logger as Logger) {
+    var divisor = Milestones.elapsedDivisorFor(20 * 60);
+    return TestUtils.verifyValueEquals(logger, divisor, 60);
   }
 
   (:test)
