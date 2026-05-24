@@ -14,6 +14,14 @@ Anchor: `source/stats/ElapsedTimeBuilder.mc`
 
 Anchor: `source/stats/Stats.mc`
 
+## `FONT_NUMBER_*` fonts are digits-only
+
+Every `Graphics.FONT_NUMBER_*` variant (`FONT_NUMBER_MILD`, `FONT_NUMBER_MEDIUM`, `FONT_NUMBER_HOT`, `FONT_NUMBER_THAI_HOT`) ships only digit glyphs and a handful of separators — letters render as the missing-glyph box. `StatView.drawTitle` uses `FONT_NUMBER_MEDIUM` because the stat titles are numeric; any subclass whose title carries a letter (unit suffix, abbreviation, label) must override `drawTitle` to pick a letter-capable font like `FONT_LARGE` or `FONT_MEDIUM`.
+
+Rule: if a font name contains `NUMBER`, treat it as digits-only. Reach for `FONT_TINY` / `FONT_SMALL` / `FONT_MEDIUM` / `FONT_LARGE` when the text includes anything else.
+
+Anchor: `source/view/MilestonesView.drawTitle` — the milestone label "1d" rendered as `1` + tofu under the inherited `FONT_NUMBER_MEDIUM` until the override landed.
+
 ## Anything reachable from the glance build needs `(:glance)`
 
 The glance build is a separate, smaller binary than the full app, produced by stripping every function, class, and module that is not annotated `(:glance)`. The linker does **not** warn when a glance call site references stripped code — you get a silent broken binary that crashes at first invocation with `"Failed invoking <symbol>"`.

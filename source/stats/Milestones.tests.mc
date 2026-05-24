@@ -10,44 +10,69 @@ module MilestonesTests {
 
   var today = new Time.Moment(Time.now().value());
 
+  const TEST_UNITS = {
+    :minute => "min",
+    :hour => "h",
+    :day => "d",
+    :week => "w",
+    :month => "mo",
+    :year => "y",
+  };
+
   (:test)
-  function canGetOneDayMilestone(logger as Logger) {
+  function canGet20MinMilestone(logger as Logger) {
+    var duration = new Time.Duration(10 * 60);
+    var quitTime = today.subtract(duration) as Time.Moment;
+    var milestone = Milestones.closestMilestoneTo(quitTime, today);
+    return TestUtils.verifyValueEquals(logger, milestone, 20 * 60);
+  }
+
+  (:test)
+  function canGet8hMilestone(logger as Logger) {
+    var duration = new Time.Duration(5 * Gregorian.SECONDS_PER_HOUR);
+    var quitTime = today.subtract(duration) as Time.Moment;
+    var milestone = Milestones.closestMilestoneTo(quitTime, today);
+    return TestUtils.verifyValueEquals(logger, milestone, 8 * Gregorian.SECONDS_PER_HOUR);
+  }
+
+  (:test)
+  function canGet24hMilestone(logger as Logger) {
     var duration = new Time.Duration((0.5 * Gregorian.SECONDS_PER_DAY) as Lang.Number);
     var quitTime = today.subtract(duration) as Time.Moment;
     var milestone = Milestones.closestMilestoneTo(quitTime, today);
-    return (milestone == Milestones.MILESTONES[0]);
+    return TestUtils.verifyValueEquals(logger, milestone, Gregorian.SECONDS_PER_DAY);
   }
 
   (:test)
-  function canGetTwoDayMilestone(logger as Logger) {
+  function canGet48hMilestone(logger as Logger) {
     var duration = new Time.Duration(Gregorian.SECONDS_PER_DAY + 1);
     var quitTime = today.subtract(duration) as Time.Moment;
     var milestone = Milestones.closestMilestoneTo(quitTime, today);
-    return (milestone == Milestones.MILESTONES[1]);
+    return TestUtils.verifyValueEquals(logger, milestone, 2 * Gregorian.SECONDS_PER_DAY);
   }
 
   (:test)
-  function canGetOneWeekMilestone(logger as Logger) {
+  function canGet1WeekMilestone(logger as Logger) {
     var duration = new Time.Duration(6 * Gregorian.SECONDS_PER_DAY + 1);
     var quitTime = today.subtract(duration) as Time.Moment;
     var milestone = Milestones.closestMilestoneTo(quitTime, today);
-    return (milestone == Milestones.MILESTONES[6]);
+    return TestUtils.verifyValueEquals(logger, milestone, 7 * Gregorian.SECONDS_PER_DAY);
   }
 
   (:test)
-  function canGetTwoWeekMilestone(logger as Logger) {
-    var duration = new Time.Duration(11 * Gregorian.SECONDS_PER_DAY);
+  function canGet12WeekMilestone(logger as Logger) {
+    var duration = new Time.Duration(60 * Gregorian.SECONDS_PER_DAY);
     var quitTime = today.subtract(duration) as Time.Moment;
     var milestone = Milestones.closestMilestoneTo(quitTime, today);
-    return (milestone == Milestones.MILESTONES[8]);
+    return TestUtils.verifyValueEquals(logger, milestone, 84 * Gregorian.SECONDS_PER_DAY);
   }
 
   (:test)
-  function canGetThreeMonthsMilestone(logger as Logger) {
-    var duration = new Time.Duration(2 * 30 * Gregorian.SECONDS_PER_DAY);
+  function canGet6MonthMilestone(logger as Logger) {
+    var duration = new Time.Duration(100 * Gregorian.SECONDS_PER_DAY);
     var quitTime = today.subtract(duration) as Time.Moment;
     var milestone = Milestones.closestMilestoneTo(quitTime, today);
-    return (milestone == Milestones.MILESTONES[11]);
+    return TestUtils.verifyValueEquals(logger, milestone, 6 * 30 * Gregorian.SECONDS_PER_DAY);
   }
 
   (:test)
@@ -61,10 +86,129 @@ module MilestonesTests {
 
   (:test)
   function progressPastLastMilestone(logger as Logger) {
-    var fiftyOneYears = new Time.Duration(51 * Gregorian.SECONDS_PER_YEAR);
-    var quitTime = today.subtract(fiftyOneYears) as Time.Moment;
+    var twoYears = new Time.Duration(2 * Gregorian.SECONDS_PER_YEAR);
+    var quitTime = today.subtract(twoYears) as Time.Moment;
     var progress = Milestones.milestoneProgress(quitTime, today);
     return TestUtils.verifyValueEquals(logger, progress, 1.0);
+  }
+
+  (:test)
+  function labelFor24h(logger as Logger) {
+    var label = Milestones.labelFor(Gregorian.SECONDS_PER_DAY, TEST_UNITS);
+    return TestUtils.verifyValueEquals(logger, label, "24h");
+  }
+
+  (:test)
+  function labelFor48h(logger as Logger) {
+    var label = Milestones.labelFor(2 * Gregorian.SECONDS_PER_DAY, TEST_UNITS);
+    return TestUtils.verifyValueEquals(logger, label, "48h");
+  }
+
+  (:test)
+  function labelFor1Week(logger as Logger) {
+    var label = Milestones.labelFor(7 * Gregorian.SECONDS_PER_DAY, TEST_UNITS);
+    return TestUtils.verifyValueEquals(logger, label, "1w");
+  }
+
+  (:test)
+  function labelFor12Weeks(logger as Logger) {
+    var label = Milestones.labelFor(84 * Gregorian.SECONDS_PER_DAY, TEST_UNITS);
+    return TestUtils.verifyValueEquals(logger, label, "12w");
+  }
+
+  (:test)
+  function labelFor6Months(logger as Logger) {
+    var label = Milestones.labelFor(6 * 30 * Gregorian.SECONDS_PER_DAY, TEST_UNITS);
+    return TestUtils.verifyValueEquals(logger, label, "6mo");
+  }
+
+  (:test)
+  function labelFor1Year(logger as Logger) {
+    var label = Milestones.labelFor(Gregorian.SECONDS_PER_YEAR, TEST_UNITS);
+    return TestUtils.verifyValueEquals(logger, label, "1y");
+  }
+
+  (:test)
+  function labelForCoversEveryMilestone(logger as Logger) {
+    var expected = ["20min", "8h", "24h", "48h", "72h", "1w", "2w", "4w", "12w", "6mo", "9mo", "1y"];
+    if (Milestones.NUMBER_OF_MILESTONES != expected.size()) {
+      logger.debug("MILESTONES size " + Milestones.NUMBER_OF_MILESTONES + " != expected " + expected.size());
+      return false;
+    }
+    for (var i = 0; i < Milestones.NUMBER_OF_MILESTONES; i++) {
+      var label = Milestones.labelFor(Milestones.MILESTONES[i], TEST_UNITS);
+      if (!label.equals(expected[i])) {
+        logger.debug("MILESTONES[" + i + "] labeled " + label + ", expected " + expected[i]);
+        return false;
+      }
+    }
+    return true;
+  }
+
+  (:test)
+  function elapsedUnitForHourTargets(logger as Logger) {
+    var unit = Milestones.elapsedUnitFor(2 * Gregorian.SECONDS_PER_DAY, TEST_UNITS);
+    return TestUtils.verifyValueEquals(logger, unit, "h");
+  }
+
+  (:test)
+  function elapsedUnitForWeekTargets(logger as Logger) {
+    var unit = Milestones.elapsedUnitFor(7 * Gregorian.SECONDS_PER_DAY, TEST_UNITS);
+    return TestUtils.verifyValueEquals(logger, unit, "d");
+  }
+
+  (:test)
+  function elapsedUnitForYearTargets(logger as Logger) {
+    var unit = Milestones.elapsedUnitFor(Gregorian.SECONDS_PER_YEAR, TEST_UNITS);
+    return TestUtils.verifyValueEquals(logger, unit, "d");
+  }
+
+  (:test)
+  function bandIndexForMapsEachMilestone(logger as Logger) {
+    // index in MILESTONES → expected band
+    var expected = [0, 1, 2, 3, 4, 5, 5, 5, 5, 6, 6, 7];
+    if (Milestones.NUMBER_OF_MILESTONES != expected.size()) {
+      logger.debug("MILESTONES size " + Milestones.NUMBER_OF_MILESTONES + " != expected " + expected.size());
+      return false;
+    }
+    for (var i = 0; i < Milestones.NUMBER_OF_MILESTONES; i++) {
+      var band = Milestones.bandIndexFor(Milestones.MILESTONES[i]);
+      if (band != expected[i]) {
+        logger.debug("MILESTONES[" + i + "] band=" + band + ", expected " + expected[i]);
+        return false;
+      }
+    }
+    return true;
+  }
+
+  (:test)
+  function bandIndexForPastFinalMilestone(logger as Logger) {
+    var band = Milestones.bandIndexFor(2 * Gregorian.SECONDS_PER_YEAR);
+    return TestUtils.verifyValueEquals(logger, band, 7);
+  }
+
+  (:test)
+  function labelFor20Min(logger as Logger) {
+    var label = Milestones.labelFor(20 * 60, TEST_UNITS);
+    return TestUtils.verifyValueEquals(logger, label, "20min");
+  }
+
+  (:test)
+  function labelFor8h(logger as Logger) {
+    var label = Milestones.labelFor(8 * Gregorian.SECONDS_PER_HOUR, TEST_UNITS);
+    return TestUtils.verifyValueEquals(logger, label, "8h");
+  }
+
+  (:test)
+  function elapsedUnitForMinuteTargets(logger as Logger) {
+    var unit = Milestones.elapsedUnitFor(20 * 60, TEST_UNITS);
+    return TestUtils.verifyValueEquals(logger, unit, "min");
+  }
+
+  (:test)
+  function elapsedDivisorForMinuteTargets(logger as Logger) {
+    var divisor = Milestones.elapsedDivisorFor(20 * 60);
+    return TestUtils.verifyValueEquals(logger, divisor, 60);
   }
 
   (:test)

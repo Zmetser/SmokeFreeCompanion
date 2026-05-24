@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added
+
+- New **Milestones** page as the widget's landing view: shows a circular progress arc with an `elapsed / target` fraction (e.g. `23h / 48h`, `60d / 12w`, `260d / 1y`) toward the next NHS milestone.
+- Each of the 6 NHS milestone bands (24h, 48h, 72h, weeks, months, 1y+) carries a paraphrased physiological description; repeat visits to the same band swap in one of two band-specific motivational lines so the page rewards return visits.
+- Hungarian translations for all new milestone copy.
+
+### Changed
+
+- Milestone set rebalanced to a curated 10-entry list (`24h, 48h, 72h, 1w, 2w, 4w, 12w, 6mo, 9mo, 1y`) replacing the previous 31-entry array.
+
 ## [0.5.0] - 2026-05-23
 
 ### Added

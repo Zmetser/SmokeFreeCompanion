@@ -33,14 +33,15 @@ Single-test runs are not supported by either path; `monkeydo -t` runs every `(:t
 
 Entry point `source/App.mc` (`class App extends Application.AppBase`):
 
-- `getInitialView()` returns `CigarettesNotSmokedView` paired with a `NavigationBehavior(0)` delegate.
+- `getInitialView()` reads `Application.Storage["lastPage"]` and returns the matching view via `NavigationBehavior.getView(page)`. On a fresh install the default is page 0 (`MilestonesView`).
 - `getGlanceView()` returns `GlanceView` — the compact widget preview. Code reachable from the glance must be annotated `(:glance)` (see `App`, `Settings.getQuitDate`, `Stats.durationSince`, `Stats.elapsedTimeSince`).
 
-**View paging.** `source/view/NavigationBehavior.mc` is a `BehaviorDelegate` that cycles through 3 stat views via `onNextPage` / `onPreviousPage`, hard-coded in `getView(page)`:
+**View paging.** `source/view/NavigationBehavior.mc` is a `BehaviorDelegate` that cycles through 4 stat views via `onNextPage` / `onPreviousPage`, hard-coded in `getView(page)`:
 
-0. `CigarettesNotSmokedView`
-1. `MoneyNotSpentView`
-2. `CleanSinceView`
+0. `MilestonesView`
+1. `CigarettesNotSmokedView`
+2. `MoneyNotSpentView`
+3. `CleanSinceView`
 
 Each transition calls `WatchUi.switchToView` with a **new** `NavigationBehavior(nextPage)` — page state is held in the delegate, not globally. `NavigationBehavior.initialize` also writes the current page to `Application.Storage["lastPage"]`, and `App.getInitialView()` reads it back on launch so the widget reopens to where the user left off. When adding a new stat view, update both `_numberOfViews` and the `switch` in `getView`; the `default` case keeps stale stored values safe.
 
@@ -49,7 +50,7 @@ Each transition calls `WatchUi.switchToView` with a **new** `NavigationBehavior(
 - `durationSince`, `elapsedTimeSince` — used by glance and views.
 - `cigarettesNotSmoked` works in **hours**, not days (`cigarettesPerDay / 24` × duration-in-hours). This was a deliberate change in v0.4.0 for finer-grained updates; preserve hour-level math when modifying.
 - `ElapsedTimeBuilder` (`stats/ElapsedTimeBuilder.mc`) converts a `Time.Duration` into the `ElapsedTime` struct that views render.
-- `Milestones.mc` defines progress milestones.
+- `Milestones.mc` defines the 10-entry `MILESTONES` array (`24h..1y`) plus `closestMilestoneTo`, `milestoneProgress`, `labelFor` (hours/days/weeks/months/years), `elapsedDivisorFor` + `elapsedUnitFor` (one tier finer than the target so the view can render `"60d / 12w"` rather than `"0 / 1y"`), and `bandIndexFor` (maps a target milestone to one of 6 NHS description bands for `MilestonesView`).
 
 **Settings** (`source/Settings.mc`) wraps `Application.Properties` for `packPrice`, `packSize`, `cigarettesPerDay`, `quitDate`, `currency`, `colorSpace`. Every getter null-guards the underlying property read with a sensible default. Property keys are defined in `resources/settings/properties.xml` and surfaced to users via `resources/settings/settings.xml`. `getQuitDate()` falls back to today when the stored timestamp is `0` or in the future (handles the pre-1970 / future-date edge cases called out in CHANGELOG.md). `getCurrencyConfig()` returns a dict `{:symbol, :suffixed, :priceFormat, :defaultPrice, :pickerMode}` for the active currency — views and the on-watch price picker consume this, not the raw index. `:pickerMode` is one of `:narrow` (USD/EUR: 2 int + "." + 1 decimal, max 99.9) or `:hundreds` (HUF: 2 int + literal "00.0", max 9900 step 100). To add a currency: append an entry to `getCurrencyConfig`'s `configs` table (including `:defaultPrice` and `:pickerMode`), add a string resource for the symbol, and add a `listEntry` in `settings.xml`.
 
@@ -57,7 +58,9 @@ Each transition calls `WatchUi.switchToView` with a **new** `NavigationBehavior(
 
 **On-watch editing.** Long-press UP (the MENU behavior) on any stat view opens `SettingsMenu` (`source/settings/SettingsMenu.mc`) via `NavigationBehavior.onMenu`. Editors live in the same folder: `CurrencyMenu` for the list pick, `Pickers.mc` for the three `WatchUi.Picker`s (whole-number, currency-aware price, date). The price picker layout branches on `currencyConfig[:pickerMode]`. Setters in `Settings.mc` write through `Properties.setValue` via the same `PropertyReader` DI seam the getters use, so unit tests round-trip without hitting real Properties. Changing currency in `CurrencyMenu` also resets `packPrice` to the new currency's `:defaultPrice` so the user isn't left with a price at the wrong scale.
 
-**Upgrade compatibility — load-bearing.** The current Store release is **v0.4.0**; existing users have real configured values in `Application.Properties` on their devices. Property **keys** and **types** in `resources/settings/properties.xml` (and the corresponding casts in `Settings.mc`) are an external contract — changing or removing any of `quitDate` (number), `currency` (number), `packPrice` (double), `cigarettesPerDay` (number), `packSize` (number) silently wipes the value for every existing user on update. If a key or type must change, ship an explicit migration that reads the old key and writes the new one before the first getter is called. The regression guard is `SettingsTests.upgradeFromV040_preservesAllUserSettings` in `source/Settings.tests.mc` — keep it green.
+**MilestonesView** (`source/view/MilestonesView.mc`) shows progress toward the next NHS milestone as a `CircularProgressBar` arc plus an `elapsed / target` fraction (e.g. `"23h / 48h"`). Below the fraction a `WatchUi.TextArea` renders one of three description strings for the current band: an NHS-paraphrased physiological fact on the user's first visit to that band, then a random pick from `{NHS, motivational #1, motivational #2}` on repeat visits. First-visit tracking is a 6-bit bitfield in `Application.Storage["milestonesBandsSeen"]` (one bit per band, unset reads as 0 so v0.5.0 upgraders see the NHS copy first like a fresh install). Entry animation is a 700ms ease-out arc sweep driven by `System.getTimer()` inside `onUpdate` calling `WatchUi.requestUpdate()` until done — `Timer.Timer` is not used here because instance `method(:name)` indirect lookup crashes the simulator TVM (see `learning_monkeyc_indirect_method_lookup`).
+
+**Upgrade compatibility — load-bearing.** The current Store release is **v0.5.0**; existing users have real configured values in `Application.Properties` on their devices. Property **keys** and **types** in `resources/settings/properties.xml` (and the corresponding casts in `Settings.mc`) are an external contract — changing or removing any of `quitDate` (number), `currency` (number), `packPrice` (double), `cigarettesPerDay` (number), `packSize` (number) silently wipes the value for every existing user on update. If a key or type must change, ship an explicit migration that reads the old key and writes the new one before the first getter is called. The regression guard is `SettingsTests.upgradeFromV040_preservesAllUserSettings` in `source/Settings.tests.mc` — keep it green.
 
 Note: v0.4.0's `Settings.mc` had no null-guards and stricter `as Number` casts; the current null-guard-everything pattern is strictly more permissive, so any value a v0.4.0 user could have stored is readable by today's code.
 
