@@ -24,6 +24,33 @@
   <string id="SignEUR" translatable="false">€</string>
   <string id="SignHUF" translatable="false">Ft</string>
   
+  <!-- Milestones screen -->
+  <string id="Milestones_UnitHour">h</string>
+  <string id="Milestones_UnitDay">d</string>
+  <string id="Milestones_UnitWeek">w</string>
+  <string id="Milestones_UnitMonth">mo</string>
+  <string id="Milestones_UnitYear">y</string>
+  <!-- NHS-derived descriptions, paraphrased -->
+  <string id="Milestones_Desc_24h">Oxygen recovering, harmful carbon monoxide dropping.</string>
+  <string id="Milestones_Desc_48h">Lungs clearing mucus. Taste and smell improving.</string>
+  <string id="Milestones_Desc_72h">Breathing feels easier. Energy increasing.</string>
+  <string id="Milestones_Desc_Weeks">Blood circulation is improving.</string>
+  <string id="Milestones_Desc_Months">Lung function up to 10% better. Coughing easing.</string>
+  <string id="Milestones_Desc_1y">Heart attack risk has halved.</string>
+  <!-- Motivational variants — shown on repeat visits to a band -->
+  <string id="Milestones_Mot_24h_1">You did it — 24 hours smoke-free.</string>
+  <string id="Milestones_Mot_24h_2">Day one is the hardest. You're crushing it.</string>
+  <string id="Milestones_Mot_48h_1">Two days of fresh air. Keep going.</string>
+  <string id="Milestones_Mot_48h_2">Your body is thanking you right now.</string>
+  <string id="Milestones_Mot_72h_1">Three days strong. You're rewriting habits.</string>
+  <string id="Milestones_Mot_72h_2">The cravings are losing their grip.</string>
+  <string id="Milestones_Mot_Weeks_1">You're doing amazing. Stay with it.</string>
+  <string id="Milestones_Mot_Weeks_2">Every breath is yours now.</string>
+  <string id="Milestones_Mot_Months_1">Months of freedom. Be proud.</string>
+  <string id="Milestones_Mot_Months_2">Look how far you've come.</string>
+  <string id="Milestones_Mot_1y_1">A whole year. Take a moment to celebrate.</string>
+  <string id="Milestones_Mot_1y_2">You did the hard thing.</string>
+
   <!-- Quit Data Screen -->
   <string id="Quit_OneDayTitle">You quit today!</string>
   <string id="Quit_OneDaySubtitle">Congratulations!</string>
