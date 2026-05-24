@@ -22,25 +22,25 @@
   <string id="Milestones_UnitWeek">hét</string>
   <string id="Milestones_UnitMonth">hó</string>
   <string id="Milestones_UnitYear">é</string>
-  <!-- NHS-derived descriptions, paraphrased — TODO: native review -->
+  <!-- NHS-derived descriptions, paraphrased -->
   <string id="Milestones_Desc_24h">Az oxigénszinted javul, a szén-monoxid csökken.</string>
   <string id="Milestones_Desc_48h">A tüdő tisztul. Az ízlelés és szaglás javul.</string>
   <string id="Milestones_Desc_72h">A légzésed könnyebb. Energiád növekszik.</string>
   <string id="Milestones_Desc_Weeks">A vérkeringésed javul.</string>
   <string id="Milestones_Desc_Months">Tüdőfunkció akár 10%-kal jobb. A köhögés enyhül.</string>
   <string id="Milestones_Desc_1y">A szívinfarktus kockázata felére csökkent.</string>
-  <!-- Motivational variants — TODO: native review -->
-  <string id="Milestones_Mot_24h_1">Megcsináltad — 24 óra cigi nélkül.</string>
-  <string id="Milestones_Mot_24h_2">Az első nap a legnehezebb. Bírod!</string>
-  <string id="Milestones_Mot_48h_1">Két nap friss levegő. Csak így tovább.</string>
+  <!-- Motivational variants -->
+  <string id="Milestones_Mot_24h_1">Hidd el, hogy menni fog — már félúton vagy.</string>
+  <string id="Milestones_Mot_24h_2">Hiszek benned. Egyszerre csak egy óra.</string>
+  <string id="Milestones_Mot_48h_1">Megcsináltad — 24 óra cigi nélkül.</string>
   <string id="Milestones_Mot_48h_2">A tested most hálás neked.</string>
-  <string id="Milestones_Mot_72h_1">Három nap! Új szokásokat építesz.</string>
+  <string id="Milestones_Mot_72h_1">Két nap friss levegő. Csak így tovább.</string>
   <string id="Milestones_Mot_72h_2">A sóvárgás kezd elgyengülni.</string>
   <string id="Milestones_Mot_Weeks_1">Fantasztikus vagy. Tarts ki.</string>
   <string id="Milestones_Mot_Weeks_2">Minden lélegzet a tiéd.</string>
-  <string id="Milestones_Mot_Months_1">Hónapok szabadság. Légy büszke.</string>
+  <string id="Milestones_Mot_Months_1">A sóvárgás múló. A szabadság örök.</string>
   <string id="Milestones_Mot_Months_2">Nézd, milyen messzire jutottál.</string>
-  <string id="Milestones_Mot_1y_1">Egy egész év. Ünnepeld meg.</string>
+  <string id="Milestones_Mot_1y_1">Erősebb vagy, mint a függőséged.</string>
   <string id="Milestones_Mot_1y_2">Megcsináltad a nehezét.</string>
 
   <!-- Quit Data Screen -->
