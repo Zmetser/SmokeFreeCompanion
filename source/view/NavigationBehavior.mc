@@ -4,7 +4,7 @@ import Toybox.Lang;
 
 class NavigationBehavior extends BehaviorDelegate {
   private var _currentPage as Number;
-  private const _numberOfViews as Number = 3;
+  private const _numberOfViews as Number = 4;
 
   function initialize(currentPage as Number) {
     _currentPage = currentPage;
@@ -32,10 +32,11 @@ class NavigationBehavior extends BehaviorDelegate {
   // To add a view: add a case here and increment _numberOfViews.
   function getView(page as Number) as WatchUi.View {
     switch (page) {
-      case 0: return new CigarettesNotSmokedView();
-      case 1: return new MoneyNotSpentView();
-      case 2: return new CleanSinceView();
-      default: return new CigarettesNotSmokedView();
+      case 0: return new MilestonesView();
+      case 1: return new CigarettesNotSmokedView();
+      case 2: return new MoneyNotSpentView();
+      case 3: return new CleanSinceView();
+      default: return new MilestonesView();
     }
   }
 }
