@@ -34,6 +34,7 @@ class MilestonesView extends StatView {
     StatView.onLayout(dc);
 
     _units = {
+      :minute => Application.loadResource(Rez.Strings.Milestones_UnitMinute) as String,
       :hour => Application.loadResource(Rez.Strings.Milestones_UnitHour) as String,
       :day => Application.loadResource(Rez.Strings.Milestones_UnitDay) as String,
       :week => Application.loadResource(Rez.Strings.Milestones_UnitWeek) as String,
@@ -47,6 +48,8 @@ class MilestonesView extends StatView {
     });
 
     _descriptions = [
+      Application.loadResource(Rez.Strings.Milestones_Desc_20min) as String,
+      Application.loadResource(Rez.Strings.Milestones_Desc_8h) as String,
       Application.loadResource(Rez.Strings.Milestones_Desc_24h) as String,
       Application.loadResource(Rez.Strings.Milestones_Desc_48h) as String,
       Application.loadResource(Rez.Strings.Milestones_Desc_72h) as String,
@@ -56,6 +59,10 @@ class MilestonesView extends StatView {
     ];
 
     _motivationals = [
+      [Application.loadResource(Rez.Strings.Milestones_Mot_20min_1) as String,
+       Application.loadResource(Rez.Strings.Milestones_Mot_20min_2) as String],
+      [Application.loadResource(Rez.Strings.Milestones_Mot_8h_1) as String,
+       Application.loadResource(Rez.Strings.Milestones_Mot_8h_2) as String],
       [Application.loadResource(Rez.Strings.Milestones_Mot_24h_1) as String,
        Application.loadResource(Rez.Strings.Milestones_Mot_24h_2) as String],
       [Application.loadResource(Rez.Strings.Milestones_Mot_48h_1) as String,

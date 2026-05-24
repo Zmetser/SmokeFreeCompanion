@@ -9,6 +9,7 @@
 
   <string id="CigarettesPerDay">Cigarettes Per Day</string>
   <string id="QuitDate">Quit Date</string>
+  <string id="QuitTime">Quit Time</string>
   <string id="PackPrice">Pack Price</string>
   <string id="PackSize">Cigarettes per Pack</string>
 
@@ -25,12 +26,15 @@
   <string id="SignHUF" translatable="false">Ft</string>
   
   <!-- Milestones screen -->
+  <string id="Milestones_UnitMinute">min</string>
   <string id="Milestones_UnitHour">h</string>
   <string id="Milestones_UnitDay">d</string>
   <string id="Milestones_UnitWeek">w</string>
   <string id="Milestones_UnitMonth">mo</string>
   <string id="Milestones_UnitYear">y</string>
   <!-- NHS-derived descriptions, paraphrased -->
+  <string id="Milestones_Desc_20min">Pulse rate starting to return to normal.</string>
+  <string id="Milestones_Desc_8h">Oxygen levels recovering. Carbon monoxide already halved.</string>
   <string id="Milestones_Desc_24h">Oxygen recovering, harmful carbon monoxide dropping.</string>
   <string id="Milestones_Desc_48h">Lungs clearing mucus. Taste and smell improving.</string>
   <string id="Milestones_Desc_72h">Breathing feels easier. Energy increasing.</string>
@@ -38,6 +42,10 @@
   <string id="Milestones_Desc_Months">Lung function up to 10% better. Coughing easing.</string>
   <string id="Milestones_Desc_1y">Heart attack risk has halved.</string>
   <!-- Motivational variants — shown on repeat visits to a band -->
+  <string id="Milestones_Mot_20min_1">The first 20 minutes — your body already noticed.</string>
+  <string id="Milestones_Mot_20min_2">Right now is the start of something good.</string>
+  <string id="Milestones_Mot_8h_1">Eight hours in. Quietly winning.</string>
+  <string id="Milestones_Mot_8h_2">Half the carbon monoxide is already gone.</string>
   <string id="Milestones_Mot_24h_1">Believe you can and you're halfway there.</string>
   <string id="Milestones_Mot_24h_2">I believe in you. One hour at a time.</string>
   <string id="Milestones_Mot_48h_1">You did it! 24 hours smoke-free.</string>

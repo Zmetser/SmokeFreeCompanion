@@ -6,6 +6,7 @@
 
   <string id="CigarettesPerDay">Szál cigaretta naponta</string>
   <string id="QuitDate">Leszokás dátuma</string>
+  <string id="QuitTime">Leszokás ideje</string>
   <string id="PackPrice">Doboz ára</string>
   <string id="PackSize">Szál cigaretta 1 dobozban</string>
 
@@ -17,12 +18,15 @@
   <string id="ShortMinute" scope="glance">p</string>
   
   <!-- Milestones screen -->
+  <string id="Milestones_UnitMinute">p</string>
   <string id="Milestones_UnitHour">ó</string>
   <string id="Milestones_UnitDay">n</string>
   <string id="Milestones_UnitWeek">hét</string>
   <string id="Milestones_UnitMonth">hó</string>
   <string id="Milestones_UnitYear">é</string>
   <!-- NHS-derived descriptions, paraphrased -->
+  <string id="Milestones_Desc_20min">A pulzusod kezd visszaállni a normálisra.</string>
+  <string id="Milestones_Desc_8h">Az oxigénszinted javul. A szén-monoxid felére csökkent.</string>
   <string id="Milestones_Desc_24h">Az oxigénszinted javul, a szén-monoxid csökken.</string>
   <string id="Milestones_Desc_48h">A tüdő tisztul. Az ízlelés és szaglás javul.</string>
   <string id="Milestones_Desc_72h">A légzésed könnyebb. Energiád növekszik.</string>
@@ -30,6 +34,10 @@
   <string id="Milestones_Desc_Months">Tüdőfunkció akár 10%-kal jobb. A köhögés enyhül.</string>
   <string id="Milestones_Desc_1y">A szívinfarktus kockázata felére csökkent.</string>
   <!-- Motivational variants -->
+  <string id="Milestones_Mot_20min_1">Az első 20 perc — a tested már észrevette.</string>
+  <string id="Milestones_Mot_20min_2">Most kezdődik valami jó.</string>
+  <string id="Milestones_Mot_8h_1">Nyolc óra mögötted. Csendben nyerésben vagy.</string>
+  <string id="Milestones_Mot_8h_2">A szén-monoxid fele már eltűnt.</string>
   <string id="Milestones_Mot_24h_1">Hidd el, hogy menni fog — már félúton vagy.</string>
   <string id="Milestones_Mot_24h_2">Hiszek benned. Egyszerre csak egy óra.</string>
   <string id="Milestones_Mot_48h_1">Megcsináltad — 24 óra cigi nélkül.</string>
