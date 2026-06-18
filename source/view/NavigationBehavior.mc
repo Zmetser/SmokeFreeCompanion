@@ -1,41 +1,36 @@
 import Toybox.Application;
-import Toybox.WatchUi;
 import Toybox.Lang;
+import Toybox.WatchUi;
 
-class NavigationBehavior extends BehaviorDelegate {
+// Outer delegate for the page-loop ViewLoop. Handles MENU (push settings)
+// and persists the last-viewed page on every navigation.
+class NavigationBehavior extends WatchUi.ViewLoopDelegate {
+  private var _viewLoop as WatchUi.ViewLoop;
   private var _currentPage as Number;
   private const _numberOfViews as Number = 3;
 
-  function initialize(currentPage as Number) {
+  function initialize(viewLoop as WatchUi.ViewLoop, currentPage as Number) {
+    ViewLoopDelegate.initialize(viewLoop);
+    _viewLoop = viewLoop;
     _currentPage = currentPage;
-    Storage.setValue("lastPage", currentPage);
-    BehaviorDelegate.initialize();
   }
 
-  function onNextPage() as Boolean {
-    var nextPage = (_currentPage + 1) % _numberOfViews;
-    WatchUi.switchToView(getView(nextPage), new NavigationBehavior(nextPage), WatchUi.SLIDE_UP);
+  function onNextView() as Boolean {
+    _viewLoop.changeView(WatchUi.ViewLoop.DIRECTION_NEXT);
+    _currentPage = (_currentPage + 1) % _numberOfViews;
+    Storage.setValue("lastPage", _currentPage);
     return true;
   }
 
-  function onPreviousPage() as Boolean {
-    var prevPage = (_currentPage - 1 + _numberOfViews) % _numberOfViews;
-    WatchUi.switchToView(getView(prevPage), new NavigationBehavior(prevPage), WatchUi.SLIDE_DOWN);
+  function onPreviousView() as Boolean {
+    _viewLoop.changeView(WatchUi.ViewLoop.DIRECTION_PREVIOUS);
+    _currentPage = (_currentPage - 1 + _numberOfViews) % _numberOfViews;
+    Storage.setValue("lastPage", _currentPage);
     return true;
   }
 
   function onMenu() as Boolean {
     WatchUi.pushView(new SettingsMenu(), new SettingsMenuDelegate(), WatchUi.SLIDE_UP);
     return true;
-  }
-
-  // To add a view: add a case here and increment _numberOfViews.
-  function getView(page as Number) as WatchUi.View {
-    switch (page) {
-      case 0: return new CigarettesNotSmokedView();
-      case 1: return new MoneyNotSpentView();
-      case 2: return new CleanSinceView();
-      default: return new CigarettesNotSmokedView();
-    }
   }
 }
