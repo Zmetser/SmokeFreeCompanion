@@ -11,6 +11,7 @@ class SettingsMenu extends WatchUi.Menu2 {
   private var _currencyItem as WatchUi.MenuItem?;
   private var _packPriceItem as WatchUi.MenuItem?;
   private var _packSizeItem as WatchUi.MenuItem?;
+  private var _iconStyleItem as WatchUi.MenuItem?;
 
   function initialize() {
     Menu2.initialize({:title => Application.loadResource(Rez.Strings.SettingsMenuTitle) as String});
@@ -45,12 +46,19 @@ class SettingsMenu extends WatchUi.Menu2 {
       :packSize,
       {}
     );
+    _iconStyleItem = new WatchUi.MenuItem(
+      Application.loadResource(Rez.Strings.IconStyle) as String,
+      _iconStyleSubLabel(),
+      :iconStyle,
+      {}
+    );
 
     addItem(_quitDateItem);
     addItem(_cigsPerDayItem);
     addItem(_currencyItem);
     addItem(_packPriceItem);
     addItem(_packSizeItem);
+    addItem(_iconStyleItem);
   }
 
   function onShow() as Void {
@@ -76,6 +84,9 @@ class SettingsMenu extends WatchUi.Menu2 {
     if (_packSizeItem != null) {
       (_packSizeItem as WatchUi.MenuItem).setSubLabel(Settings.getPackSize().toString());
     }
+    if (_iconStyleItem != null) {
+      (_iconStyleItem as WatchUi.MenuItem).setSubLabel(_iconStyleSubLabel());
+    }
     WatchUi.requestUpdate();
   }
 
@@ -84,6 +95,12 @@ class SettingsMenu extends WatchUi.Menu2 {
       Settings.getQuitDate(),
       Application.loadResource(Rez.Strings.DateFormat) as String
     );
+  }
+
+  private function _iconStyleSubLabel() as String {
+    return Application.loadResource(
+      Settings.getIconStyle() == Settings.ICON_STYLE_PIXEL ? Rez.Strings.IconStylePixel : Rez.Strings.IconStyleSimple
+    ) as String;
   }
 }
 
@@ -134,6 +151,8 @@ class SettingsMenuDelegate extends WatchUi.Menu2InputDelegate {
         new PackSizePickerDelegate(),
         WatchUi.SLIDE_LEFT
       );
+    } else if (id == :iconStyle) {
+      WatchUi.pushView(new IconStyleMenu(), new IconStyleMenuDelegate(), WatchUi.SLIDE_LEFT);
     }
   }
 

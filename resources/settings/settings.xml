@@ -22,4 +22,11 @@
     <setting propertyKey="@Properties.packSize" title="@Strings.PackSize">
       <settingConfig type="numeric" min="1" />
     </setting>
+
+    <setting propertyKey="@Properties.iconStyle" title="@Strings.IconStyle">
+      <settingConfig type="list">
+        <listEntry value="0">@Strings.IconStyleSimple</listEntry>
+        <listEntry value="1">@Strings.IconStylePixel</listEntry>
+      </settingConfig>
+    </setting>
 </settings>

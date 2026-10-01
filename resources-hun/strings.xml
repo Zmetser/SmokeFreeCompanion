@@ -8,6 +8,9 @@
   <string id="QuitDate">Leszokás dátuma</string>
   <string id="PackPrice">Doboz ára</string>
   <string id="PackSize">Szál cigaretta 1 dobozban</string>
+  <string id="IconStyle">Ikonstílus</string>
+  <string id="IconStyleSimple">Egyszerű</string>
+  <string id="IconStylePixel">Pixel art</string>
 
   <!-- Short date units -->
   <string id="ShortYear" scope="glance">é</string>

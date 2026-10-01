@@ -11,6 +11,9 @@
   <string id="QuitDate">Quit Date</string>
   <string id="PackPrice">Pack Price</string>
   <string id="PackSize">Cigarettes per Pack</string>
+  <string id="IconStyle">Icon Style</string>
+  <string id="IconStyleSimple">Simple</string>
+  <string id="IconStylePixel">Pixel Art</string>
 
   <!-- Short date units -->
   <string id="ShortYear" scope="glance">y</string>

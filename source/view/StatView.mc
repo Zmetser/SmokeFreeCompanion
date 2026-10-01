@@ -4,14 +4,22 @@ import Toybox.Time;
 import Toybox.Lang;
 
 import Milestones;
+import Settings;
 
 /**
   * A view that displays a stat with an icon and a title.
   * Extend this class to create a new stat view.
-  * The View has 3 fields, set them in the onShow function:
+  * The View has 4 fields, set them in the onShow function:
   * - title: The title of the stat.
   * - subTitle: The subtitle of the stat.
-  * - iconResource: The icon to display.
+  * - _iconSimpleId: Drawable resource id for the "Simple" icon style.
+  * - _iconPixelId: Drawable resource id for the "Pixel Art" icon style.
+  *
+  * The icon itself is loaded lazily in onUpdate, since which style to show
+  * depends on Settings.getIconStyle() — a Connect-Mobile-pushed setting
+  * change only triggers onUpdate, not onShow (see CLAUDE.md "Settings
+  * reactivity"). The loaded bitmap is cached and only reloaded when the
+  * style actually changes, to avoid reloading it on every tick.
   *
   * @extends WatchUi.View
 */
@@ -23,8 +31,13 @@ class StatView extends WatchUi.View {
   // The subtitle of the stat.
   protected var subTitle;
 
-  // The icon to display.
-  protected var iconResource;
+  // Icon resource ids for each style — set these in onShow.
+  protected var _iconSimpleId as ResourceId?;
+  protected var _iconPixelId as ResourceId?;
+
+  // The currently loaded icon bitmap.
+  private var iconResource;
+  private var _loadedIconStyle as Number?;
 
   // Title position
   protected var titleX;
@@ -64,12 +77,27 @@ class StatView extends WatchUi.View {
     // Call the parent onUpdate function to redraw the layout
     View.onUpdate(dc);
 
+    _updateIconForStyle();
+
     if (iconResource != null && _iconDimensions != null) {
       dc.drawBitmap(_iconDimensions[0], _iconDimensions[1], iconResource);
     }
 
     drawTitle(dc);
     drawSubTitle(dc);
+  }
+
+  private function _updateIconForStyle() as Void {
+    if (_iconSimpleId == null || _iconPixelId == null) {
+      return;
+    }
+    var style = Settings.getIconStyle();
+    if (style == _loadedIconStyle) {
+      return;
+    }
+    var id = (style == Settings.ICON_STYLE_PIXEL) ? _iconPixelId : _iconSimpleId;
+    iconResource = WatchUi.loadResource(id) as BitmapResource;
+    _loadedIconStyle = style;
   }
 
   /**

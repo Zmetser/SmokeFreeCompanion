@@ -98,6 +98,19 @@ module SettingsTests {
   }
 
   (:test)
+  function iconStyle_defaultsToSimple(logger as Logger) as Boolean {
+    _setReader(new DictPropertyReader({}));
+    return Settings.getIconStyle() == Settings.ICON_STYLE_SIMPLE;
+  }
+
+  (:test)
+  function setIconStyle_roundTrip(logger as Logger) as Boolean {
+    _setReader(new DictPropertyReader({}));
+    Settings.setIconStyle(Settings.ICON_STYLE_PIXEL);
+    return Settings.getIconStyle() == Settings.ICON_STYLE_PIXEL;
+  }
+
+  (:test)
   function currencyConfig_exposesDefaultPricePerCurrency(logger as Logger) as Boolean {
     var expected = [9.0f, 9.0f, 2100.0f];
     for (var i = 0; i < expected.size(); i++) {

@@ -4,6 +4,9 @@ import Toybox.Lang;
 
 module Settings {
 
+  public const ICON_STYLE_SIMPLE = 0;
+  public const ICON_STYLE_PIXEL = 1;
+
   var _reader as PropertyReader? = null;
 
   (:glance)
@@ -32,6 +35,11 @@ module Settings {
   public function getCurrencyIndex() as Number {
     var v = _getReader().getValue("currency");
     return v != null ? (v as Number) : 0;
+  }
+
+  public function getIconStyle() as Number {
+    var v = _getReader().getValue("iconStyle");
+    return v != null ? (v as Number) : ICON_STYLE_SIMPLE;
   }
 
   (:glance)
@@ -84,5 +92,9 @@ module Settings {
 
   public function setPackSize(value as Number) as Void {
     _getReader().setValue("packSize", value);
+  }
+
+  public function setIconStyle(value as Number) as Void {
+    _getReader().setValue("iconStyle", value);
   }
 }

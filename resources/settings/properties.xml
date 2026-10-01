@@ -5,4 +5,5 @@
   <property id="packPrice" type="double">9.0</property>
   <property id="cigarettesPerDay" type="number">1</property>
   <property id="packSize" type="number">19</property>
+  <property id="iconStyle" type="number">0</property>
 </properties>
