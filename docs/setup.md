@@ -106,6 +106,14 @@ make test DEVICE=fenix7
 
 The device package for the target must be installed in the SDK Manager first.
 
+## Building a Store release package
+
+```bash
+make release
+```
+
+Packages every product declared in `manifest.xml` (the fenix6 and fenix7 lineups — 11 products, more once screen-shape variants are counted) into a single signed, release-stripped `.iq`, written to `releases/<appVersion>/SmokeFreeCompanion.iq`. `<appVersion>` is read from `resources/settings/properties.xml`, so bump that first (the "chore: release vX.Y.Z" commit does this). Unlike `build`/`test`, this doesn't take `DEVICE` — it builds all products in one pass. Needs every fenix6/fenix7 device package installed via the SDK Manager, and `DEVELOPER_KEY` pointed at the Store-registered key (see `docs/setup.md` §3) rather than a throwaway dev key, since this package is what actually ships. `releases/` is gitignored — upload the `.iq` to the GitHub release manually.
+
 ## Recovering from a stuck simulator
 
 `monkeydo` connects to the running simulator process. If a prior test run left it in a weird state (window hangs, `monkeydo` doesn't return), reset:

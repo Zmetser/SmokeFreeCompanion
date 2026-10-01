@@ -18,6 +18,7 @@ Primary workflow is the **Makefile** (see `docs/setup.md` for one-time install):
 make build              # compile for fenix6
 make test               # build with --unit-test + run in simulator
 make test DEVICE=fenix7 # other devices (package must be installed)
+make release            # build the signed Store .iq for all fenix6/7 products, into releases/<appVersion>/
 make clean
 ```
 
