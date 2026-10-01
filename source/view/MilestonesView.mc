@@ -102,8 +102,8 @@ class MilestonesView extends StatView {
 
   // First visit to a band: show the NHS fact and mark the band seen.
   // Subsequent visits: random pick across {NHS, motivationals[band]...}.
-  // Persistence is a 6-bit bitfield in Application.Storage so we keep one key
-  // instead of six; unset reads as 0 so v0.5.0 upgraders behave like fresh installs.
+  // Persistence is an 8-bit bitfield in Application.Storage so we keep one key
+  // instead of eight; unset reads as 0 so v0.5.0 upgraders behave like fresh installs.
   private function pickMessageFor(band as Number) as String {
     var raw = Application.Storage.getValue(STORAGE_KEY_BANDS_SEEN);
     var seen = (raw instanceof Lang.Number) ? raw : 0;
