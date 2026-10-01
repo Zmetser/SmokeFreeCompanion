@@ -31,10 +31,17 @@ APP_SETTINGS := $(OUT_DIR)/$(APP_NAME)-settings.json
 SETTINGS_DEST := GARMIN/Settings/$(shell echo $(APP_NAME) | tr '[:lower:]' '[:upper:]')-settings.json
 TEST_PRG     := $(OUT_DIR)/$(APP_NAME)-tests.prg
 
+# Store package output — releases/<appVersion>/<APP_NAME>.iq. appVersion is
+# read from properties.xml rather than duplicated here, since it's the same
+# value that must be bumped in the "chore: release vX.Y.Z" commit.
+RELEASES_DIR ?= releases
+APP_VERSION  := $(shell sed -n 's/.*id="appVersion"[^>]*>\([^<]*\)<.*/\1/p' resources/settings/properties.xml)
+APP_IQ       := $(RELEASES_DIR)/$(APP_VERSION)/$(APP_NAME).iq
+
 # monkeyc builds in ~2s, so always rebuild rather than track a wildcard of
 # every .mc/resource file. Stale .prgs would be a much worse failure mode
 # than the extra two seconds.
-.PHONY: all build run test clean check-deps simulator
+.PHONY: all build run test clean check-deps simulator release
 
 all: build
 
@@ -72,6 +79,14 @@ simulator:
 		sleep 1; \
 	done; \
 	echo "Simulator did not become ready on port $(SIMULATOR_PORT)"; exit 1
+
+# Build the signed Connect IQ Store package (.iq) for every product declared
+# in manifest.xml, release-stripped, into releases/<appVersion>/. Unlike
+# build/test, this doesn't take $(DEVICE) — -e packages all products at once.
+release: check-deps
+	@mkdir -p "$(RELEASES_DIR)/$(APP_VERSION)"
+	monkeyc -f $(JUNGLE) -y "$(DEVELOPER_KEY)" -o $(APP_IQ) -e -r -w
+	@echo "Store package: $(APP_IQ)"
 
 clean:
 	rm -rf $(OUT_DIR)
