@@ -28,7 +28,8 @@ class CleanSinceView extends StatView {
   function onShow() as Void {
     StatView.onShow();
 
-    iconResource = WatchUi.loadResource(Rez.Drawables.QuitDateIcon) as BitmapResource;
+    _iconSimpleId = Rez.Drawables.QuitDateIconSimple;
+    _iconPixelId = Rez.Drawables.QuitDateIconPixel;
   }
 
   function onUpdate(dc as Dc) as Void {

@@ -1,7 +1,10 @@
 <drawables>
   <bitmap id="LauncherIcon" filename="app_icon.png" />
-  <!-- Stat view icons -->
-  <bitmap id="CigarettesNotSmokedIcon" filename="smoking.png" />
-  <bitmap id="MoneyNotSpentIcon" filename="piggy_bank.png" />
-  <bitmap id="QuitDateIcon" filename="calendar.png" />
+  <!-- Stat view icons — Simple and Pixel Art styles, picked at runtime via Settings.getIconStyle() -->
+  <bitmap id="CigarettesNotSmokedIconSimple" filename="simple/smoking.png" />
+  <bitmap id="CigarettesNotSmokedIconPixel" filename="pixel_art/smoking.png" />
+  <bitmap id="MoneyNotSpentIconSimple" filename="simple/piggy_bank.png" />
+  <bitmap id="MoneyNotSpentIconPixel" filename="pixel_art/piggy_bank.png" />
+  <bitmap id="QuitDateIconSimple" filename="simple/calendar.png" />
+  <bitmap id="QuitDateIconPixel" filename="pixel_art/calendar.png" />
 </drawables>

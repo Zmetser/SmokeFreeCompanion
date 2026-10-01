@@ -22,7 +22,8 @@ class MoneyNotSpentView extends StatView {
   function onShow() as Void {
     StatView.onShow();
 
-    iconResource = WatchUi.loadResource(Rez.Drawables.MoneyNotSpentIcon) as BitmapResource;
+    _iconSimpleId = Rez.Drawables.MoneyNotSpentIconSimple;
+    _iconPixelId = Rez.Drawables.MoneyNotSpentIconPixel;
     subTitle = WatchUi.loadResource(Rez.Strings.Saved) as Lang.String;
   }
 

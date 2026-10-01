@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added
+
+- New **Icon Style** setting lets you switch the cigarette/piggy-bank/calendar icons between "Simple" and "Pixel Art", editable via Connect Mobile or on-watch (long-press UP → Settings → Icon Style). The app launcher icon is unaffected — Connect IQ doesn't support swapping it at runtime.
+
 ## [0.5.0] - 2026-05-23
 
 ### Added

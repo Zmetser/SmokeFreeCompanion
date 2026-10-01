@@ -12,7 +12,8 @@ class CigarettesNotSmokedView extends StatView {
   function onShow() as Void {
     StatView.onShow();
 
-    iconResource = WatchUi.loadResource(Rez.Drawables.CigarettesNotSmokedIcon) as BitmapResource;
+    _iconSimpleId = Rez.Drawables.CigarettesNotSmokedIconSimple;
+    _iconPixelId = Rez.Drawables.CigarettesNotSmokedIconPixel;
     subTitle = WatchUi.loadResource(Rez.Strings.Cigarettes) as Lang.String;
   }
 
