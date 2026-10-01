@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-10-01
+
 ### Added
 
 - New **Icon Style** setting lets you switch the cigarette/piggy-bank/calendar icons between "Simple" and "Pixel Art", editable via Connect Mobile or on-watch (long-press UP → Settings → Icon Style). The app launcher icon is unaffected — Connect IQ doesn't support swapping it at runtime.
@@ -85,7 +87,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 First test release to Connect IQ Store to test app settings
 
-[unreleased]: https://github.com/Zmetser/SmokeFreeCompanion/compare/v0.5.0...HEAD
+[unreleased]: https://github.com/Zmetser/SmokeFreeCompanion/compare/v0.6.0...HEAD
+[0.6.0]: https://github.com/Zmetser/SmokeFreeCompanion/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/Zmetser/SmokeFreeCompanion/compare/v0.4.1...v0.5.0
 [0.4.1]: https://github.com/Zmetser/SmokeFreeCompanion/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/Zmetser/SmokeFreeCompanion/releases/tag/v0.4.0
